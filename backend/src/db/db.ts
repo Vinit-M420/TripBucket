@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 // import { boolean, String } from "zod";
 dotenv.config();
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
     try {
         const uri = process.env.MONGOOSE_URI;
         if (!uri) {
@@ -50,8 +50,3 @@ const ContentSchema = new mongoose.Schema({
 export const UserModel = mongoose.model("user", UserSchema);
 export const TripModel = mongoose.model("trip", TripSchema);
 export const ContentModel = mongoose.model("content", ContentSchema);
-
-
-export {
-    connectToDatabase
-}

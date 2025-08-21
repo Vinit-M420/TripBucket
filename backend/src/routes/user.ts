@@ -1,10 +1,11 @@
 import express from "express";
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
-import { string, z } from "zod";
+import { z } from "zod";
 import  bcrypt from "bcrypt";
 import { UserModel, TripModel } from "../db/db.js";
 import { HttpStatusCode } from "../response.js"
+import { userAuth, type CustomRequest } from "../middleware/auth.js";
 dotenv.config();
 
 const router = express.Router(); 
@@ -110,7 +111,16 @@ router.post("/signin",  async function (req, res) {
     }
 });
 
-router.post("/trip", async function (req, res) {
+router.use(userAuth);
+
+router.post("/trip", async function (req:CustomRequest, res) {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({
+            message: "User not authenticated"
+        });
+    }
+
     const parsedTrip= UserTripSchema.safeParse(req.body);
     if (!parsedTrip){
          return res.status(403).json({
@@ -118,16 +128,16 @@ router.post("/trip", async function (req, res) {
         })
     }
 
-    const { userId , destination, bucketlist, to_date, from_date, bannerURL } = req.body;
-    let trip: any = TripModel.findOne({ userId: userId, destination: destination  }); /// this any is a problem
-    if (trip){
+    const { destination, bucketlist, to_date, from_date, bannerURL } = req.body;
+    let existingTrip = await TripModel.findOne({ userId, destination }); /// this any is a problem
+    if (existingTrip){
         return res.status(HttpStatusCode.UserAlreadyExist).json({
             message: "Trip to this destination already exists"
         })
     }
 
     try{
-        const trip = TripModel.create({
+        const trip = await TripModel.create({
             userId , destination, bucketlist, to_date, from_date, bannerURL
         });
         res.status(HttpStatusCode.Ok).json({ message: "Trip created", destination, userId})
@@ -137,9 +147,13 @@ router.post("/trip", async function (req, res) {
             message: "Wrong Details"
         })
     }
-})
+});
 
-router.get("/trips", async function (req, res) {
-    
+router.get("/trips", async function (req:CustomRequest, res) {
+    const userId = req.userId
+    const trips = await TripModel.find({ userId })
+    res.json({ trips })
 
 });
+
+export default router;
