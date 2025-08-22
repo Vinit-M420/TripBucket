@@ -1,44 +1,16 @@
 import express from "express";
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
-import { z } from "zod";
 import  bcrypt from "bcrypt";
-import { UserModel, TripModel } from "../db/db.js";
-import { HttpStatusCode } from "../response.js"
+import { UserModel } from "../db/db.js";
+import { HttpStatusCode } from "../schemas/responses.js"
+import { UserSigninSchema, UserSignupSchema } from "../schemas/user_schema.js";
 import { userAuth, type CustomRequest } from "../middleware/auth.js";
+
 dotenv.config();
 
 const router = express.Router(); 
 router.use(express.json());
-
-const UserSignupSchema = z.object({
-        firstName: z.string().min(3).max(20 , {message:"First name can't be empty"}),
-        lastName: z.string().min(3).max(20).optional(),
-        email: z.email().min(8).max(20, { message: "Invalid email format" }),
-        password: z.string().min(8).max(20).refine((password) => {
-                const hasUppercase = /[A-Z]/.test(password);
-                const hasLowercase = /[a-z]/.test(password);
-                const hasNumber = /[0-9]/.test(password);
-                const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
-                 return hasUppercase && hasLowercase && hasNumber && hasSpecialCharacter;
-            },{
-            message: "Password must contain at least one uppercase, lowercase, number, and special character"
-        })
-    })
-
-const UserSigninSchema = UserSignupSchema.pick({
-  email: true,
-  password: true,
-});
-
-const UserTripSchema = z.object({
-    destination: z.string().min(5).max(20, {message: "Destination is necessary"}),
-    bucketlist: z.boolean(),
-    to_date: z.date(),
-    from_date: z.date()
-}) 
-
 
 router.post("/signup",  async function (req, res) {
     const parsedDataWithSuccess = UserSignupSchema.safeParse(req.body);
@@ -75,16 +47,14 @@ router.post("/signup",  async function (req, res) {
             error: err
         } )
     }  
-} );
+});
 
 router.post("/signin",  async function (req, res) {
     const parsedDataWithSuccess = UserSigninSchema.safeParse(req.body)
     if (!parsedDataWithSuccess){
-        res.status(403).json({
+        return res.status(403).json({
             message: "Incorrect format"
-          
-        })
-        return
+        })    
     }
 
     const email = req.body.email;
@@ -92,10 +62,9 @@ router.post("/signin",  async function (req, res) {
 
     let user = await UserModel.findOne({ email: email })
     if (!user){
-        res.status(403).json({
+        return res.status(403).json({
             message:"You are not signed up. Please sign up first"
-        })
-        return
+        })     
     }
 
     try{
@@ -111,49 +80,19 @@ router.post("/signin",  async function (req, res) {
     }
 });
 
-router.use(userAuth);
 
-router.post("/trip", async function (req:CustomRequest, res) {
+router.put("/update", userAuth, async function (req:CustomRequest, res) {
     const userId = req.userId;
-    if (!userId) {
-        return res.status(401).json({
-            message: "User not authenticated"
-        });
-    }
-
-    const parsedTrip= UserTripSchema.safeParse(req.body);
-    if (!parsedTrip){
-         return res.status(403).json({
-            message: "Incorrect format"
-        })
-    }
-
-    const { destination, bucketlist, to_date, from_date, bannerURL } = req.body;
-    let existingTrip = await TripModel.findOne({ userId, destination }); /// this any is a problem
-    if (existingTrip){
-        return res.status(HttpStatusCode.UserAlreadyExist).json({
-            message: "Trip to this destination already exists"
-        })
-    }
-
+    const { firstName, lastName } = req.body;
     try{
-        const trip = await TripModel.create({
-            userId , destination, bucketlist, to_date, from_date, bannerURL
-        });
-        res.status(HttpStatusCode.Ok).json({ message: "Trip created", destination, userId})
+        await UserModel.updateOne({ firstName, lastName });
+        res.json({ message: "Updated your name" })
     }
     catch(err){
-        res.status(HttpStatusCode.InputError).json({ 
-            message: "Wrong Details"
+        return res.status(HttpStatusCode.ServerError).json({
+            message: "Error in updating the user's detail"
         })
     }
-});
-
-router.get("/trips", async function (req:CustomRequest, res) {
-    const userId = req.userId
-    const trips = await TripModel.find({ userId })
-    res.json({ trips })
-
 });
 
 export default router;

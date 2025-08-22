@@ -5,5 +5,4 @@ export enum HttpStatusCode  {
     UserAlreadyExist = 403,
     InputError= 411,
     ServerError= 500,
-
 }

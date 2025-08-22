@@ -1,6 +1,6 @@
 import  jwt, { type JwtPayload }  from "jsonwebtoken";
 import dotenv from "dotenv";
-import { HttpStatusCode } from "../response.js";
+import { HttpStatusCode } from "../schemas/responses.js";
 import type { Request, Response, NextFunction } from "express";
 dotenv.config();
 

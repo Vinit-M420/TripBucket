@@ -1,15 +1,19 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectToDatabase } from "./db/db.js";
 import cors from "cors";
 import userRoutes from "./routes/user.js";
+import tripRoutes from "./routes/trip.js"
+import { connectToDatabase } from "./db/db.js";
 
 const app = express();
 dotenv.config();
 
 app.use(cors());
 app.use(express.json());
+
+// Routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/trip", tripRoutes);
 
 connectToDatabase().then(() => {
     const PORT = process.env.PORT;
