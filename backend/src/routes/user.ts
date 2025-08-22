@@ -5,8 +5,7 @@ import  bcrypt from "bcrypt";
 import { UserModel } from "../db/db.js";
 import { HttpStatusCode } from "../schemas/responses.js"
 import { UserSigninSchema, UserSignupSchema } from "../schemas/user_schema.js";
-import { userAuth, type CustomRequest } from "../middleware/auth.js";
-
+import { userAuth, type CustomRequest } from "../middleware/user_auth.js"
 dotenv.config();
 
 const router = express.Router(); 
@@ -15,7 +14,7 @@ router.use(express.json());
 router.post("/signup",  async function (req, res) {
     const parsedDataWithSuccess = UserSignupSchema.safeParse(req.body);
     if (!parsedDataWithSuccess){
-        res.status(HttpStatusCode.UserAlreadyExist).json({
+        res.status(HttpStatusCode.Forbidden).json({
             message: "Incorrect format"
         })
         return

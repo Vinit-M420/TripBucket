@@ -2,7 +2,7 @@ export enum HttpStatusCode  {
     Ok = 200,
     BadRequest = 400,
     Unauthorized= 401,
-    UserAlreadyExist = 403,
+    Forbidden = 403,
     InputError= 411,
     ServerError= 500,
 }

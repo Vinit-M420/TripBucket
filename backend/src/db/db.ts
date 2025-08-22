@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
 import dotenv from 'dotenv';
-// import { boolean, String } from "zod";
 dotenv.config();
 
 export async function connectToDatabase() {
@@ -41,9 +40,11 @@ const TripSchema = new mongoose.Schema({
 // const contentTypes = ["image" | "link", "string"];
 
 const ContentSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true }, 
-    type: { type: String, enum: ["note", "image", "link"] },
-    value: String,
+    type:  { type: String, enum: ["note", "image", "link", "video"], default: "note" },
+    title: { type: String },
+    value: { type: String },
     createdAt: { type: Date, default: Date.now },
 })
 

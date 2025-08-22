@@ -6,6 +6,7 @@ dotenv.config();
 
 export interface CustomRequest extends Request {
     userId?: string | number;
+    tripId?: string | number
 }
 
 export function userAuth(req: CustomRequest, res: Response, next: NextFunction) {

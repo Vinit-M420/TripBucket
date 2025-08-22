@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/db/db.ts","./src/middleware/auth.ts","./src/routes/content.ts","./src/routes/trip.ts","./src/routes/user.ts","./src/schemas/responses.ts","./src/schemas/trip_schema.ts","./src/schemas/user_schema.ts"],"version":"5.9.2"}
+{"root":["./src/index.ts","./src/db/db.ts","./src/middleware/user_auth.ts","./src/routes/content.ts","./src/routes/trip.ts","./src/routes/user.ts","./src/schemas/content_schema.ts","./src/schemas/responses.ts","./src/schemas/trip_schema.ts","./src/schemas/user_schema.ts"],"version":"5.9.2"}

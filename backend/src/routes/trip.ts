@@ -1,7 +1,7 @@
 import express from "express";
 // import mongoose from "mongoose";
 import { TripModel } from "../db/db.js";
-import { userAuth, type CustomRequest } from "../middleware/auth.js";
+import { userAuth, type CustomRequest } from "../middleware/user_auth.js";
 import { UserTripSchema } from "../schemas/trip_schema.js";
 import { HttpStatusCode } from "../schemas/responses.js"
 
@@ -19,7 +19,7 @@ router.post("/", async function (req:CustomRequest, res) {
 
     const parsedTrip= UserTripSchema.safeParse(req.body);
     if (!parsedTrip){
-         return res.status(HttpStatusCode.UserAlreadyExist).json({
+         return res.status(HttpStatusCode.Forbidden).json({
             message: "Incorrect format"
         })
     }
@@ -27,12 +27,12 @@ router.post("/", async function (req:CustomRequest, res) {
     const { destination, bucketlist, to_date, from_date, bannerURL } = req.body;
     let existingTrip = await TripModel.findOne({ userId, destination }); /// this any is a problem
     if (existingTrip){
-        return res.status(HttpStatusCode.UserAlreadyExist).json({
+        return res.status(HttpStatusCode.Forbidden).json({
             message: "Trip to this destination already exists"
         })
     }
-    console.log('Request body:', req.body);
-    console.log('Schema validation result:', parsedTrip);
+    // console.log('Request body:', req.body);
+    // console.log('Schema validation result:', parsedTrip);
 
     try{
         const trip = await TripModel.create({
@@ -73,7 +73,7 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
     const PartialTripSchema = UserTripSchema.partial();
     const parsedTrip= PartialTripSchema.safeParse(req.body);
     if (!parsedTrip.success){
-         return res.status(HttpStatusCode.UserAlreadyExist).json({
+         return res.status(HttpStatusCode.Forbidden).json({
             message: "Incorrect format"
         })
     }
@@ -96,7 +96,7 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
             trip: updatedTrip
             })
     } catch(err){
-        console.error('Update trip error:', err);
+        //console.error('Update trip error:', err);
         return res.status(HttpStatusCode.ServerError).json({
              message: "Server Error: Failed to update the trip"
         })
@@ -130,5 +130,7 @@ router.delete("/delete/:id", async function (req:CustomRequest, res) {
         })
     }
 });
+
+
 
 export default router;
