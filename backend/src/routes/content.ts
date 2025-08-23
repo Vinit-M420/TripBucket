@@ -1,6 +1,5 @@
 import express from "express";
-import { TripModel } from "../db/db.js";
-import { ContentModel } from "../db/db.js";
+import { TripModel, ContentModel } from "../db/db.js";
 import { userAuth, type CustomRequest } from "../middleware/user_auth.js"
 import { HttpStatusCode } from "../schemas/responses.js"
 import { TripContentSchema } from "../schemas/content_schema.js";
@@ -12,7 +11,7 @@ router.post('/:tripId', async function (req:CustomRequest, res) {
     const userId = req.userId;
     const { tripId } = req.params;
 
-    const trip = await TripModel.findOne({ userId: userId, _id: tripId });
+    const trip = await TripModel.find({ userId: userId, _id: tripId });
     if (!trip){
         return res.status(HttpStatusCode.InputError).json({
             error: "Trip Not Found"
@@ -40,13 +39,13 @@ router.post('/:tripId', async function (req:CustomRequest, res) {
     }
 })
 
-router.put("/:tripId/edit", async function (req:CustomRequest, res) {
+router.put("/:tripId/edit/:contentId", async function (req:CustomRequest, res) {
     const userId = req.userId;
-    const { tripId } = req.params;
-    const trip = await TripModel.findOne({ userId: userId, _id: tripId });
-    if (!trip){
+    const { tripId, contentId } = req.params;
+    const content = await ContentModel.findOne({ userId, tripId, _id: contentId });
+    if (!content){
         return res.status(HttpStatusCode.InputError).json({
-            error: "Trip Not Found"
+            error: "Content Not Found"
         })
     }
 
@@ -58,9 +57,16 @@ router.put("/:tripId/edit", async function (req:CustomRequest, res) {
                 error: parsedContent.error
             })
     }
-    const { type, title, value } = parsedContent.data;
+    const updateData = parsedContent.data;
     try{
-        const content = await ContentModel.updateOne({ userId, tripId, type, title, value });
+        const content = await ContentModel.findOneAndUpdate({ _id: contentId, userId, tripId }, 
+            updateData, { new: true, runValidators: true });
+        
+        if (!content) {
+            return res.status(HttpStatusCode.InputError).json({
+            error: "Content Not Updated"
+            })
+        }
         return res.status(HttpStatusCode.Ok).json({ 
             message: "Trip Content updated", content: content
         })
@@ -72,21 +78,27 @@ router.put("/:tripId/edit", async function (req:CustomRequest, res) {
     }
 })
 
-router.delete("/:tripId/delete", async function (req:CustomRequest, res) {
+router.delete("/:tripId/delete/:contentId", async function (req:CustomRequest, res) {
     const userId = req.userId;
-    const { tripId } = req.params;
-    const trip = await TripModel.findOne({ userId: userId, _id: tripId });
-    if (!trip){
+    const { tripId, contentId } = req.params;
+    const content = await ContentModel.findOne({ userId, tripId, _id: contentId });
+    if (!content){
         return res.status(HttpStatusCode.InputError).json({
-            error: "Trip Not Found"
+            error: "Content Not Found"
         })
     }
 
     try{
-        const deletedTrip = await ContentModel.deleteOne({ userId: userId, _id: tripId  });
+        const content = await ContentModel.findOneAndDelete({ _id: contentId, userId, tripId });
+        
+        if (!content) {
+            return res.status(HttpStatusCode.InputError).json({
+            error: "Content Not Deleted"
+            })
+        }
         res.status(HttpStatusCode.Ok).json({
             message: "Trip Content is deleted successfully",
-            deletedTrip: deletedTrip
+            deletedContent: content
         })
     }
     catch(err){

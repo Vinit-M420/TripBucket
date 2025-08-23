@@ -5,8 +5,8 @@ import type { Request, Response, NextFunction } from "express";
 dotenv.config();
 
 export interface CustomRequest extends Request {
-    userId?: string | number;
-    tripId?: string | number
+    userId?: string | undefined,
+    tripId?: string | undefined
 }
 
 export function userAuth(req: CustomRequest, res: Response, next: NextFunction) {

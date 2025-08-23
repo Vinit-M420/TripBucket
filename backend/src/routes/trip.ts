@@ -1,5 +1,4 @@
 import express from "express";
-// import mongoose from "mongoose";
 import { TripModel } from "../db/db.js";
 import { userAuth, type CustomRequest } from "../middleware/user_auth.js";
 import { UserTripSchema } from "../schemas/trip_schema.js";
@@ -57,11 +56,6 @@ router.get("/all", async function (req:CustomRequest, res) {
 router.put("/edit/:id", async function (req:CustomRequest, res) {
     const userId = req.userId;
     const { id } = req.params;
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //         return res.status(HttpStatusCode.BadRequest).json({
-    //             message: "Invalid trip ID format"
-    //         })
-    // }   
 
     const trip = await TripModel.findOne({ userId, _id: id });
     if (!trip) {
@@ -130,7 +124,5 @@ router.delete("/delete/:id", async function (req:CustomRequest, res) {
         })
     }
 });
-
-
 
 export default router;

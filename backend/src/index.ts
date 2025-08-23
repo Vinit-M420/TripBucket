@@ -17,6 +17,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/trip", tripRoutes);
 app.use("/api/v1/content", contentRoutes);
 
+// DB connection
 connectToDatabase().then(() => {
     const PORT = process.env.PORT;
     app.listen(PORT, () => console.log("Server running on localhost:" + PORT));
