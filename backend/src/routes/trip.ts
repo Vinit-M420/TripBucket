@@ -1,10 +1,24 @@
 import express from "express";
-import { TripModel } from "../db/db.js";
+import { ContentModel, TripModel } from "../db/db.js";
 import { userAuth, type CustomRequest } from "../middleware/user_auth.js";
 import { UserTripSchema } from "../schemas/trip_schema.js";
 import { HttpStatusCode } from "../schemas/responses.js"
 
 const router = express.Router(); 
+
+router.get("/public/:shareId", async function (req, res){
+    const trip = await TripModel.findOne({ shareId: req.params.shareId, isPublic: true });
+    if (!trip){
+        res.status(HttpStatusCode.Forbidden).json({
+            message:"No trip found"
+        })
+    }
+    else{
+        const contents = await ContentModel.find({ tripId: trip._id })
+        res.status(HttpStatusCode.Ok).json({ trip, contents })
+    }
+});
+
 router.use(userAuth);
 
 
@@ -17,31 +31,39 @@ router.post("/", async function (req:CustomRequest, res) {
     }
 
     const parsedTrip= UserTripSchema.safeParse(req.body);
-    if (!parsedTrip){
+    if (!parsedTrip.success){
          return res.status(HttpStatusCode.Forbidden).json({
             message: "Incorrect format"
         })
     }
 
     const { destination, bucketlist, to_date, from_date, bannerURL } = req.body;
-    let existingTrip = await TripModel.findOne({ userId, destination }); /// this any is a problem
+    let existingTrip = await TripModel.findOne({ userId, destination }); 
     if (existingTrip){
         return res.status(HttpStatusCode.Forbidden).json({
             message: "Trip to this destination already exists"
         })
     }
-    // console.log('Request body:', req.body);
-    // console.log('Schema validation result:', parsedTrip);
 
     try{
         const trip = await TripModel.create({
             userId , destination, bucketlist, to_date, from_date, bannerURL
         });
-        res.status(HttpStatusCode.Ok).json({ message: "Trip created", destination, userId})
+
+        if (!trip){
+            res.status(HttpStatusCode.InputError).json({
+                message: "Failed to create the trip"
+            })
+        }
+        res.status(HttpStatusCode.Ok).json({ 
+            message: "Trip created", 
+            destination, userId
+        })
     }
     catch(err){
         res.status(HttpStatusCode.InputError).json({ 
-            message: "Wrong Details"
+            message: "Wrong Details",
+            error: err
         })
     }
 });
@@ -60,7 +82,7 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
     const trip = await TripModel.findOne({ userId, _id: id });
     if (!trip) {
         return res.status(HttpStatusCode.Unauthorized).json({
-            message: "User not authenticated"
+            message: "No trip found"
         });
     }
 
@@ -73,9 +95,9 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
     }
    
     try{
-        const { destination, bucketlist, to_date, from_date, bannerURL } = req.body;
+        const editBody = req.body;
         const updatedResult = await TripModel.updateOne( {_id: id, userId: userId },
-                                         { destination, bucketlist, to_date, from_date, bannerURL },
+                                         editBody,
                                         { runValidators: true })
         
         if (updatedResult.modifiedCount === 0){
@@ -89,10 +111,9 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
             message: "Trip updated", 
             trip: updatedTrip
             })
-    } catch(err){
-        //console.error('Update trip error:', err);
+    } catch(err) {
         return res.status(HttpStatusCode.ServerError).json({
-             message: "Server Error: Failed to update the trip"
+             error: "Server Error: Failed to update the trip"
         })
     }
 });
@@ -116,13 +137,39 @@ router.delete("/delete/:id", async function (req:CustomRequest, res) {
             });
         }
         return res.status(HttpStatusCode.Ok).json({
-            message: "Trip deleted"
+            message: "Trip deleted",
+            deletedTrip: deletedTrip
         })
     } catch(err){
         return res.status(HttpStatusCode.ServerError).json({
-             message: "Server Error: Failed to delete the trip"
+             error: "Server Error: Failed to delete the trip"
         })
     }
 });
+
+router.patch("/public/:id" , async function (req:CustomRequest, res) {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    const trip = await TripModel.findOne({ userId, _id: id });
+    if (!trip) {
+        return res.status(HttpStatusCode.Unauthorized).json({
+            message: "No trip found"
+        });
+    }
+    try{
+        trip.isPublic = !trip.isPublic;
+        await trip.save();
+        res.status(HttpStatusCode.Ok).json({
+            message: `Trip is now ${trip.isPublic ? "public" : "private"}`,
+            trip
+        });
+    }catch{
+        res.status(HttpStatusCode.ServerError).json({
+            error: "Server Error: Error in changing the trip's access"
+        })
+    }
+});
+
 
 export default router;

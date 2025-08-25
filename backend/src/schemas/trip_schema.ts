@@ -5,6 +5,7 @@ export const UserTripSchema = z.object({
     bucketlist: z.boolean().default(true),
     to_date: z.string().optional(), // This might expect ISO format
     from_date: z.string().optional(),
-    bannerURL: z.string().optional()
+    bannerURL: z.string().optional(),
+    //isPublic: z.coerce.boolean().default(false)
 }) 
 

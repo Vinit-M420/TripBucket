@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import dotenv from 'dotenv';
+import { nanoid } from "nanoid";
 dotenv.config();
 
 export async function connectToDatabase() {
@@ -9,12 +10,11 @@ export async function connectToDatabase() {
             throw new Error("MONGOOSE_URI is not defined in environment variables");
         }
         await mongoose.connect(uri);
-        console.log("Database conntected");
+        console.log("Database connected");
     }
     catch (err) {
         console.log("Error in connecting with the Database", err);
     }
-
 };
 
 
@@ -33,11 +33,20 @@ const TripSchema = new mongoose.Schema({
     to_date: Date,
     from_date: Date,
     bannerURL: String,
-    createdAt: { type: Date, default: Date.now },
+    isPublic: {type:Boolean, default:false},
+    shareId: {type:String },
+    createdAt: {type: Date, default: Date.now },
     updatedAt: Date,
 })
 
-// const contentTypes = ["image" | "link", "string"];
+TripSchema.pre("save", function(next) {
+    if (this.isPublic && !this.shareId){
+        this.shareId = nanoid(10);
+    }
+    next();
+})
+
+// enum contentTypes = ["image" | "link", "string"];
 
 const ContentSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

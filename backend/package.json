@@ -17,6 +17,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.2",
+    "nanoid": "^5.1.5",
     "ts-import": "^5.0.0-beta.1"
   },
   "devDependencies": {
