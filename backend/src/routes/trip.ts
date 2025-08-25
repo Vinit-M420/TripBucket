@@ -21,7 +21,6 @@ router.get("/public/:shareId", async function (req, res){
 
 router.use(userAuth);
 
-
 router.post("/", async function (req:CustomRequest, res) {
     const userId = req.userId;
     if (!userId) {
@@ -170,6 +169,5 @@ router.patch("/public/:id" , async function (req:CustomRequest, res) {
         })
     }
 });
-
 
 export default router;

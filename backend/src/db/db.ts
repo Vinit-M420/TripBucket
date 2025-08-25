@@ -34,7 +34,7 @@ const TripSchema = new mongoose.Schema({
     from_date: Date,
     bannerURL: String,
     isPublic: {type:Boolean, default:false},
-    shareId: {type:String },
+    shareId: {type:String, unique: true, sparse: true},
     createdAt: {type: Date, default: Date.now },
     updatedAt: Date,
 })
@@ -46,7 +46,7 @@ TripSchema.pre("save", function(next) {
     next();
 })
 
-// enum contentTypes = ["image" | "link", "string"];
+// enum contentTypes { "image" | "link" | "string"};
 
 const ContentSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

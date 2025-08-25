@@ -6,6 +6,5 @@ export const UserTripSchema = z.object({
     to_date: z.string().optional(), // This might expect ISO format
     from_date: z.string().optional(),
     bannerURL: z.string().optional(),
-    //isPublic: z.coerce.boolean().default(false)
 }) 
 
