@@ -1,1 +1,6 @@
+@import url('./clash-grotesk.css');
 @import "tailwindcss";
+
+body {
+  font-family: 'ClashGrotesk', sans-serif;
+}

@@ -1,0 +1,15 @@
+/* Light Mode */
+--primary: #3E6B3E;      /* Eucalyptus */
+--secondary: #7A9B7A;    /* Soft green */
+--accent: #A0845C;       /* Earth brown */
+--background: #FBFCFB;   /* Fresh white */
+--surface: #FFFFFF;
+--text: #2D332D;
+
+/* Dark Mode */
+--primary: #6F9D6F;      /* Night eucalyptus */
+--secondary: #95B595;    /* Pale green */
+--accent: #C4A678;       /* Warm beige */
+--background: #181A18;   /* Forest floor */
+--surface: #222422;
+--text: #E8ECE8;
