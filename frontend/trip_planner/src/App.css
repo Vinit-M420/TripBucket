@@ -1,6 +1,48 @@
 @import url('./clash-grotesk.css');
+@import url('./switzer.css');
 @import "tailwindcss";
 
 body {
-  font-family: 'ClashGrotesk', sans-serif;
+  font-family: 'Switzer', sans-serif;
+}
+
+:root {
+  /* Light Mode - Nature & Adventure Theme */
+  --primary: #2D5A3D;        /* Deep Forest Green */
+  --primary-light: #4A7C59;  /* Lighter forest for hover */
+  --primary-dark: #1E3D2A;   /* Darker forest for active states */
+  
+  --secondary: #E8751A;      /* Sunset Orange */
+  --secondary-light: #FF9A42; /* Bright orange for hover */
+  --secondary-dark: #C65D10;  /* Deep orange for active */
+  
+  --accent: #D4AF37;         /* Golden Sand */
+  --accent-light: #E6C757;   /* Light gold for hover */
+  --accent-dark: #B8941F;    /* Deep gold for active */
+  
+  --neutral: #6B7280;        /* Cool Gray */
+  --neutral-light: #9CA3AF;  /* Light gray */
+  --neutral-dark: #374151;   /* Dark gray */
+  
+  --background: #FEFEFE;     /* Pure white */
+  --surface: #F9FAFB;        /* Off-white cards */
+  --surface-elevated: #FFFFFF; /* Elevated elements */
+  
+  --text-primary: #1F2937;   /* Near black */
+  --text-secondary: #4B5563; /* Medium gray */
+  --text-muted: #6B7280;     /* Light gray */
+  
+  /* Interactive States */
+  --success: #059669;        /* Emerald success */
+  --warning: #D97706;        /* Amber warning */
+  --error: #DC2626;          /* Red error */
+  --info: #2563EB;           /* Blue info */
+  
+  /* Borders & Shadows */
+  --border-light: #E5E7EB;
+  --border-default: #D1D5DB;
+  --border-strong: #9CA3AF;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
