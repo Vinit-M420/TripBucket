@@ -2,7 +2,7 @@ import heropic from '../images/hero1.png'
 
 const Hero = () => {
     return (
-        <div className="flex flex-col gap-5 items-center mx-auto pt-20 pb-10">
+        <div className="flex flex-col gap-5 justify-center items-center mx-auto h-[calc(100dvh-80px)]">
         <h1 className="text-6xl text-green-800 font-bold">
             Never Lose Another Travel Idea
         </h1>

@@ -11,7 +11,8 @@ const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
       <div className="flex justify-between mx-20 items-center w-full">
         <div className="flex gap-20 items-center">
           <div className="flex items-center">
-            <h1 className="font-bold text-2xl tracking-tight text-green-950">
+            <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
+                onClick={() => setNavbarState("hero")}>
               TripBucket
             </h1>
           </div>
