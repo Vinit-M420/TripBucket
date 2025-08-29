@@ -1,3 +1,4 @@
+// import { useState } from "react";
 import type { NavbarState } from "../types/navbarstate";
 
 interface NavbarProps {
@@ -6,9 +7,11 @@ interface NavbarProps {
 }
 
 const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
+    // const [toggleNavbar, setToggleNavbar] = useState(false);
+  
   return (
     <div className="top-0 bg-stone-50 shadow-sm p-4 min-h-[80px] flex items-center">
-      <div className="flex justify-between mx-20 items-center w-full">
+      <div className="flex justify-between md:mx-20 mx-5 items-center w-full">
         <div className="flex gap-20 items-center">
           <div className="flex items-center">
             <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
