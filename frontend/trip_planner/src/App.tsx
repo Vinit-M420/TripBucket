@@ -8,7 +8,7 @@ import Signup from './components/Signup';
 
 
 function App() {
- const [navbarState, setNavbarState] = useState<NavbarState>('hero');
+ const [navbarState, setNavbarState] = useState<NavbarState>('profile');
 
   return (
     <div className='bg-stone-50 transition-colors duration-200'>
