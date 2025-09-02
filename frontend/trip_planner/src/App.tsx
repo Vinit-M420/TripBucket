@@ -6,12 +6,12 @@ import { type NavbarState } from './types/navbarstate';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import YourTrips from './components/YourTrips';
-// import Trip from './components/TripContent';
+// import TripContentDisplay from './components/TripContent';
 
 
 function App() {
  const [navbarState, setNavbarState] = useState<NavbarState>('profile');
-
+ 
   return (
     <div className='bg-stone-50 transition-colors duration-200'>
       <Navbar navbarState={navbarState} setNavbarState={setNavbarState} />

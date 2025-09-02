@@ -8,7 +8,7 @@ import iceland from '../images/iceland.jpg'
 import AddTrip from './AddTrip';
 
 const YourTrips = () => {
-    const [toggleAddTrip, setToggleAddTrip] = useState<Boolean>(false);
+    const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
 
     return (
     <div className="h-[calc(100dvh-80px)] w-6xl flex flex-col items-center mx-auto gap-5 mt-10">
@@ -55,8 +55,7 @@ const YourTrips = () => {
                     </div>
                     <div className='flex justify-between items-center mx-5'>
                         <h1 className='text-green-800 text-xl font-semibold'>Vietnam</h1>
-                        <div className='border border-transparent rounded-2xl p-1 
-                                    hover:border hover:border-green-800 hover:bg-stone-200'>
+                        <div className='border border-transparent rounded-2xl p-1'>
                             <Lock />
                         </div>
                     </div>
@@ -84,18 +83,22 @@ const YourTrips = () => {
                 </div>
                 
             </div>
-            <div className="fixed bottom-6 right-10">
+            <div className="fixed bottom-6 right-20">
                     <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl hover:bg-green-700 
                             transition-all duration-200 cursor-pointer items-center'
                         onClick={() => {
                             setToggleAddTrip(!toggleAddTrip);
-                            console.log("Add Trip Btn toggled")}}>
+                            console.log("Add Trip Btn toggled", toggleAddTrip)}}>
                         <PlusCircle />
                         <h3 className='text-lg'>Add Trip</h3>           
                     </div>
             </div>
         </div>
-        {toggleAddTrip === true && <AddTrip />}
+        {toggleAddTrip === true && 
+            <AddTrip toggleAddTrip={toggleAddTrip} setToggleAddTrip={setToggleAddTrip} 
+                onClose={function (): void {
+                throw new Error('Function not implemented.');
+            } } />}
     </div>
     )
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { NavbarState } from "../types/navbarstate";
 import { Bars } from "../assets/bars";
 import ProfileCircle from "../assets/profileCircle";
+import { ChevronDown } from 'lucide-react';
+import ProfileDropDown from "./ProfileDropdown";
 
 interface NavbarProps {
   navbarState: NavbarState;
@@ -10,6 +12,7 @@ interface NavbarProps {
 
 const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
     const [toggleNavbar, setToggleNavbar] = useState(false);
+    const [toggleProfileDropdown, setToggleProfileDropdown] = useState(false);
   
   if (toggleNavbar) {
     return (
@@ -102,10 +105,13 @@ const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
             </div>  
           </div>
 
-          <div className={`flex gap-3 items-center cursor-pointer ${(navbarState === 'profile') ? 'block' : "hidden"}`}>
+          <div className={`flex gap-3 items-center cursor-pointer ${(navbarState === 'profile') ? 'block' : "hidden"}`}
+                onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
               <ProfileCircle />
               <div className="flex items-center">
                 <h2 className="font-bold text-xl">Hi Vinit</h2></div>
+                <ChevronDown  
+                  className={`transition-transform duration-200 ${toggleProfileDropdown ? 'rotate-180' : 'rotate-0'}`}/>
           </div>
         </div>
       </div>
@@ -119,6 +125,7 @@ const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
               <Bars />
           </div>
       </div>
+      {toggleProfileDropdown && <ProfileDropDown /> }
 
     </div>
   );
