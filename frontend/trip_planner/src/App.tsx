@@ -2,10 +2,11 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero';
 import { useState } from 'react';
-import type { NavbarState } from './types/navbarstate';
+import { type NavbarState } from './types/navbarstate';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Trips from './components/Trips';
+import YourTrips from './components/YourTrips';
+// import Trip from './components/TripContent';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         {navbarState === 'hero' && <Hero />}
         {navbarState === 'login' && <Login setNavbarState={setNavbarState} />}
         {navbarState === 'signup' && <Signup setNavbarState={setNavbarState} />}
-        {navbarState == 'profile' && <Trips /> }
+        {navbarState == 'profile' && <YourTrips /> }
       </div>
     </div>
     )
