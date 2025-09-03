@@ -12,13 +12,6 @@ const router = express.Router();
 router.use(express.json());
 
 router.post("/signup",  async function (req, res) {
-    const parsedDataWithSuccess = UserSignupSchema.safeParse(req.body);
-    if (!parsedDataWithSuccess){
-        res.status(HttpStatusCode.Forbidden).json({
-            message: "Incorrect format"
-        })
-        return
-    }
 
     const { firstName, lastName, email, password } = req.body;
     
@@ -28,6 +21,16 @@ router.post("/signup",  async function (req, res) {
             message:"You are already signed up"
         })
     }
+
+    const parsedDataWithSuccess = UserSignupSchema.safeParse(req.body);
+
+    if (!parsedDataWithSuccess.success){
+        return res.status(400).json({
+            message: "Email or Password has incorrect format",
+            errors: parsedDataWithSuccess.error,
+        });
+    }
+    
 
     try{
         const hashedPass = await bcrypt.hash(password, 5);
@@ -48,34 +51,39 @@ router.post("/signup",  async function (req, res) {
     }  
 });
 
-router.post("/signin",  async function (req, res) {
-    const parsedDataWithSuccess = UserSigninSchema.safeParse(req.body)
-    if (!parsedDataWithSuccess){
-        return res.status(403).json({
-            message: "Incorrect format"
-        })    
+router.post("/login",  async function (req, res) {
+    const parsed = UserSigninSchema.safeParse(req.body);
+    if (!parsed.success) {
+        return res.status(HttpStatusCode.Forbidden).json({ 
+            message: "Incorrect format" 
+        });
     }
 
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = parsed.data;
 
     let user = await UserModel.findOne({ email: email })
     if (!user){
-        return res.status(403).json({
+        return res.status(HttpStatusCode.Forbidden).json({
             message:"You are not signed up. Please sign up first"
         })     
     }
 
     try{
         const passMatch = await bcrypt.compare(password, user.password);
-        if (passMatch){
-            const token = jwt.sign( {id: user._id.toString( )} , process.env.JWT_SECRET  || '');
-            res.status(HttpStatusCode.Ok).json({ token: token })
+        if (!passMatch){
+            return res.status(HttpStatusCode.InputError).json({ message: "Invalid email or password" });
+        }
+        else{
+            const token = jwt.sign({
+                id: user._id.toString( )} , 
+                process.env.JWT_SECRET  || '', 
+                { expiresIn: "7d"});
+                
+            return res.status(HttpStatusCode.Ok).json({ token: token })
         }
     } catch(err){
-        res.status(HttpStatusCode.InputError).json({
-             message: "Invalid Password"
-        })
+        return res.status(HttpStatusCode.ServerError).json({ 
+            message: "Server error while signing in" });
     }
 });
 

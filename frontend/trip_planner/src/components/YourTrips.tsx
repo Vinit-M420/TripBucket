@@ -39,7 +39,7 @@ const YourTrips = () => {
                             <Edit /> 
                             <h3 className='text-base'>Edit</h3>
                         </button>
-                        <div className='border border-transparent rounded-2xl p-1 
+                        <div className='border border-transparent rounded-2xl p-1
                                     hover:border hover:border-green-800 hover:bg-stone-200'>
                             <Trash />
                         </div>

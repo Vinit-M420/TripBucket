@@ -7,7 +7,6 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip }:
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close modal on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {

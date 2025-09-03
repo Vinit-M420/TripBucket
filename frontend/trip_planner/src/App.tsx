@@ -10,7 +10,7 @@ import YourTrips from './components/YourTrips';
 
 
 function App() {
- const [navbarState, setNavbarState] = useState<NavbarState>('profile');
+ const [navbarState, setNavbarState] = useState<NavbarState>('hero');
  
   return (
     <div className='bg-stone-50 transition-colors duration-200'>
