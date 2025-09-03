@@ -17,7 +17,6 @@ export async function connectToDatabase() {
     }
 };
 
-
 const UserSchema = new mongoose.Schema({
     firstName: {type:String, required:true},
     lastName: {type:String},
@@ -27,9 +26,8 @@ const UserSchema = new mongoose.Schema({
 })
 
 const TripSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' , required: true},
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     destination: {type:String, required:true},
-    bucketlist: {type:Boolean, default:false},
     to_date: Date,
     from_date: Date,
     bannerURL: String,

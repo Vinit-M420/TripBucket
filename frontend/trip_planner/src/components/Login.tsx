@@ -20,7 +20,7 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
             body: JSON.stringify({ email, password }),
             });
 
-            const data = await response.json().catch(() => ({})); // avoid crash on empty body
+            const data = await response.json().catch(() => ({}));
 
             if (!response.ok) {
                 alert(data.message || "Login failed");

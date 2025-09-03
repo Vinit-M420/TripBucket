@@ -36,7 +36,7 @@ router.post("/", async function (req:CustomRequest, res) {
         })
     }
 
-    const { destination, bucketlist, to_date, from_date, bannerURL } = req.body;
+    const { destination, to_date, from_date, bannerURL } = req.body;
     let existingTrip = await TripModel.findOne({ userId, destination }); 
     if (existingTrip){
         return res.status(HttpStatusCode.Forbidden).json({
@@ -46,7 +46,7 @@ router.post("/", async function (req:CustomRequest, res) {
 
     try{
         const trip = await TripModel.create({
-            userId , destination, bucketlist, to_date, from_date, bannerURL
+            userId , destination, to_date, from_date, bannerURL
         });
 
         if (!trip){
