@@ -1,9 +1,42 @@
-
 import { useState } from 'react';
+import type { tripInterface } from '../types/tripInterface';
+
 
 
 const EditTrip = () => {
     const [isPublic, setIsPublic] = useState(true);
+        const [trip, setTrip] = useState<tripInterface[]>([]);
+
+    // useEffect(() => {
+    //         const fetchTrip = async () => {
+    //         try {
+    //             const response = await fetch("http://localhost:5000/api/v1/trip/all", {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `${localStorage.getItem("token")}`,
+    //             },
+    //             });
+    
+    //             console.log("Status:", response.status);
+    
+    //             if (!response.ok) {
+    //             const errorText = await response.text();
+    //             console.error("Backend error:", errorText);
+    //             throw new Error("Failed to fetch trips");
+    //             }
+    
+    //             const data = await response.json();     
+    //             console.log("API response:", data);
+    //             setTrips(data.trips || data);
+    
+    //         } catch (err) { 
+    //             console.error("Error fetching trips:", err);  
+    //             }
+    //         };
+    
+    //         fetchTrip();
+    //     }, []);
 
     return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">

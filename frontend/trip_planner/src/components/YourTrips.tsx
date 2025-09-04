@@ -12,38 +12,38 @@ const YourTrips = () => {
     const [trips, setTrips] = useState<tripInterface[]>([]);
 
     useEffect(() => {
-        const fetchTrips = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/api/v1/trip/all", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${localStorage.getItem("token")}`,
-            },
-            });
+        async function fetchTrips() {
+            try {
+                const response = await fetch("http://localhost:5000/api/v1/trip/all", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `${localStorage.getItem("token")}`,
+                    },
+                });
 
-            console.log("Status:", response.status);
+                console.log("Status:", response.status);
 
-            if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Backend error:", errorText);
-            throw new Error("Failed to fetch trips");
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Backend error:", errorText);
+                    throw new Error("Failed to fetch trips");
+                }
+
+                const data = await response.json();
+                console.log("API response:", data);
+                setTrips(data.trips || data);
+
+            } catch (err) {
+                console.error("Error fetching trips:", err);
             }
-
-            const data = await response.json();     
-            console.log("API response:", data);
-            setTrips(data.trips || data);
-
-        } catch (err) { 
-            console.error("Error fetching trips:", err);  
-            }
-        };
+        }
 
         fetchTrips();
     }, []);
 
     return (
-    <div className="h-[calc(100dvh-80px)] w-6xl flex flex-col items-center mx-auto gap-5 mt-10">
+    <div className="h-[calc(100dvh-80px)] lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10">
         <div>
             <div className='flex justify-start gap-5 my-5'>
                 <h1 className="text-green-800 text-2xl">
@@ -51,14 +51,16 @@ const YourTrips = () => {
                 </h1>      
             </div>
 
-            <div className="grid grid-flow-col grid-cols-3 gap-5">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
+                            lg:w-6xl md:w-2xl w-sm">
                 { trips.map((trip) => (
+                    
                     <div key={trip._id } 
                         className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer">  
                         {trip.bannerURL ? (
-                            <img src={trip.bannerURL} className="w-full h-[70%] rounded-t-lg" />
+                            <img src={trip.bannerURL} className="w-full h-[70%] min-h-60 rounded-t-lg" />
                             ) : (
-                            <div className="bg-green-200 w-full h-[70%] rounded-t-lg place-content-center">
+                            <div className="bg-green-200 w-full h-[70%] min-h-60 rounded-t-lg place-content-center">
                                 <h2 className="text-center text-green-800">No Banner Yet</h2>
                             </div>
                             )}
@@ -84,13 +86,12 @@ const YourTrips = () => {
                         <div className='mx-5'>
                             <h2 className='text-green-600 text-sm'>
                                 {trip.from_date && trip.to_date
-                                ? `${new Date(trip.from_date).toLocaleDateString()} → ${new Date(
-                                    trip.to_date
-                                    ).toLocaleDateString()}`
+                                ? `${new Date(trip.from_date).toLocaleDateString()} → 
+                                    ${new Date(trip.to_date ).toLocaleDateString()}`
                                 : "Someday ..."}
                             </h2>
                         </div>
-                        <div className='flex justify-between mx-5 gap-5 items-center'>
+                        <div className='flex justify-between mx-5 gap-5 items-center mb-2'>
                             <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 
                             transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center">
                                 <Edit /> 
@@ -109,7 +110,7 @@ const YourTrips = () => {
             </div>         
         </div>
 
-        <div className="fixed bottom-6 right-20">
+        <div className="fixed bottom-6 md:right-20 right-5">
                     <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl hover:bg-green-700 
                             transition-all duration-200 cursor-pointer items-center'
                         onClick={() => {

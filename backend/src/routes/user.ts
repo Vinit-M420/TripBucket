@@ -91,6 +91,7 @@ router.post("/login",  async function (req, res) {
 router.put("/update", userAuth, async function (req:CustomRequest, res) {
     const userId = req.userId;
     const { firstName, lastName } = req.body;
+    
     try{
         await UserModel.updateOne({ firstName, lastName });
         res.json({ message: "Updated your name" })
@@ -98,6 +99,20 @@ router.put("/update", userAuth, async function (req:CustomRequest, res) {
     catch(err){
         return res.status(HttpStatusCode.ServerError).json({
             message: "Error in updating the user's detail"
+        })
+    }
+});
+
+router.get("/get", userAuth, async function (req:CustomRequest, res) {
+    const userId = req.userId;
+
+    try{
+        const response = await UserModel.findOne({ _id: userId });
+        res.json({ response })
+    }
+    catch(err){
+        return res.status(HttpStatusCode.ServerError).json({
+            message: "Error in finding the user's detail"
         })
     }
 });

@@ -28,8 +28,8 @@ const UserSchema = new mongoose.Schema({
 const TripSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     destination: {type:String, required:true},
-    to_date: Date,
     from_date: Date,
+    to_date: Date,
     bannerURL: String,
     isPublic: {type:Boolean, default:false},
     shareId: {type:String, unique: true, sparse: true},
