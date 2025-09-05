@@ -7,6 +7,7 @@ import Trash from '../assets/trash';
 import AddTrip from './AddTrip';
 import type { tripInterface } from '../types/tripInterface';
 import EditTrip from './EditTrip';
+import DeleteTrip from './DeleteTrip';
 import { ExternalLink  } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
 
@@ -15,7 +16,9 @@ const YourTrips = () => {
     const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
     const [trips, setTrips] = useState<tripInterface[]>([]);
     const [toggleEditTrip, setToggleEditTrip] = useState<boolean>(false);
+    const [toggleDeleteTrip, setToggleDeleteTrip] = useState<boolean>(false);
     const [editingTripId, setEditingTripId] = useState<string | null>(null);
+    const [deletingTripId, SetDeletingTripId] = useState<string | null>(null);
 
     useEffect(() => {
     const loadTrips = async () => {
@@ -29,6 +32,11 @@ const YourTrips = () => {
         console.log("Edit trip with id:", id);
         setEditingTripId(id)
     };
+
+    const refreshTrips = async () => {
+        const tripsData = await fetchTrips();
+        setTrips(tripsData);
+    }
 
     return (
     <div className="h-full lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10">
@@ -89,8 +97,12 @@ const YourTrips = () => {
                                 <h3 className='text-base'>Edit</h3>
                             </button>
                             <div className='border border-transparent rounded-2xl p-1
-                                        hover:border hover:border-green-800 hover:bg-stone-200'>
-                                <Trash />
+                                        hover:border hover:border-green-800 hover:bg-stone-200'
+                                 onClick={() =>{
+                                    setToggleDeleteTrip(!toggleDeleteTrip);
+                                    SetDeletingTripId(trip._id);
+                                 } }>
+                                <Trash  />
                             </div>
                         </div>
                 </div>
@@ -114,11 +126,12 @@ const YourTrips = () => {
 
         {toggleAddTrip === true && 
             <AddTrip 
-                
-                toggleAddTrip={toggleAddTrip} setToggleAddTrip={setToggleAddTrip} 
-                onClose={function (): void {
-                throw new Error('Function not implemented.');
-            } } />
+                toggleAddTrip={toggleAddTrip} 
+                setToggleAddTrip={setToggleAddTrip} 
+                refreshTrips={refreshTrips}
+                onClose={function (): void { 
+                    throw new Error('Function not implemented.');
+                }}/>
         }
 
         {toggleEditTrip === true && 
@@ -127,12 +140,19 @@ const YourTrips = () => {
                 toggleEditTrip={toggleEditTrip}
                 setToggleEditTrip={setToggleEditTrip}
                 onClose={() => setEditingTripId(null)}
-                refreshTrips={async () => {
-                    const tripsData = await fetchTrips();
-                    setTrips(tripsData);
-                }}
-            />}
-    
+                refreshTrips={refreshTrips}
+            />
+        }
+
+        {toggleDeleteTrip === true && 
+            <DeleteTrip
+                tripId={deletingTripId}
+                setToggleDeleteTrip={setToggleDeleteTrip}
+                onClose={() => SetDeletingTripId(null)}
+                refreshTrips={refreshTrips}
+            />
+        }
+        
     </div>
     )
 }
