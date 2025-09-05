@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import type { tripInterface } from '../types/tripInterface';
 import { X } from 'lucide-react';
 import type { EditTripProps } from '../types/EditTripProps';
-import { fetchTrips } from '../utils/fetchtrips';
-
 
 const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
 
@@ -163,4 +161,3 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
 };
 
 export default EditTrip;
-

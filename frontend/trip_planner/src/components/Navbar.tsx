@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react";
-import type { NavbarState } from "../types/navbarstate";
 import { Bars } from "../assets/bars";
 import ProfileCircle from "../assets/profileCircle";
 import { ChevronDown } from 'lucide-react';
 import ProfileDropDown from "./ProfileDropdown";
+import type { NavbarProps } from "../types/navbarstate";
 
-interface NavbarProps {
-  navbarState: NavbarState;
-  setNavbarState: (state: NavbarState) => void;
-}
-
-const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
+const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     const [toggleNavbar, setToggleNavbar] = useState(false);
     const [toggleProfileDropdown, setToggleProfileDropdown] = useState(false);
     const [userFname, setUserFname] = useState("");
@@ -137,8 +132,11 @@ const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
           </div>
 
           <div className={`flex gap-3 items-center cursor-pointer ${(navbarState === 'profile') ? 'block' : "hidden"}`}
-                onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
-              <ProfileCircle />
+                onClick={() => {
+                  setToggleProfileDropdown(!toggleProfileDropdown);
+                  }
+                }>
+              <ProfileCircle   />
               <div className="flex items-center">
                 <h2 className="font-bold text-xl">Hi {userFname}</h2>
               </div>
@@ -159,7 +157,12 @@ const Navbar = ({ navbarState, setNavbarState }: NavbarProps) => {
               <Bars />
           </div>
       </div>
-      {toggleProfileDropdown && <ProfileDropDown /> }
+      {toggleProfileDropdown && 
+      <ProfileDropDown 
+          // navbarState={navbarState} 
+          setNavbarState={setNavbarState} 
+          setToggleProfileDropdown={setToggleProfileDropdown}
+      /> }
 
     </div>
   );

@@ -1,3 +1,4 @@
+
 export type DeleteTripProps = {
   tripId: string | null;
 //   toggleEditTrip: boolean;

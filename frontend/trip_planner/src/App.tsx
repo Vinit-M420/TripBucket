@@ -6,11 +6,11 @@ import { type NavbarState } from './types/navbarstate';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import YourTrips from './components/YourTrips';
-// import TripContentDisplay from './components/TripContent';
+import TripContent from './components/TripContent';
 
 
 function App() {
- const [navbarState, setNavbarState] = useState<NavbarState>('hero');
+ const [navbarState, setNavbarState] = useState<NavbarState>('content');
  
   return (
     <div className='bg-stone-50 transition-colors duration-200'>
@@ -19,7 +19,8 @@ function App() {
         {navbarState === 'hero' && <Hero />}
         {navbarState === 'login' && <Login setNavbarState={setNavbarState} />}
         {navbarState === 'signup' && <Signup setNavbarState={setNavbarState} />}
-        {navbarState == 'profile' && <YourTrips /> }
+        {navbarState === 'profile' && <YourTrips />}
+        {navbarState === 'content' && <TripContent />}
       </div>
     </div>
     )

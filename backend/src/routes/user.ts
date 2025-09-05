@@ -90,10 +90,10 @@ router.post("/login",  async function (req, res) {
 
 router.put("/update", userAuth, async function (req:CustomRequest, res) {
     const userId = req.userId;
-    const { firstName, lastName } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     
     try{
-        await UserModel.updateOne({ firstName, lastName });
+        await UserModel.updateOne({ firstName, lastName, email, password });
         res.json({ message: "Updated your name" })
     }
     catch(err){

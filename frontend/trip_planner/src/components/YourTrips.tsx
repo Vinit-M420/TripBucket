@@ -51,7 +51,7 @@ const YourTrips = () => {
                             lg:w-6xl md:w-2xl w-sm">
                 { trips.map((trip) => (
                     
-                    <div key={trip._id } 
+                    <div key={trip._id} 
                         className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer">  
                         {trip.bannerURL ? (
                             <img src={trip.bannerURL} className="w-full h-[70%] min-h-60 rounded-t-lg" />
@@ -108,19 +108,18 @@ const YourTrips = () => {
                 </div>
                 ))
                 }
-
-                
+            
             </div>         
         </div>
 
         <div className="fixed bottom-6 md:right-20 right-5">
-                    <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl hover:bg-green-700 
-                            transition-all duration-200 cursor-pointer items-center'
+                    <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl 
+                    hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
                         onClick={() => {
                             setToggleAddTrip(!toggleAddTrip);
                             console.log("Add Trip Btn toggled", toggleAddTrip)}}>
                         <PlusCircle />
-                        <h3 className='text-lg'>Add Trip</h3>           
+                        {/* <h3 className='text-lg'>Add Trip</h3> */}
                     </div>
         </div>
 
