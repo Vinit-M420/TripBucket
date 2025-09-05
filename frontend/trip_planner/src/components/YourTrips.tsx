@@ -6,44 +6,32 @@ import PlusCircle from '../assets/pluscircle';
 import Trash from '../assets/trash';
 import AddTrip from './AddTrip';
 import type { tripInterface } from '../types/tripInterface';
+import EditTrip from './EditTrip';
+import { ExternalLink  } from 'lucide-react';
+import { fetchTrips } from '../utils/fetchtrips';
+
 
 const YourTrips = () => {
     const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
     const [trips, setTrips] = useState<tripInterface[]>([]);
+    const [toggleEditTrip, setToggleEditTrip] = useState<boolean>(false);
+    const [editingTripId, setEditingTripId] = useState<string | null>(null);
 
     useEffect(() => {
-        async function fetchTrips() {
-            try {
-                const response = await fetch("http://localhost:5000/api/v1/trip/all", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `${localStorage.getItem("token")}`,
-                    },
-                });
-
-                console.log("Status:", response.status);
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error("Backend error:", errorText);
-                    throw new Error("Failed to fetch trips");
-                }
-
-                const data = await response.json();
-                console.log("API response:", data);
-                setTrips(data.trips || data);
-
-            } catch (err) {
-                console.error("Error fetching trips:", err);
-            }
-        }
-
-        fetchTrips();
+    const loadTrips = async () => {
+        const tripsData = await fetchTrips();
+        setTrips(tripsData);
+    };
+    loadTrips();
     }, []);
 
+    const handleEdit = (id: string) => {
+        console.log("Edit trip with id:", id);
+        setEditingTripId(id)
+    };
+
     return (
-    <div className="h-[calc(100dvh-80px)] lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10">
+    <div className="h-full lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10">
         <div>
             <div className='flex justify-start gap-5 my-5'>
                 <h1 className="text-green-800 text-2xl">
@@ -69,12 +57,12 @@ const YourTrips = () => {
 
                             <h1 className='text-green-800 text-xl font-semibold'>{trip.destination}</h1>
                             {trip.isPublic ? (
-                                <div className="border border-transparent rounded-2xl p-1 hidden">
-                                <Lock />
+                                <div className="border border-transparent rounded-2xl p-1">
+                                    <ExternalLink className="size-5" />
                                 </div>
                             ) : (
                                 <div className="border border-transparent rounded-2xl p-1">
-                                <Lock />
+                                    <Lock  />
                                 </div>
                             )}
 
@@ -93,7 +81,10 @@ const YourTrips = () => {
                         </div>
                         <div className='flex justify-between mx-5 gap-5 items-center mb-2'>
                             <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 
-                            transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center">
+                            transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center"
+                            onClick={() => { 
+                                setToggleEditTrip(!toggleAddTrip);
+                                handleEdit(trip._id);}} >
                                 <Edit /> 
                                 <h3 className='text-base'>Edit</h3>
                             </button>
@@ -122,11 +113,26 @@ const YourTrips = () => {
         </div>
 
         {toggleAddTrip === true && 
-            <AddTrip toggleAddTrip={toggleAddTrip} setToggleAddTrip={setToggleAddTrip} 
+            <AddTrip 
+                
+                toggleAddTrip={toggleAddTrip} setToggleAddTrip={setToggleAddTrip} 
                 onClose={function (): void {
                 throw new Error('Function not implemented.');
             } } />
         }
+
+        {toggleEditTrip === true && 
+            <EditTrip
+                tripId={editingTripId}
+                toggleEditTrip={toggleEditTrip}
+                setToggleEditTrip={setToggleEditTrip}
+                onClose={() => setEditingTripId(null)}
+                refreshTrips={async () => {
+                    const tripsData = await fetchTrips();
+                    setTrips(tripsData);
+                }}
+            />}
+    
     </div>
     )
 }

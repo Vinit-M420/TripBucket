@@ -4,6 +4,6 @@ export interface tripInterface {
     destination: string;
     bannerURL?: string;
     isPublic: boolean;
-    from_date?: string;
-    to_date?: string;
+    from_date?: string;  
+    to_date?: string; 
 }

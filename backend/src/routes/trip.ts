@@ -99,6 +99,8 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
             message: "Incorrect format"
         })
     }
+    // console.log("Incoming update body:", req.body);  
+
    
     try{
         const editBody = req.body;
