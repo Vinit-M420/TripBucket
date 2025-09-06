@@ -10,7 +10,9 @@ import TripContent from './components/TripContent';
 
 
 function App() {
- const [navbarState, setNavbarState] = useState<NavbarState>('content');
+ const [navbarState, setNavbarState] = useState<NavbarState>('hero');
+ const [selectedTripId, setSelectedTripId] = useState<string | null>(null);
+ const [selectedTripName, setSelectedTripName] = useState<string | null>(null);
  
   return (
     <div className='bg-stone-50 transition-colors duration-200'>
@@ -19,8 +21,20 @@ function App() {
         {navbarState === 'hero' && <Hero />}
         {navbarState === 'login' && <Login setNavbarState={setNavbarState} />}
         {navbarState === 'signup' && <Signup setNavbarState={setNavbarState} />}
-        {navbarState === 'profile' && <YourTrips />}
-        {navbarState === 'content' && <TripContent />}
+        {navbarState === 'profile' && 
+          <YourTrips 
+            setNavbarState={setNavbarState} 
+            setSelectedTripId={setSelectedTripId}
+            setSelectedTripName={setSelectedTripName}/>
+        }
+        
+        {navbarState === 'content' && selectedTripId && 
+          <TripContent 
+            tripId={selectedTripId} 
+            tripName={selectedTripName}
+            setNavbarState={setNavbarState}
+            />
+        }
       </div>
     </div>
     )

@@ -10,9 +10,16 @@ import EditTrip from './EditTrip';
 import DeleteTrip from './DeleteTrip';
 import { ExternalLink  } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
+import type { NavbarState } from "../types/navbarstate";
 
 
-const YourTrips = () => {
+type YourTripsProps = {
+    setNavbarState: (state: NavbarState) => void;
+    setSelectedTripId: (id: string) => void;
+    setSelectedTripName: (id: string) => void;
+}
+
+const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: YourTripsProps ) => {
     const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
     const [trips, setTrips] = useState<tripInterface[]>([]);
     const [toggleEditTrip, setToggleEditTrip] = useState<boolean>(false);
@@ -52,7 +59,11 @@ const YourTrips = () => {
                 { trips.map((trip) => (
                     
                     <div key={trip._id} 
-                        className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer">  
+                        className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer"
+                        onClick={() => {setNavbarState("content"); 
+                        setSelectedTripId(trip._id);
+                        setSelectedTripName(trip.destination);
+                        }}>  
                         {trip.bannerURL ? (
                             <img src={trip.bannerURL} className="w-full h-[70%] min-h-60 rounded-t-lg" />
                             ) : (

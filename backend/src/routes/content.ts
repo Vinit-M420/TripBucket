@@ -112,16 +112,16 @@ router.delete("/:tripId/delete/:contentId", async function (req:CustomRequest, r
 router.get("/:tripId/all", async function (req:CustomRequest, res) {
     const userId = req.userId;
     const { tripId } = req.params;
-    const trips =  await ContentModel.find({ userId: userId, tripId: tripId });
-    if (trips.length === 0){
+    const content =  await ContentModel.find({ userId: userId, tripId: tripId });
+    if (content.length === 0){
         return res.status(HttpStatusCode.Unauthorized ).json({
             error: "No Trip Content Not Found"
         })
     }
 
     res.status(HttpStatusCode.Ok).json({
-            message: "Content Found",
-            trips
+            // message: "Content Found",
+            content
     })
 })
 
