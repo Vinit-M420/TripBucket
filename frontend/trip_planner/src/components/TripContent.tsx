@@ -4,33 +4,31 @@ import PlusCircle from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
 import type { NavbarState } from "../types/navbarstate";
-import { fetchContents } from '../utils/fetchContents';
+import { fetchContent } from '../utils/fetchContents';
+import type { ContentTypeState, ContentItem } from '../types/ContentItem';
+import AddContent from './AddContent';
 
-export type ContentTypeState = 'all' | 'video' | 'link' | 'note' | 'image';
 
-type ContentItem = {
-  _id: number;
-  type: ContentTypeState;
-  title: string;
-  value?: string;
-};
-
-type tripContentType = {
+type TripContentType = {
     tripId: string,
     tripName: string | null,
     setNavbarState: (state: NavbarState) => void;
 }
 
-const TripContent = ({tripId, tripName, setNavbarState}: tripContentType) => {
-    const [contentType, setContentType] = useState<ContentTypeState>("all"); 
-    const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
-    const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";
+const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
+    const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [content, setContent] = useState<ContentItem[]>([])
+    const [toggleAddContent, setToggleAddContent] = useState<boolean>(false);
+    const [toggleDeleteContent, setToggleDeleteContent] = useState<boolean>(false);
+
+    const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
+    const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";
+    
 
     useEffect(() => {
         const loadContent = async () => {
-            const response = await fetchContents(tripId);
+            const response = await fetchContent(tripId);
             setContent(response)
             console.log(content);
         };
@@ -39,6 +37,11 @@ const TripContent = ({tripId, tripName, setNavbarState}: tripContentType) => {
 
     const filteredContent =
     contentType === "all" ? content : content.filter((c) => c.type === contentType);
+
+    const refreshContent = async () => {
+            const tripsContent = await fetchContent(tripId);
+            setContent(tripsContent);
+    }
 
     return (
         <div className="h-screen lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10 bg-stone-50">
@@ -139,11 +142,25 @@ const TripContent = ({tripId, tripName, setNavbarState}: tripContentType) => {
             
             <div className="fixed bottom-6 md:right-20 right-5">
                     <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl 
-                    hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'>
+                    hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
+                    onClick={() => { setToggleAddContent(!toggleAddContent) }}>
                         <PlusCircle />
-                        {/* <h3 className='text-lg'>Add Trip</h3> */}
+                        {/* <h3 className='text-lg'>Add Content</h3> */}
                     </div>
             </div>
+            {toggleAddContent === true && 
+            <AddContent 
+                tripId={tripId}
+                toggleAddContent={toggleAddContent}
+                setToggleAddContent={setToggleAddContent}
+                refreshContent={refreshContent}
+                onClose={function (): void {
+                    throw new Error('Function not implemented.');
+                } } 
+                toggleAddTrip={false}
+                />
+            }
+
         </div>
     )
 }

@@ -12,7 +12,6 @@ import { ExternalLink  } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
 import type { NavbarState } from "../types/navbarstate";
 
-
 type YourTripsProps = {
     setNavbarState: (state: NavbarState) => void;
     setSelectedTripId: (id: string) => void;
@@ -101,7 +100,8 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                         <div className='flex justify-between mx-5 gap-5 items-center mb-2'>
                             <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 
                             transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center"
-                            onClick={() => { 
+                            onClick={(e) => { 
+                                e.stopPropagation();
                                 setToggleEditTrip(!toggleAddTrip);
                                 handleEdit(trip._id);}} >
                                 <Edit /> 
@@ -109,9 +109,11 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                             </button>
                             <div className='border border-transparent rounded-2xl p-1
                                         hover:border hover:border-green-800 hover:bg-stone-200'
-                                 onClick={() =>{
+                                 onClick={(e) =>{
+                                    e.stopPropagation();
                                     setToggleDeleteTrip(!toggleDeleteTrip);
                                     SetDeletingTripId(trip._id);
+                                    
                                  } }>
                                 <Trash  />
                             </div>

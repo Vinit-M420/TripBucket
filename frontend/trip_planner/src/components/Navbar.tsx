@@ -98,7 +98,9 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
               </h1>
             </div>
             <div className={`flex lg:gap-10 gap-5 items-center 
-              ${(navbarState === 'login' || navbarState === 'signup' || navbarState === 'profile') ? 'hidden' : ''}`}>
+              ${(navbarState === 'login' || navbarState === 'signup' || navbarState === 'profile' || navbarState === 'content'
+
+              ) ? 'hidden' : ''}`}>
               <div className="flex items-center">
                 <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 transition duration-200">
                   Create
@@ -113,7 +115,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           </div>
           
           <div className={`flex gap-5 items-center 
-            ${(navbarState === 'login' || navbarState === 'signup' || navbarState === 'profile') ? 'hidden' : ''}`}>
+            ${(navbarState === 'login' || navbarState === 'signup' || navbarState === 'profile' || navbarState === 'content') ? 'hidden' : ''}`}>
             <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                             transition duration-200 cursor-pointer hover:bg-green-100"
                 onClick={() => setNavbarState("login")}>
@@ -131,7 +133,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
             </div>  
           </div>
 
-          <div className={`flex gap-3 items-center cursor-pointer ${(navbarState === 'profile') ? 'block' : "hidden"}`}
+          <div className={`flex gap-3 items-center cursor-pointer ${(navbarState === 'profile' || navbarState === 'content') ? 'block' : "hidden"}`}
                 onClick={() => {
                   setToggleProfileDropdown(!toggleProfileDropdown);
                   }
@@ -152,7 +154,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
                 TripBucket
           </h1>
           <div className={`border border-transparent hover:border hover:border-green-800 rounded-lg p-1
-                ${(navbarState === 'login' || navbarState === 'signup' || navbarState === 'profile') ? 'hidden' : ''}`}
+                ${(navbarState === 'login' || navbarState === 'signup' || navbarState === 'profile' || navbarState === 'content') ? 'hidden' : ''}`}
               onClick={() => setToggleNavbar(!toggleNavbar)} >
               <Bars />
           </div>

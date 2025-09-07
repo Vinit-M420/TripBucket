@@ -4,12 +4,15 @@ import type { AddTripProp } from '../types/AddTripProp';
 
 const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: AddTripProp) => {
 
-  const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [destination, setDestination] = useState("");
-  const [from_date, setFromDate] = useState("");
-  const [to_date, setToDate] = useState("");
-  const [bannerURL, setBannerURL] = useState("");
   const modalRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    destination: "",
+    from_date: "",
+    to_date: "",
+    bannerURL: "",
+    isPublic: true,
+  });
+  
 
   // useEffect(() => {
   //   const handleClickOutside = (event: MouseEvent) => {
@@ -29,24 +32,35 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
     if (onClose) { onClose(); }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-          e.preventDefault();
-          try{
-            const response = await fetch(`http://localhost:5000/api/v1/trip/`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `${localStorage.getItem("token")}`,
-                    },
-                    body: JSON.stringify({ destination, from_date, to_date, bannerURL, isPublic }),
-                    });
-                    if (!response.ok) throw new Error("Failed to update trip");
-                    refreshTrips();
-                    handleClose();
-          } catch(err){
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "radio" ? value === "public" : value, // radio special case
+    }));
+  };
 
-          }
-      }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/trip/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) throw new Error("Failed to add trip");
+      refreshTrips();
+      handleClose();
+    } catch (err) {
+      alert("Error in adding your trip");
+      console.error("Error Detail:", err);
+    }
+  };
 
   if (!toggleAddTrip) return null;
 
@@ -69,7 +83,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
             <br />
             <input
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 mb-4 shadow border-1 border-green-800 placeholder:text-green-600"
-              type="text" onChange={(e) => setDestination(e.target.value) } value={destination} 
+              type="text" name="destination" value={formData.destination} onChange={handleChange}
               required
             />
             <br />
@@ -78,7 +92,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
               <div className="col-span-1 flex flex-col">
                 <label className="text-base text-black pl-2">From Date</label>
                 <input
-                  type="date" onChange={(e) => setFromDate(e.target.value) } value={from_date} 
+                  type="date" name="from_date" value={formData.from_date} onChange={handleChange}
                   className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
                 />
               </div>
@@ -86,7 +100,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
               <div className="col-span-1 flex flex-col">
                 <label className="text-base text-black pl-2">To Date</label>
                 <input
-                  type="date" onChange={(e) => setToDate(e.target.value) } value={to_date} 
+                  type="date" name="to_date" value={formData.to_date} onChange={handleChange}
                   className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
                 />
               </div>
@@ -96,18 +110,19 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
             <div className="flex gap-2 pl-2 mt-2 mb-4">
               <input
                 type="radio"
+                name="isPublic"
                 value="public"
-                checked={isPublic === true}
-                onChange={() => setIsPublic(true)}
+                checked={formData.isPublic === true}
+                onChange={handleChange}
               />
               <label className="text-base text-black mr-5">Public</label>
 
               <input
                 type="radio"
+                name="isPublic"
                 value="private"
-                checked={isPublic === false}
-                onChange={() => setIsPublic(false)}
-                
+                checked={formData.isPublic === false}
+                onChange={handleChange}
               />
               <label className="text-base text-black">Private</label>
               <br />
@@ -115,9 +130,12 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
 
             <label className="text-base text-black pl-2">Banner URL</label>
             <br />
-            <input onChange={(e) => setBannerURL(e.target.value) } value={bannerURL} 
+            <input
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800 placeholder:text-green-600"
               type="text"
+              name="bannerURL"
+              value={formData.bannerURL}
+              onChange={handleChange}
             />
 
             <button
