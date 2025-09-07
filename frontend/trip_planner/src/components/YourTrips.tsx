@@ -141,9 +141,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                 toggleAddTrip={toggleAddTrip} 
                 setToggleAddTrip={setToggleAddTrip} 
                 refreshTrips={refreshTrips}
-                onClose={function (): void { 
-                    throw new Error('Function not implemented.');
-                }}/>
+                onClose={() => setToggleAddTrip(false)} />
         }
 
         {toggleEditTrip === true && 

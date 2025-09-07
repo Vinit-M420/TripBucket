@@ -1,25 +1,57 @@
 import Edit from '../assets/edit';
 import Trash from '../assets/trash';
+import type { ContentDropDownType } from '../types/ContentDropDownType';
 
+const ContentDropdown = ({ tripId, contentId, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
+{
 
+  const deleteContent = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}/delete/${contentId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("token")}`,
+                },
+            });
 
-const ContentDropdown = ({ setOpenDropdownId }:
-    {setOpenDropdownId: React.Dispatch<React.SetStateAction<number | null>>} ) => {
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Backend error:", errorText);
+                throw new Error("Failed to delete content");
+            }
 
+            await refreshContent();
+
+        } catch (err) {
+            console.error("Error deleting content:", err);
+        }
+  };
+
+  const handleDelete = async () => {
+        try {
+            await deleteContent();
+            
+        } catch (err) {
+            console.error("Error deleting content:", err);
+        }
+  };
         
   return (
     <div className="bg-stone-200 shadow-xl  w-32">
       <div className="flex flex-col">
         <div className="flex gap-2 border border-transparent p-2 cursor-pointer 
                 transition-all duration-200 hover:border-green-800"
-            onClick={() => { setOpenDropdownId(null);
+            onClick={() => { setOpenDropdownId(null); 
             }}>
           <Edit />
           <h2>Edit</h2>
         </div>
         <div className="flex gap-2 border border-transparent p-2 cursor-pointer 
                 transition-all duration-200  hover:border-green-800"
-            onClick={() => { setOpenDropdownId(null);
+            onClick={() => { 
+              setOpenDropdownId(null); 
+              handleDelete();
             }}>
             <Trash />
           <h2>Delete</h2>
@@ -28,6 +60,8 @@ const ContentDropdown = ({ setOpenDropdownId }:
     </div>
   );
 };
+
+
 
 
 export default ContentDropdown;

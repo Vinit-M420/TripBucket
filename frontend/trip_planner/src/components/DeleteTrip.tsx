@@ -34,8 +34,6 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
         fetchTrip();
     }, [tripId]);
 
-
-
     
     const deleteTrip = async () => {
         try {
@@ -50,7 +48,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error("Backend error:", errorText);
-                throw new Error("Failed to fetch trip");
+                throw new Error("Failed to delete trip");
             }
 
             await refreshTrips();

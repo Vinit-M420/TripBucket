@@ -4,14 +4,15 @@ import type { AddContentProp } from "../types/AddContentProp";
 
 
 const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshContent, onClose }: AddContentProp) => {
-    const modalRef = useRef<HTMLDivElement>(null);
-    const [formData, setFormData] = useState({
+    
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
         type: "note",
         title: "",
         value: ""
       });
 
-     const handleClose = () => {
+  const handleClose = () => {
         setToggleAddContent(false);
         if (onClose) { onClose(); }
     };
@@ -39,11 +40,13 @@ const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshCont
                     });
 
                     if (!response.ok) throw new Error("Failed to add content to your trip");
+
                     refreshContent();
                     handleClose();
+
           } catch(err){
-              alert("Error in adding content your trip")
               console.log("Error Detail:" , err)
+              //alert("Error in adding content your trip")
           }
     }
 

@@ -110,15 +110,19 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
 
                                     {openDropdownId === item._id && (
                                         <div className="absolute right-0 mt-1 z-50">
-                                        <ContentDropdown setOpenDropdownId={setOpenDropdownId} />
+                                        <ContentDropdown 
+                                        tripId={tripId}
+                                        contentId={item._id}
+                                        setOpenDropdownId={setOpenDropdownId}
+                                        // setToggleDeleteContent={setToggleDeleteContent}
+                                        refreshContent={refreshContent} 
+                                        />
                                         </div>
                                     )}
                                     </div>
 
                             </div>
-                            {item.type === "note" && (
-                                    <p>{item.value}</p>
-                            )}
+                            {item.type === "note" && (<p>{item.value}</p>)}
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" className="text-blue-600 underline" >
                                     {item.value}
@@ -154,9 +158,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 toggleAddContent={toggleAddContent}
                 setToggleAddContent={setToggleAddContent}
                 refreshContent={refreshContent}
-                onClose={function (): void {
-                    throw new Error('Function not implemented.');
-                } } 
+                onClose={() => setToggleAddContent(false)} 
                 toggleAddTrip={false}
                 />
             }
