@@ -45,16 +45,13 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
     }
 
     return (
-    <div className="h-full lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10">
+    <div className="h-full lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10">
         <div>
-            <div className='flex justify-start gap-5 my-5'>
-                <h1 className="text-green-800 text-2xl">
-                    Your Trips
-                </h1>      
-            </div>
+            <h1 className="text-green-800 text-2xl my-5">
+                Your Trips
+            </h1>      
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
-                            lg:w-6xl md:w-2xl w-sm">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center">
                 { trips.map((trip) => (
                     
                     <div key={trip._id} 
@@ -125,7 +122,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
             </div>         
         </div>
 
-        <div className="fixed bottom-6 md:right-20 right-5">
+        <div className="fixed bottom-6 md:right-10 sm:right-7 right-5">
                     <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl 
                     hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
                         onClick={() => {

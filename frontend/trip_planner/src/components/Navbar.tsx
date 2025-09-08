@@ -44,13 +44,18 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
       <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
           <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden">
             <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                    onClick={() => setNavbarState("hero")}>
+                    onClick={
+                      navbarState === "profile" || navbarState === "content"
+                      ? undefined : () => setNavbarState("hero")
+                    }>
                   TripBucket
             </h1>
-            <div className={`border border-transparent hover:border hover:border-green-800 rounded-lg p-1 `}       
+            <div className={`border border-transparent hover:border hover:border-green-800 rounded-lg p-1
+            ${navbarState === "profile" || navbarState === "content" ? "hidden" : 'flex'}`}       
                 onClick={() => setToggleNavbar(!toggleNavbar)} >
                 <Bars />
             </div>
+              
           </div>
 
           <div className="flex flex-col gap-10 items-center mt-10">
@@ -80,6 +85,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
                   Sign Up
                 </h2>
               </div>
+              
           </div>
 
       </div>
@@ -93,7 +99,9 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           <div className="flex lg:gap-20 gap-10 items-center">
             <div className="flex items-center">
               <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                  onClick={() => setNavbarState("hero")}>
+                  onClick={navbarState === "profile" || navbarState === "content"
+                    ? undefined : () => setNavbarState("hero")
+                }>
                 TripBucket
               </h1>
             </div>
@@ -133,12 +141,10 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
             </div>  
           </div>
 
-          <div className={`flex gap-3 items-center cursor-pointer ${(navbarState === 'profile' || navbarState === 'content') ? 'block' : "hidden"}`}
-                onClick={() => {
-                  setToggleProfileDropdown(!toggleProfileDropdown);
-                  }
-                }>
-              <ProfileCircle   />
+          <div className={`flex gap-3 items-center cursor-pointer 
+                ${(navbarState === 'profile' || navbarState === 'content') ? '' : "hidden"}`}
+                onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
+              <ProfileCircle  />
               <div className="flex items-center">
                 <h2 className="font-bold text-xl">Hi {userFname}</h2>
               </div>
@@ -150,7 +156,11 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
       </div>
       <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden shadow-sm">
           <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                  onClick={() => setNavbarState("hero")}>
+                  onClick={
+                      navbarState === "profile" || navbarState === "content"
+                        ? undefined
+                        : () => setNavbarState("hero")
+                    }>
                 TripBucket
           </h1>
           <div className={`border border-transparent hover:border hover:border-green-800 rounded-lg p-1

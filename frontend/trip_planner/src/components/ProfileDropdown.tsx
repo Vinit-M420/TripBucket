@@ -6,7 +6,7 @@ type ProfileDropDowntype = {
     setToggleProfileDropdown:React.Dispatch<React.SetStateAction<boolean>> 
 }
 
-const ProfileDropDown = ({  setNavbarState ,setToggleProfileDropdown }: ProfileDropDowntype  ) => {
+const ProfileDropDown = ({ setNavbarState ,setToggleProfileDropdown }: ProfileDropDowntype  ) => {
     return (
         <div className='transition-all duration-100 absolute z-50 right-25 bg-stone-200 shadow p-2 mt-2 rounded-xl'>
             <div className='flex flex-col gap-2'>

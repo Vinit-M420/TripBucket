@@ -10,13 +10,15 @@ import TripContent from './components/TripContent';
 
 
 function App() {
- const [navbarState, setNavbarState] = useState<NavbarState>('hero');
+ const [navbarState, setNavbarState] =  useState<NavbarState>(localStorage.getItem("token") ? "profile" : "hero");
+
  const [selectedTripId, setSelectedTripId] = useState<string | null>(null);
  const [selectedTripName, setSelectedTripName] = useState<string | null>(null);
- 
+
   return (
     <div className='bg-stone-50 transition-colors duration-200'>
       <Navbar navbarState={navbarState} setNavbarState={setNavbarState} />
+      
       <div className="flex-1">
         {navbarState === 'hero' && <Hero />}
         {navbarState === 'login' && <Login setNavbarState={setNavbarState} />}

@@ -48,7 +48,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
     };
 
     return (
-        <div className="h-screen lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10 bg-stone-50">
+        <div className="h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 bg-stone-50">
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
@@ -56,7 +56,6 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                     transition duration-200 cursor-pointer hover:bg-green-700"
                         onClick={() => setNavbarState("profile")}>
                         <Left />
-                        {/* <h2 className="text-lg">Back to Trips</h2>  */}
                     </div> 
 
                     <h1 className="text-green-800 text-2xl font-bold">
@@ -65,7 +64,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 </div>
                 
                 {/* Filter Tabs */}
-                <div className="bg-green-100 rounded-xl p-1 flex gap-4 mb-5 justify-center">
+                <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden">
                     {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
@@ -176,7 +175,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
             </div>
             
             
-            <div className="fixed bottom-6 md:right-20 right-5">
+            <div className="fixed bottom-6 md:right-10 sm:right-7 right-5">
                     <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl 
                     hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
                     onClick={() => { setToggleAddContent(!toggleAddContent) }}>
@@ -184,6 +183,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                         {/* <h3 className='text-lg'>Add Content</h3> */}
                     </div>
             </div>
+            
             {toggleAddContent === true && 
             <AddContent 
                 tripId={tripId}
