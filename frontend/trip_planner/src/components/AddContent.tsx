@@ -88,9 +88,8 @@ const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshCont
 
             <label className="text-base text-black pl-2">Value</label>
             <br />
-            <input name="value" value={formData.value} onChange={handleChange}
-              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800 placeholder:text-green-600"
-              type="text"
+            <textarea name="value" rows={4} cols={40} value={formData.value} onChange={handleChange}
+              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
             />
 
             <button

@@ -121,8 +121,8 @@ const EditContent = (
             <label className="text-base text-black pl-2">Value</label>
             <br />
             <input name="value" value={EditformData.value} onChange={handleChange}
-              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800 placeholder:text-green-600"
-              type="text"
+              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-80"
+              
             />
 
             <button

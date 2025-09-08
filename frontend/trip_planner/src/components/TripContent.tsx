@@ -1,16 +1,18 @@
-import { FileText, Play , Image, Link, EllipsisVertical   } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import PlusCircle from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
-import { fetchContent } from '../utils/fetchContents';
-import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import AddContent from './AddContent';
-import type { TripContentType } from '../types/TripContentType';
 import EditContent from './EditContent';
+import { fetchContent } from '../utils/fetchContents';
+import type { TripContentType } from '../types/TripContentType';
+import type { ContentTypeState, ContentItem } from '../types/ContentItem';
+import { FileText, Play , Image, Link, EllipsisVertical   } from 'lucide-react';
+
 
 
 const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
+
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [content, setContent] = useState<ContentItem[]>([])
@@ -38,6 +40,12 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
             const tripsContent = await fetchContent(tripId);
             setContent(tripsContent);
     }
+
+    const getYouTubeId = (url: string) => {
+        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+    };
 
     return (
         <div className="h-screen lg:w-6xl w-2xl flex flex-col items-center mx-auto gap-5 mt-10 bg-stone-50">
@@ -82,7 +90,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 
                 {/* Content Part */}
                 <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
-                                lg:w-6xl md:w-2xl w-sm'> 
+                                lg:w-6xl md:w-2xl w-sm mb-10'> 
                     {filteredContent.map((item) => (
                         <div key={item._id}
                             className="col-span-1 flex flex-col gap-5 border-2 border-green-200 rounded-xl p-4 shadow hover:shadow-lg transition">
@@ -123,14 +131,39 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                             {item.type === "note" && (<p>{item.value}</p>)}
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" className="text-blue-600 underline" >
-                                    {item.value}
+                                    Visit Link
                                 </a>
                             )}
-                            {item.type === 'video' && 
-                                <a href={item.value} target='_blank' className='text-red-500 underline'>
+                            {item.type === "video" && (() => {
+                                const videoId = getYouTubeId(item.value ?? '');
+                                return videoId ? (
+                                    <div className="w-full place-content-center">
+                                        <a 
+                                            href={item.value} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="block w-full overflow-hidden shadow-lg hover:opacity-90 transition relative"
+                                        >
+                                            <img 
+                                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} 
+                                            alt="YouTube thumbnail" 
+                                            className="w-full"
+                                            />
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                            <Play size={45} 
+                                            className="text-white drop-shadow-lg opacity-90 bg-green-800
+                                             rounded-3xl p-1" />
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                ) : (
+                                    <a href={item.value} target="_blank" className="text-red-500 underline">
                                     Watch Video
-                                </a>
-                            }
+                                    </a>
+                                );
+                                })()}
+
                             {item.type === 'image' && 
                                 <img src={item.value} className='max-w-lg' ></img>
                             }
@@ -162,7 +195,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 />
             }
 
-             {toggleEditContent === true && 
+            {toggleEditContent === true && 
                 <EditContent 
                     tripId={tripId}
                     contentId={selectedContentId}
