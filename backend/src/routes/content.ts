@@ -123,6 +123,24 @@ router.get("/:tripId/all", async function (req:CustomRequest, res) {
             // message: "Content Found",
             content
     })
-})
+});
+
+router.get("/:tripId/:contentId", async function (req:CustomRequest, res) {
+    const userId = req.userId;
+    const { tripId, contentId } = req.params;
+    const content =  await ContentModel.findOne({ userId, tripId, _id: contentId });
+    
+    if (!content){
+        return res.status(HttpStatusCode.Unauthorized).json({
+            error: "No Trip Content Not Found"
+        })
+    }
+
+    res.status(HttpStatusCode.Ok).json({
+            // message: "Content Found",
+            content
+    })
+});
+
 
 export default router;

@@ -2,9 +2,9 @@ import Edit from '../assets/edit';
 import Trash from '../assets/trash';
 import type { ContentDropDownType } from '../types/ContentDropDownType';
 
-const ContentDropdown = ({ tripId, contentId, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
+const ContentDropdown = ({ tripId, contentId, toggleEditContent, setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
 {
-
+  
   const deleteContent = async () => {
         try {
             const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}/delete/${contentId}`, {
@@ -38,12 +38,13 @@ const ContentDropdown = ({ tripId, contentId, setOpenDropdownId, refreshContent 
   };
         
   return (
-    <div className="bg-stone-200 shadow-xl  w-32">
+    <div className="bg-stone-200 shadow-xl w-32">
       <div className="flex flex-col">
         <div className="flex gap-2 border border-transparent p-2 cursor-pointer 
                 transition-all duration-200 hover:border-green-800"
             onClick={() => { setOpenDropdownId(null); 
-            }}>
+              setToggleEditContent(!toggleEditContent);
+               }}>
           <Edit />
           <h2>Edit</h2>
         </div>
@@ -60,8 +61,6 @@ const ContentDropdown = ({ tripId, contentId, setOpenDropdownId, refreshContent 
     </div>
   );
 };
-
-
 
 
 export default ContentDropdown;

@@ -3,24 +3,20 @@ import { useEffect, useState } from 'react';
 import PlusCircle from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
-import type { NavbarState } from "../types/navbarstate";
 import { fetchContent } from '../utils/fetchContents';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import AddContent from './AddContent';
+import type { TripContentType } from '../types/TripContentType';
+import EditContent from './EditContent';
 
-
-type TripContentType = {
-    tripId: string,
-    tripName: string | null,
-    setNavbarState: (state: NavbarState) => void;
-}
 
 const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [content, setContent] = useState<ContentItem[]>([])
     const [toggleAddContent, setToggleAddContent] = useState<boolean>(false);
-    const [toggleDeleteContent, setToggleDeleteContent] = useState<boolean>(false);
+    const [toggleEditContent, setToggleEditContent] = useState<boolean>(false);
+    const [selectedContentId, setSelectedContentId] = useState<number | null>(null);
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";
@@ -109,13 +105,15 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                     </div>
 
                                     {openDropdownId === item._id && (
-                                        <div className="absolute right-0 mt-1 z-50">
+                                        <div className="absolute right-0 mt-1 z-50"
+                                        onClick={() => {setSelectedContentId(item._id);}}>
                                         <ContentDropdown 
-                                        tripId={tripId}
-                                        contentId={item._id}
-                                        setOpenDropdownId={setOpenDropdownId}
-                                        // setToggleDeleteContent={setToggleDeleteContent}
-                                        refreshContent={refreshContent} 
+                                            tripId={tripId}
+                                            contentId={item._id}
+                                            setOpenDropdownId={setOpenDropdownId}
+                                            toggleEditContent={toggleEditContent}
+                                            setToggleEditContent={setToggleEditContent}
+                                            refreshContent={refreshContent} 
                                         />
                                         </div>
                                     )}
@@ -136,7 +134,8 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                             {item.type === 'image' && 
                                 <img src={item.value} className='max-w-lg' ></img>
                             }
-                        
+
+                           
                         </div>
                     )) }                
                 </div>
@@ -162,6 +161,17 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 toggleAddTrip={false}
                 />
             }
+
+             {toggleEditContent === true && 
+                <EditContent 
+                    tripId={tripId}
+                    contentId={selectedContentId}
+                    toggleEditContent={toggleEditContent}
+                    setToggleEditContent={setToggleEditContent}
+                    refreshContent={refreshContent}
+                    onClose={() => setToggleEditContent(false)} 
+                    />
+            } 
 
         </div>
     )
