@@ -100,13 +100,12 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
         })
     }
     // console.log("Incoming update body:", req.body);  
-
    
     try{
         const editBody = req.body;
         const updatedResult = await TripModel.updateOne( {_id: id, userId: userId },
-                                         editBody,
-                                        { runValidators: true })
+                                                        editBody,
+                                                        { runValidators: true })
         
         if (updatedResult.modifiedCount === 0){
             return res.status(HttpStatusCode.BadRequest).json({

@@ -10,13 +10,7 @@ import EditTrip from './EditTrip';
 import DeleteTrip from './DeleteTrip';
 import { ExternalLink  } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
-import type { NavbarState } from "../types/navbarstate";
-
-type YourTripsProps = {
-    setNavbarState: (state: NavbarState) => void;
-    setSelectedTripId: (id: string) => void;
-    setSelectedTripName: (id: string) => void;
-}
+import type { YourTripsProps } from '../types/YourTripsProps';
 
 const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: YourTripsProps ) => {
     const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
@@ -45,9 +39,9 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
     }
 
     return (
-    <div className="h-full lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10">
+    <div className="h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10">
         <div>
-            <h1 className="text-green-800 text-2xl my-5">
+            <h1 className="text-green-800 text-2xl font-semibold my-5">
                 Your Trips
             </h1>      
 
@@ -92,7 +86,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                             <h2 className='text-green-600 text-sm'>
                                 {trip.from_date && trip.to_date
                                 ? `${new Date(trip.from_date).toLocaleDateString()} → 
-                                    ${new Date(trip.to_date ).toLocaleDateString()}`
+                                ${new Date(trip.to_date ).toLocaleDateString()}`
                                 : "Someday ..."}
                             </h2>
                         </div>
@@ -124,12 +118,10 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
             </div>         
         </div>
 
-        <div className="fixed bottom-6 md:right-10 sm:right-7 right-5">
-                    <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl 
+        <div className="fixed bottom-6 lg:right-15 md:right-10 sm:right-7 right-5">
+                    <div className='flex justify-start gap-2 bg-green-800 text-white p-3 rounded-3xl 
                     hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
-                        onClick={() => {
-                            setToggleAddTrip(!toggleAddTrip);
-                            console.log("Add Trip Btn toggled", toggleAddTrip)}}>
+                        onClick={() => setToggleAddTrip(!toggleAddTrip) }>
                         <PlusCircle />
                         {/* <h3 className='text-lg'>Add Trip</h3> */}
                     </div>

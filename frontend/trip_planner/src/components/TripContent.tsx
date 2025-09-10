@@ -10,7 +10,6 @@ import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { FileText, Play , Image, Link, EllipsisVertical, X } from 'lucide-react';
 
 
-
 const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
 
     const [contentType, setContentType] = useState<ContentTypeState>("all");
@@ -36,14 +35,13 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
 
     useEffect(() => {
         const showAlert = setTimeout(() => setToggleAlert(false), 3000);
-        
         return () => clearTimeout(showAlert)
 
     }, [toggleAlert])
 
-
-
-
+    const handleClose = () => {
+        setToggleAlert(false);
+    }
 
     const filteredContent =
     contentType === "all" ? content : content.filter((c) => c.type === contentType);
@@ -59,15 +57,9 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
         return match ? match[1] : null;
     };
     
-    const handleClose = () => {
-    setToggleAlert(false);
-    }
-    
-
-
 
     return (
-        <div className="h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 bg-stone-50">
+        <div className="bg-stone-50 h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
 
             <div>   
                 {/* Header  */}
@@ -199,15 +191,16 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 </div>
             </div>
             
-            
-            <div className="fixed bottom-6 md:right-10 sm:right-7 right-5">
-                    <div className='flex justify-start gap-2 bg-green-800 text-white px-5 py-2 rounded-2xl 
-                    hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
-                    onClick={() => { setToggleAddContent(!toggleAddContent) }}>
-                        <PlusCircle />
-                        {/* <h3 className='text-lg'>Add Content</h3> */}
-                    </div>
+
+
+        <div className="fixed bottom-6 lg:right-15 md:right-10 sm:right-7 right-5">
+            <div className='flex justify-start gap-2 bg-green-800 text-white p-3 rounded-3xl 
+            hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
+                onClick={() => { setToggleAddContent(!toggleAddContent) }}>
+                <PlusCircle />
+                {/* <h3 className='text-lg'>Add Content</h3> */}
             </div>
+        </div>
             
             {toggleAddContent === true && 
             <AddContent 
@@ -246,7 +239,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                         <X className='size-3' />
                     </div>
                 </div>
-            ) : (<p></p>)}
+            ) : (null)}
             
 
         </div>

@@ -10,7 +10,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
     from_date: "",
     to_date: "",
     bannerURL: "",
-    isPublic: true,
+    isPublic: false,
   });
   
 
