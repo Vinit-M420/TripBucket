@@ -59,7 +59,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
     
 
     return (
-        <div className="bg-stone-50 h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
+        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
 
             <div>   
                 {/* Header  */}
@@ -101,7 +101,8 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 
                 {/* Content Part */}
                 <div 
-                className={`grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10`}>
+                className={`grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10
+                        `}>
                                 
                     {filteredContent.map((item) => (
                         <div key={item._id}
@@ -156,19 +157,14 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                 const videoId = getYouTubeId(item.value ?? '');
                                 return videoId ? (
                                     <div className="w-full place-content-center">
-                                        <a 
-                                            href={item.value} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
-                                            className="block w-full overflow-hidden shadow-lg hover:opacity-90 transition relative"
-                                        >
-                                            <img 
-                                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} 
-                                            alt="YouTube thumbnail" 
+                                        <a href={item.value}  target="_blank" rel="noopener noreferrer" 
+                                        className="block w-full overflow-hidden shadow-lg hover:opacity-90 transition relative">
+                                            <img alt="YouTube thumbnail" 
                                             className="w-full"
-                                            />
+                                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}  />
+
                                             <div className="absolute inset-0 flex items-center justify-center">
-                                            <Play size={45} 
+                                            <Play size={40} 
                                             className="text-white drop-shadow-lg opacity-90 bg-green-800
                                              rounded-3xl p-1" />
                                             </div>
@@ -185,7 +181,6 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                             {item.type === 'image' && 
                                 <img src={item.value} className='max-w-lg' ></img>
                             }
-
                             </div>
                     )) }                
                 </div>

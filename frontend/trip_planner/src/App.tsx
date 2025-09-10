@@ -38,6 +38,7 @@ function App() {
             setNavbarState={setNavbarState}
             />
         }
+        
       </div>
     </div>
     )

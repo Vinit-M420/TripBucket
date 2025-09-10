@@ -55,8 +55,8 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
           const payload = {
             destination: trip.destination,
             isPublic,
-            from_date: trip.from_date ? new Date(trip.from_date).toISOString() : undefined,
-            to_date: trip.to_date ? new Date(trip.to_date).toISOString() : undefined,
+            from_date: trip.from_date ? new Date(trip.from_date).toISOString() : '',
+            to_date: trip.to_date ? new Date(trip.to_date).toISOString() : '',
             bannerURL: trip.bannerURL,
           };
           const response = await fetch(`http://localhost:5000/api/v1/trip/edit/${tripId}`, {

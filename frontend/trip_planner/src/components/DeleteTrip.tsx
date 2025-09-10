@@ -2,7 +2,7 @@ import { X } from 'lucide-react';
 import type { DeleteTripProps } from '../types/DeleteTripProps';
 import { useEffect, useState } from 'react';
 
-const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: DeleteTripProps) => {
+const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refreshTrips }: DeleteTripProps) => {
     const [trip, setTrip] = useState('');
 
     useEffect(() => {
@@ -32,6 +32,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
         };
 
         fetchTrip();
+        
     }, [tripId]);
 
     
@@ -52,6 +53,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
             }
 
             await refreshTrips();
+            setToggleAlert(true);
 
         } catch (err) {
             console.error("Error deleting trip:", err);

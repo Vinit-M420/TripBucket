@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import CheckCircle from '../assets/checkcircle';
 import Edit from '../assets/edit';
 import Lock from '../assets/lock';
 import PlusCircle from '../assets/pluscircle';
 import Trash from '../assets/trash';
 import AddTrip from './AddTrip';
-import type { tripInterface } from '../types/tripInterface';
 import EditTrip from './EditTrip';
 import DeleteTrip from './DeleteTrip';
+import type { tripInterface } from '../types/tripInterface';
+import type { YourTripsProps } from '../types/YourTripsProps';
 import { ExternalLink  } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
-import type { YourTripsProps } from '../types/YourTripsProps';
+import { X } from 'lucide-react';
+
+
 
 const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: YourTripsProps ) => {
     const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
@@ -19,6 +22,8 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
     const [toggleDeleteTrip, setToggleDeleteTrip] = useState<boolean>(false);
     const [editingTripId, setEditingTripId] = useState<string | null>(null);
     const [deletingTripId, SetDeletingTripId] = useState<string | null>(null);
+    const [toggleAlert, setToggleAlert] = useState<boolean>(false);
+    const modalAlert = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
     const loadTrips = async () => {
@@ -27,6 +32,15 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
     };
     loadTrips();
     }, []);
+
+    useEffect(() => {
+        const showAlert = setTimeout(() => setToggleAlert(false), 3000);
+        return () => clearTimeout(showAlert)
+    }, [toggleAlert]);
+
+    const handleClose = () => {
+        setToggleAlert(false);
+    }
 
     const handleEdit = (id: string) => {
         console.log("Edit trip with id:", id);
@@ -39,13 +53,14 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
     }
 
     return (
-    <div className="h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10">
+        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
         <div>
             <h1 className="text-green-800 text-2xl font-semibold my-5">
-                Your Trips
+                {trips.length > 0 ? "Your Trips" : 'You have no trips yet'}                     
             </h1>      
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
+                            lg:w-6xl md:w-2xl w-sm">
                 { trips.map((trip) => (
                     
                     <div key={trip._id} 
@@ -68,12 +83,13 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                             <h1 className='text-green-800 text-xl font-semibold'>{trip.destination}</h1>
                             {trip.isPublic ? (
                                 <div className="border border-transparent rounded-2xl p-1
-                                                hover:border hover:border-green-800 hover:bg-stone-200">
+                                                hover:border hover:border-green-800 hover:bg-stone-200"
+                                    onClick={(e) => { e.stopPropagation(); }}>
                                     <ExternalLink className="size-5" />
                                 </div>
                             ) : (
                                 <div className="border border-transparent rounded-2xl p-1">
-                                    <Lock  />
+                                    <Lock />
                                 </div>
                             )}
 
@@ -149,11 +165,28 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
             <DeleteTrip
                 tripId={deletingTripId}
                 setToggleDeleteTrip={setToggleDeleteTrip}
+                setToggleAlert={setToggleAlert}
                 onClose={() => SetDeletingTripId(null)}
                 refreshTrips={refreshTrips}
             />
         }
-        
+
+        {toggleAlert ? (
+            <div ref={modalAlert} role="alert"
+                className='fixed inset-x bottom-0 flex items-center justify-between p-4 mb-4 text-sm text-green-800 
+                border border-green-300 rounded-lg bg-green-50 w-[200px] h-10 z-50'>
+                <div className="flex items-center">
+                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span className="sr-only">Info</span>
+                    <span className="font-medium">Deleted!</span> 
+                    </div>
+                    <div onClick={handleClose}>
+                        <X className='size-3' />
+                    </div>
+                </div>
+        ) : (null)}        
     </div>
     )
 }
