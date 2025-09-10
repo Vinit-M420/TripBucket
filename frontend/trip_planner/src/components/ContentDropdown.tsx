@@ -2,7 +2,8 @@ import Edit from '../assets/edit';
 import Trash from '../assets/trash';
 import type { ContentDropDownType } from '../types/ContentDropDownType';
 
-const ContentDropdown = ({ tripId, contentId, toggleEditContent, setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
+const ContentDropdown = ({ tripId, contentId, toggleEditContent, 
+  setToggleAlert, setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
 {
   
   const deleteContent = async () => {
@@ -22,6 +23,7 @@ const ContentDropdown = ({ tripId, contentId, toggleEditContent, setToggleEditCo
             }
 
             await refreshContent();
+            setToggleAlert(true);
 
         } catch (err) {
             console.error("Error deleting content:", err);

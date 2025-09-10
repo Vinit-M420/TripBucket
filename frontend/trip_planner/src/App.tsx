@@ -25,6 +25,7 @@ function App() {
         {navbarState === 'signup' && <Signup setNavbarState={setNavbarState} />}
         {navbarState === 'profile' && 
           <YourTrips 
+            
             setNavbarState={setNavbarState} 
             setSelectedTripId={setSelectedTripId}
             setSelectedTripName={setSelectedTripName}/>

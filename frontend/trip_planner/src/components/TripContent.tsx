@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import PlusCircle from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
@@ -7,7 +7,7 @@ import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
 import type { TripContentType } from '../types/TripContentType';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
-import { FileText, Play , Image, Link, EllipsisVertical   } from 'lucide-react';
+import { FileText, Play , Image, Link, EllipsisVertical, X } from 'lucide-react';
 
 
 
@@ -19,10 +19,11 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
     const [toggleAddContent, setToggleAddContent] = useState<boolean>(false);
     const [toggleEditContent, setToggleEditContent] = useState<boolean>(false);
     const [selectedContentId, setSelectedContentId] = useState<number | null>(null);
+    const [toggleAlert, setToggleAlert] = useState<boolean>(false);
+    const modalAlert = useRef<HTMLDivElement>(null);
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
-    const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";
-    
+    const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
 
     useEffect(() => {
         const loadContent = async () => {
@@ -32,6 +33,17 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
         };
         loadContent();
     }, [tripId]);
+
+    useEffect(() => {
+        const showAlert = setTimeout(() => setToggleAlert(false), 3000);
+        
+        return () => clearTimeout(showAlert)
+
+    }, [toggleAlert])
+
+
+
+
 
     const filteredContent =
     contentType === "all" ? content : content.filter((c) => c.type === contentType);
@@ -46,9 +58,17 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
         const match = url.match(regex);
         return match ? match[1] : null;
     };
+    
+    const handleClose = () => {
+    setToggleAlert(false);
+    }
+    
+
+
 
     return (
         <div className="h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 bg-stone-50">
+
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
@@ -88,19 +108,21 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 </div>
                 
                 {/* Content Part */}
-                <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
-                                lg:w-6xl md:w-2xl w-sm mb-10'> 
+                <div 
+                className={`grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10`}>
+                                
                     {filteredContent.map((item) => (
                         <div key={item._id}
-                            className="col-span-1 flex flex-col gap-5 border-2 border-green-200 rounded-xl p-4 shadow hover:shadow-lg transition">
+                            className="col-span-1 flex flex-col gap-5 border-2 border-green-200 rounded-xl p-4 
+                                        shadow hover:shadow-lg transition">
                             <div className='flex justify-between'>  
                                 <div className='flex gap-2 items-center text-green-800'>
-                                    {item.type === "note"  && <FileText className='size-5 ' /> }
+                                    {item.type === "note"  && <FileText className='size-5' /> }
                                     {item.type === "image" && <Image className='size-5' /> }
                                     {item.type === "video" && <Play className='size-5' /> }
                                     {item.type === "link"  && <Link className='size-5' /> }
-                                    <h3 className="font-semibold text-xl text-green-800">
-                                        {item.title}
+                                    <h3 className="font-semibold text-lg text-green-800">
+                                        {item.title }
                                     </h3>
                                 </div>
                                 <div className="relative">
@@ -118,6 +140,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                             tripId={tripId}
                                             contentId={item._id}
                                             setOpenDropdownId={setOpenDropdownId}
+                                            setToggleAlert={setToggleAlert}
                                             toggleEditContent={toggleEditContent}
                                             setToggleEditContent={setToggleEditContent}
                                             refreshContent={refreshContent} 
@@ -127,7 +150,11 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                     </div>
 
                             </div>
-                            {item.type === "note" && (<p>{item.value}</p>)}
+                            {item.type === "note" && (
+                                <p className="whitespace-pre-wrap text-gray-800">
+                                    {item.value}
+                                </p>
+                            )}
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" className="text-blue-600 underline" >
                                     Visit Link
@@ -167,11 +194,9 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                 <img src={item.value} className='max-w-lg' ></img>
                             }
 
-                           
-                        </div>
+                            </div>
                     )) }                
                 </div>
-                
             </div>
             
             
@@ -205,6 +230,24 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                     onClose={() => setToggleEditContent(false)} 
                     />
             } 
+            
+            {toggleAlert ? (
+            <div ref={modalAlert} role="alert"
+                className='fixed inset-x bottom-0 flex items-center justify-between p-4 mb-4 text-sm text-green-800 
+                border border-green-300 rounded-lg bg-green-50 w-[200px] h-10 z-50'>
+                <div className="flex items-center">
+                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span className="sr-only">Info</span>
+                    <span className="font-medium">Deleted!</span> 
+                    </div>
+                    <div onClick={handleClose}>
+                        <X className='size-3' />
+                    </div>
+                </div>
+            ) : (<p></p>)}
+            
 
         </div>
     )

@@ -56,9 +56,10 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                     
                     <div key={trip._id} 
                         className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer"
-                        onClick={() => {setNavbarState("content"); 
-                        setSelectedTripId(trip._id);
-                        setSelectedTripName(trip.destination);
+                        onClick={() => {
+                            setNavbarState("content"); 
+                            setSelectedTripId(trip._id);
+                            setSelectedTripName(trip.destination);
                         }}>  
                         {trip.bannerURL ? (
                             <img src={trip.bannerURL} className="w-full h-[70%] min-h-60 rounded-t-lg" />
@@ -72,7 +73,8 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
 
                             <h1 className='text-green-800 text-xl font-semibold'>{trip.destination}</h1>
                             {trip.isPublic ? (
-                                <div className="border border-transparent rounded-2xl p-1">
+                                <div className="border border-transparent rounded-2xl p-1
+                                                hover:border hover:border-green-800 hover:bg-stone-200">
                                     <ExternalLink className="size-5" />
                                 </div>
                             ) : (
@@ -100,7 +102,8 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                             onClick={(e) => { 
                                 e.stopPropagation();
                                 setToggleEditTrip(!toggleAddTrip);
-                                handleEdit(trip._id);}} >
+                                handleEdit(trip._id);
+                            }}>
                                 <Edit /> 
                                 <h3 className='text-base'>Edit</h3>
                             </button>
@@ -109,8 +112,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                                  onClick={(e) =>{
                                     e.stopPropagation();
                                     setToggleDeleteTrip(!toggleDeleteTrip);
-                                    SetDeletingTripId(trip._id);
-                                    
+                                    SetDeletingTripId(trip._id);                               
                                  } }>
                                 <Trash  />
                             </div>
