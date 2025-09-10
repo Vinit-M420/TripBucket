@@ -185,15 +185,16 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                     )) }                
                 </div>
             </div>
-            
-
 
         <div className="fixed bottom-6 lg:right-15 md:right-10 sm:right-7 right-5">
-            <div className='flex justify-start gap-2 bg-green-800 text-white p-3 rounded-3xl 
-            hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
-                onClick={() => { setToggleAddContent(!toggleAddContent) }}>
-                <PlusCircle />
-                {/* <h3 className='text-lg'>Add Content</h3> */}
+            <div className='group flex justify-start bg-green-800 text-white p-3 rounded-3xl 
+            hover:bg-green-700 transition-all duration-300 cursor-pointer items-center overflow-hidden'
+                  onClick={() => { setToggleAddContent(!toggleAddContent) }}>
+                <div className="flex-shrink-0"><PlusCircle /></div>
+                <h3 className='text-lg whitespace-nowrap transition-all duration-300 
+                w-0 group-hover:w-auto group-hover:ml-2 opacity-0 group-hover:opacity-100'>
+                    Add Content
+                </h3>
             </div>
         </div>
             

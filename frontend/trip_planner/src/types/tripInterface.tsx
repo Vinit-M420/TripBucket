@@ -5,5 +5,6 @@ export interface tripInterface {
     bannerURL?: string;
     isPublic: boolean;
     from_date?: string;  
-    to_date?: string; 
+    to_date?: string;
+    shareId?: string; 
 }

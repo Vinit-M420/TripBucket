@@ -22,6 +22,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
     const [toggleDeleteTrip, setToggleDeleteTrip] = useState<boolean>(false);
     const [editingTripId, setEditingTripId] = useState<string | null>(null);
     const [deletingTripId, SetDeletingTripId] = useState<string | null>(null);
+    const [typeOfAlert, setTypeOfAlert] = useState<string | null>(null);
     const [toggleAlert, setToggleAlert] = useState<boolean>(false);
     const modalAlert = useRef<HTMLDivElement>(null);
 
@@ -84,7 +85,12 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                             {trip.isPublic ? (
                                 <div className="border border-transparent rounded-2xl p-1
                                                 hover:border hover:border-green-800 hover:bg-stone-200"
-                                    onClick={(e) => { e.stopPropagation(); }}>
+                                    onClick={(e) => { e.stopPropagation();
+                                        navigator.clipboard.writeText(
+                                            `${window.location.origin}/public/${trip.shareId}`);
+                                        setTypeOfAlert('shareurl');
+                                        setToggleAlert(true); }                                     
+                                     }>
                                     <ExternalLink className="size-5" />
                                 </div>
                             ) : (
@@ -122,7 +128,8 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                                  onClick={(e) =>{
                                     e.stopPropagation();
                                     setToggleDeleteTrip(!toggleDeleteTrip);
-                                    SetDeletingTripId(trip._id);                               
+                                    SetDeletingTripId(trip._id);
+                                    setTypeOfAlert("delete");                               
                                  } }>
                                 <Trash  />
                             </div>
@@ -135,13 +142,18 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
         </div>
 
         <div className="fixed bottom-6 lg:right-15 md:right-10 sm:right-7 right-5">
-                    <div className='flex justify-start gap-2 bg-green-800 text-white p-3 rounded-3xl 
-                    hover:bg-green-700 transition-all duration-200 cursor-pointer items-center'
-                        onClick={() => setToggleAddTrip(!toggleAddTrip) }>
-                        <PlusCircle />
-                        {/* <h3 className='text-lg'>Add Trip</h3> */}
-                    </div>
+            <div className='group flex justify-start bg-green-800 text-white p-3 rounded-3xl 
+            hover:bg-green-700 transition-all duration-300 cursor-pointer items-center overflow-hidden'
+                onClick={() => setToggleAddTrip(!toggleAddTrip)}>
+                <div className="flex-shrink-0"><PlusCircle /></div>
+                <h3 className='text-lg whitespace-nowrap transition-all duration-300 
+                w-0 group-hover:w-auto group-hover:ml-2 opacity-0 group-hover:opacity-100'>
+                    Add Trip
+                </h3>
+            </div>
         </div>
+
+
 
         {toggleAddTrip === true && 
             <AddTrip 
@@ -171,22 +183,35 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
             />
         }
 
-        {toggleAlert ? (
-            <div ref={modalAlert} role="alert"
-                className='fixed inset-x bottom-0 flex items-center justify-between p-4 mb-4 text-sm text-green-800 
-                border border-green-300 rounded-lg bg-green-50 w-[200px] h-10 z-50'>
-                <div className="flex items-center">
-                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <span className="font-medium">Deleted!</span> 
-                    </div>
-                    <div onClick={handleClose}>
-                        <X className='size-3' />
-                    </div>
+        {toggleAlert && (
+            <div ref={modalAlert}
+                role="alert"
+                className="fixed inset-x bottom-6 mx-auto flex items-center justify-between 
+                        p-4 text-sm text-green-800 border border-green-300 
+                        rounded-lg bg-green-50 w-fit max-w-xs shadow z-50">
+            <div className="flex items-center gap-2">
+                <svg
+                    className="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20" >
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 
+                            1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 
+                            0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                {typeOfAlert === "delete" && <span className="font-medium">Deleted!</span>}
+                {typeOfAlert === "shareurl" && (
+                    <span className="font-medium">Copied share URL to clipboard</span>
+                )}
                 </div>
-        ) : (null)}        
+
+                <button onClick={handleClose} className="ml-3">
+                <X className="size-3" />
+                </button>
+            </div>
+        )}
+    
     </div>
     )
 }
