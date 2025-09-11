@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import heropic from '../images/hero1.png'
 import type { NavbarProps } from "../types/navbarstate";
 
@@ -17,7 +18,7 @@ const Hero = ( {setNavbarState}: NavbarProps) => {
             <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 sm:text-base text-sm
             transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
             onClick={() => setNavbarState('signup')}>
-                Create Your Bucket list
+                <Link to='signup'>Create Your Bucket list</Link>
             </button>
             
             <button className="bg-transparent border-2 border-green-700 text-green-700 sm:text-base text-sm

@@ -1,3 +1,4 @@
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import type { NavbarState } from "../types/navbarstate";
 
@@ -9,6 +10,7 @@ const Signup = ({setNavbarState} : NavbarProps) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,6 +31,7 @@ const Signup = ({setNavbarState} : NavbarProps) => {
             }
             alert("You're successfully Signed up!");
             setNavbarState("login");
+            navigate("/login");
 
         } catch(err){
             console.error("Error signing up:", err);
@@ -86,7 +89,7 @@ const Signup = ({setNavbarState} : NavbarProps) => {
                     <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                             transition duration-200 cursor-pointer hover:bg-green-100"
                         onClick={() => setNavbarState("login")}>
-                            <h2 className="text-base">Log In</h2> 
+                            <Link to='/login'><h2 className="text-base">Log In</h2></Link>
                     </div> 
                 </div>
             </div>

@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 // import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
-import { FileText, Play , Image, Link, EllipsisVertical } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
-import { Link as Linkk } from "react-router-dom";
+import { Link } from "react-router-dom";
+import type { NavbarProps } from '../types/navbarstate';
 
 
-const PublicContent = () => {
+const PublicContent = ({setNavbarState}: NavbarProps) => {
     const { shareId } = useParams<{ shareId: string }>();
     const [tripName, setTripName] = useState<string | null>(null);
     const [contents, setContents] = useState<ContentItem[]>([]);
@@ -49,12 +50,13 @@ const PublicContent = () => {
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
-                    <Linkk to="/">
+                    <Link to="/">
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
-                                        transition duration-200 cursor-pointer hover:bg-green-700" >
+                                        transition duration-200 cursor-pointer hover:bg-green-700" 
+                            onClick={() => { setNavbarState("hero");}}>
                             <Left /> 
                         </div> 
-                    </Linkk>
+                    </Link>
 
                     <h1 className="text-green-800 text-2xl font-bold">
                         {tripName} Itinerary 
@@ -66,7 +68,7 @@ const PublicContent = () => {
                     {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
-                        { key: "link", label: "Links", icon: <Link /> },
+                        { key: "link", label: "Links", icon: <LinkIcon /> },
                         { key: "video", label: "Videos", icon: <Play /> },
                         { key: "image", label: "Images", icon: <Image /> },
                     ].map(({ key, label, icon }) => (
@@ -99,7 +101,7 @@ const PublicContent = () => {
                                     {item.type === "note"  && <FileText className='size-5' /> }
                                     {item.type === "image" && <Image className='size-5' /> }
                                     {item.type === "video" && <Play className='size-5' /> }
-                                    {item.type === "link"  && <Link className='size-5' /> }
+                                    {item.type === "link"  && <LinkIcon className='size-5' /> }
                                     <h3 className="font-semibold text-lg text-green-800">
                                         {item.title }
                                     </h3>

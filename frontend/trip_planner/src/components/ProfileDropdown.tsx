@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Edit, LogOut } from 'lucide-react';
 import type { NavbarState } from '../types/navbarstate';
 
@@ -15,18 +16,18 @@ const ProfileDropDown = ({ setNavbarState ,setToggleProfileDropdown }: ProfileDr
                 <Edit />
                 <h2>Edit Profile</h2>
             </div>
-
-            <div className='flex gap-2 border-2 border-stone-500 p-2 rounded-xl cursor-pointer 
-                hover:bg-stone-100 hover:border-green-800'
-                onClick={() => {
-                        localStorage.removeItem("token");
-                        setToggleProfileDropdown(false);
-                        setNavbarState("hero");
-                        
-                    }}>
-                <LogOut />
-                <h2>Logout</h2>
-            </div>
+            <Link to="/">
+                <div className='flex gap-2 border-2 border-stone-500 p-2 rounded-xl cursor-pointer 
+                    hover:bg-stone-100 hover:border-green-800'
+                    onClick={() => {
+                            localStorage.removeItem("token");
+                            setToggleProfileDropdown(false);
+                            setNavbarState("hero");    
+                        }}>
+                    <LogOut />
+                    <h2>Logout</h2>
+                </div>
+            </Link>
             </div>
         </div>
     )

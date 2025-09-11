@@ -1,3 +1,4 @@
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import type { NavbarState } from "../types/navbarstate";
 
@@ -8,6 +9,7 @@ interface NavbarProps {
 const Login = ( { setNavbarState} : NavbarProps ) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate(); 
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -29,6 +31,7 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
 
             localStorage.setItem("token", data.token);
             setNavbarState("trip");
+            navigate("/trips"); 
         } catch (err) {
             console.error("Error logging in:", err);
             alert("Network error. Please try again.");
@@ -79,7 +82,7 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
                     <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                             transition duration-200 cursor-pointer hover:bg-green-100" 
                         onClick={() => setNavbarState("signup")}>
-                            <h2 className="text-base">Sign Up</h2> 
+                            <Link to="/signup">Sign Up</Link>
                     </div> 
                 </div>
             </div>

@@ -4,6 +4,7 @@ import ProfileCircle from "../assets/profileCircle";
 import { ChevronDown } from 'lucide-react';
 import ProfileDropDown from "./ProfileDropdown";
 import type { NavbarProps } from "../types/navbarstate";
+import { Link } from "react-router-dom";
 
 const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     const [toggleNavbar, setToggleNavbar] = useState(false);
@@ -11,44 +12,46 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     const [userFname, setUserFname] = useState("");
 
     useEffect(() => {
-            async function fetchUser() {
-                try {
-                    const response = await fetch("http://localhost:5000/api/v1/user/get", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `${localStorage.getItem("token")}`,
-                        },
-                    });
-        
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error("Backend error:", errorText);
-                        throw new Error("Failed to fetch trips");
-                    }
-    
-                    const userdata = await response.json();
-                    setUserFname(userdata.response.firstName);
-                    // console.log(userdata.firstName);
-    
-                } catch (err) {
-                    console.error("Error fetching trips:", err);
-                }
-            }
-    
-            fetchUser();
-        }, []);
+    async function fetchUser() {
+      try {
+        const response = await fetch("http://localhost:5000/api/v1/user/get", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Backend error:", errorText);
+          throw new Error("Failed to fetch user");
+        }
+
+        const userdata = await response.json();
+        setUserFname(userdata.response.firstName);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    }
+
+    if (localStorage.getItem("token")) {
+      fetchUser();
+    }
+  }, [navbarState]); 
+
   
   if (toggleNavbar) {
     return (
       <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
           <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden">
-            <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                    onClick={navbarState === "trip" || navbarState === "content"
-                      ? undefined : () => setNavbarState("hero")
-                    }>
-                  TripBucket
-            </h1>
+            <Link to="/">
+              <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
+                      onClick={navbarState === "trip" || navbarState === "content"
+                        ? undefined : () => setNavbarState("hero") }>
+                    TripBucket
+              </h1>
+            </Link>
             <div className={`border border-transparent hover:border hover:border-green-800 rounded-lg p-1
             ${navbarState === "trip" || navbarState === "content" ? "hidden" : 'flex'}`}       
                 onClick={() => setToggleNavbar(!toggleNavbar)} >
@@ -71,18 +74,22 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
                 </h2>
               </div> */}
               <div className="flex items-center justify-center border-b border-gray-400 w-xs">
+                <Link to="/login">
                 <h2 className="md:text-lg text-base tracking-wide cursor-pointer text-green-800 hover:text-green-600 
                     transition duration-200 pb-2"
                     onClick={() => {setNavbarState("login"); setToggleNavbar(false)}}>
                   Log In
                 </h2>
+                </Link>
               </div>
               <div className="flex items-center justify-center border-b border-gray-400 w-xs">
+                <Link to="/signup">
                 <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 
                     transition duration-200 pb-2"
                     onClick={() => {setNavbarState("signup"); setToggleNavbar(false)}}>
                   Sign Up
                 </h2>
+                </Link>
               </div>
               
           </div>
@@ -98,11 +105,13 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
         <div className="flex justify-between md:mx-20 mx-5 items-center w-full">
           <div className="flex lg:gap-20 gap-10 items-center">
             <div className="flex items-center">
+              <Link to="/">
               <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
                   onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
                     ? undefined : () => setNavbarState("hero")}>
                 TripBucket
               </h1>
+              </Link>
             </div>
             {/* <div className={`flex lg:gap-10 gap-5 items-center 
               ${(navbarState === 'login' || navbarState === 'signup' || 
@@ -121,21 +130,25 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           </div>
           
           <div className={`flex gap-5 items-center 
-            ${(navbarState === "trip" || navbarState === "content" || navbarState === "profile") ? 'hidden' : ''}`}>
+            ${(navbarState === "hero" ) ? '' : 'hidden'}`}>
             <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                             transition duration-200 cursor-pointer hover:bg-green-100"
                 onClick={() => setNavbarState("login")}>
-              <h2 className="text-lg">
-                Log In
-              </h2>
+              <Link to="/login">
+                <h2 className="text-lg">
+                  Log In
+                </h2>
+              </Link>
             </div>
 
             <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 border-2 border-transparent
                             transition duration-200 cursor-pointer hover:bg-green-700"
                 onClick={() => setNavbarState("signup")}>
-              <h2 className="text-lg">
-                Sign Up
-              </h2> 
+              <Link to="/signup">
+                <h2 className="text-lg">
+                  Sign Up
+                </h2> 
+              </Link>
             </div>  
           </div>
 
@@ -167,13 +180,14 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
               <Bars />
           </div>
       </div>
+
       {toggleProfileDropdown && 
       <ProfileDropDown 
           // navbarState={navbarState} 
           setNavbarState={setNavbarState} 
           setToggleProfileDropdown={setToggleProfileDropdown}
       /> }
-
+      
     </div>
   );
 };

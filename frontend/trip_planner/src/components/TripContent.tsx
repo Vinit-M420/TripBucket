@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { Link } from "react-router-dom";
 import PlusCircle from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
@@ -7,7 +8,7 @@ import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
 import type { TripContentType } from '../types/TripContentType';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
-import { FileText, Play , Image, Link, EllipsisVertical, X } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X } from 'lucide-react';
 
 
 const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
@@ -64,12 +65,13 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
-                    <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
-                                    transition duration-200 cursor-pointer hover:bg-green-700"
-                        onClick={() => setNavbarState("trip")}>
-                        <Left />
-                    </div> 
-
+                    <Link to='/trips'>
+                        <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
+                                        transition duration-200 cursor-pointer hover:bg-green-700"
+                            onClick={() => setNavbarState("trip")}>
+                            <Left />
+                        </div>
+                    </Link> 
                     <h1 className="text-green-800 text-2xl font-bold">
                         {tripName} Itinerary 
                     </h1>      
@@ -80,7 +82,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                     {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
-                        { key: "link", label: "Links", icon: <Link /> },
+                        { key: "LinkIcon", label: "LinkIcons", icon: <LinkIcon /> },
                         { key: "video", label: "Videos", icon: <Play /> },
                         { key: "image", label: "Images", icon: <Image /> },
                     ].map(({ key, label, icon }) => (
@@ -107,11 +109,11 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                             className="mb-5 break-inside-avoid border-2 border-green-200 rounded-xl p-4 
                                         shadow hover:shadow-lg transition">
                             <div className='flex justify-between'>  
-                                <div className='flex gap-2 items-center text-green-800'>
+                                <div className='flex gap-2 items-center text-green-800 mb-1'>
                                     {item.type === "note"  && <FileText className='size-5' /> }
                                     {item.type === "image" && <Image className='size-5' /> }
                                     {item.type === "video" && <Play className='size-5' /> }
-                                    {item.type === "link"  && <Link className='size-5' /> }
+                                    {item.type === "link"  && <LinkIcon className='size-5' /> }
                                     <h3 className="font-semibold text-lg text-green-800">
                                         {item.title }
                                     </h3>
@@ -148,7 +150,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                             )}
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" className="text-blue-600 underline" >
-                                    Visit Link
+                                    Visit LinkIcon
                                 </a>
                             )}
                             {item.type === "video" && (() => {
@@ -168,7 +170,6 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                             </div>
                                         </a>
                                     </div>
-
                                 ) : (
                                     <a href={item.value} target="_blank" className="text-red-500 underline">
                                     Watch Video

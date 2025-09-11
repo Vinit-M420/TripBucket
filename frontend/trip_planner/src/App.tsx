@@ -44,7 +44,12 @@ function App() {
             />
         } />
 
-        <Route path="/public/:shareId" element={<PublicContent />} />
+        <Route path="/public/:shareId" element={
+          <PublicContent 
+            setNavbarState={setNavbarState} 
+            navbarState={'hero'}  
+            />
+          } />
       </Routes>
     </div>
 
