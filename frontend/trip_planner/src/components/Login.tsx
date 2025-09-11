@@ -28,7 +28,7 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
             }
 
             localStorage.setItem("token", data.token);
-            setNavbarState("profile");
+            setNavbarState("trip");
         } catch (err) {
             console.error("Error logging in:", err);
             alert("Network error. Please try again.");

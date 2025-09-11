@@ -7,10 +7,12 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import YourTrips from './components/YourTrips';
 import TripContent from './components/TripContent';
+import Top3 from './components/Top3';
+import PublicContent from './components/PublicContent';
 
 
 function App() {
- const [navbarState, setNavbarState] =  useState<NavbarState>(localStorage.getItem("token") ? "profile" : "hero");
+ const [navbarState, setNavbarState] =  useState<NavbarState>(localStorage.getItem("token") ? "trip" : "hero");
 
  const [selectedTripId, setSelectedTripId] = useState<string | null>(null);
  const [selectedTripName, setSelectedTripName] = useState<string | null>(null);
@@ -20,12 +22,16 @@ function App() {
       <Navbar navbarState={navbarState} setNavbarState={setNavbarState} />
       
       <div className="flex-1">
-        {navbarState === 'hero' && <Hero />}
+        {navbarState === 'hero' && 
+          (<div>
+            <Hero setNavbarState={setNavbarState} navbarState={'hero'} />
+            <Top3 setNavbarState={setNavbarState} navbarState={'hero'} />
+          </div>
+        )}
         {navbarState === 'login' && <Login setNavbarState={setNavbarState} />}
         {navbarState === 'signup' && <Signup setNavbarState={setNavbarState} />}
-        {navbarState === 'profile' && 
+        {navbarState === 'trip' && 
           <YourTrips 
-            
             setNavbarState={setNavbarState} 
             setSelectedTripId={setSelectedTripId}
             setSelectedTripName={setSelectedTripName}/>
@@ -37,6 +43,12 @@ function App() {
             tripName={selectedTripName}
             setNavbarState={setNavbarState}
             />
+        }
+
+        {navbarState ==='public' && 
+          <PublicContent 
+          
+          />
         }
         
       </div>
