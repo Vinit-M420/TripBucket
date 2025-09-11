@@ -1,4 +1,4 @@
-export const fetchContent = async (tripId:string) => {
+export const fetchContent = async (tripId:string | null) => {
   try {
     const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}/all`, {
       method: "GET",

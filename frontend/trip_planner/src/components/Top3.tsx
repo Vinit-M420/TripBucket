@@ -1,4 +1,5 @@
-import type { NavbarProps } from "../types/navbarstate"
+import type { NavbarProps } from "../types/navbarstate";
+import { Link } from "react-router-dom";
 
 
 const Top3 = ({setNavbarState} : NavbarProps ) => {
@@ -11,10 +12,12 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
 
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
                             lg:w-6xl md:w-2xl w-sm my-10">
-               
-                <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer
+                <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2
                                 md:hover:translate-y-3 transition-all duration-200"
-                    onClick={() => {setNavbarState("public")}}>  
+                    onClick={() => {
+                        //navigate("/public/icelandbaby");
+                        setNavbarState("public");
+                    }}>  
                     <img src="https://images.unsplash.com/photo-1500043357865-c6b8827edf10?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     className="w-full h-[70%] min-h-60 rounded-t-lg" />
                     <h1 className='text-green-800 text-xl font-semibold mx-5'>
@@ -24,16 +27,22 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                         Land of Fire & Ice—where glaciers and volcanoes meet.
                         Explore hot springs, black beaches, waterfalls, and northern lights.
                     </h2>
-
+                    
                     <button className="bg-green-800 text-white hover:bg-green-700 transition-all duration-200 
                     cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"> 
-                        <h3 className='text-lg'>View</h3>
+                        <Link to="/public/icelandbaby">
+                            <h3 className='text-lg'>View</h3>
+                        </Link>
                     </button>
-                </div>
 
-                 <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer
+                </div>   
+
+                 <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2
                                 md:hover:translate-y-3 transition-all duration-200"
-                    onClick={() => {setNavbarState("public")}}>  
+                    onClick={() => { 
+                        //navigate("/public/icelandbaby");
+                        // setNavbarState("public");
+                    }}>  
                     <img src="https://plus.unsplash.com/premium_photo-1661964177687-57387c2cbd14?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     className="w-full h-[70%] min-h-60 rounded-t-lg" />
                     <h1 className='text-green-800 text-xl font-semibold mx-5'>
@@ -49,9 +58,12 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                     </button>
                 </div>
 
-                 <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer
+                 <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 
                                 md:hover:translate-y-2 transition-all duration-200"
-                    onClick={() => {setNavbarState("public")}}>  
+                    onClick={() => {
+                        //navigate("/public/icelandbaby");
+                        // setNavbarState("public");
+                    }}>  
                     <img src="https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     className="w-full h-[70%] min-h-60 rounded-t-lg" />
                     <h1 className='text-green-800 text-xl font-semibold mx-5'>
@@ -73,4 +85,4 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
     )
 }
 
-export default Top3
+export default Top3;

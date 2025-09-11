@@ -19,7 +19,7 @@ const ProfileDropDown = ({ setNavbarState ,setToggleProfileDropdown }: ProfileDr
             <div className='flex gap-2 border-2 border-stone-500 p-2 rounded-xl cursor-pointer 
                 hover:bg-stone-100 hover:border-green-800'
                 onClick={() => {
-                        localStorage.removeItem("Authorization");
+                        localStorage.removeItem("token");
                         setToggleProfileDropdown(false);
                         setNavbarState("hero");
                         

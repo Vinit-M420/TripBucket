@@ -44,8 +44,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
       <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
           <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden">
             <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                    onClick={
-                      navbarState === "trip" || navbarState === "content"
+                    onClick={navbarState === "trip" || navbarState === "content"
                       ? undefined : () => setNavbarState("hero")
                     }>
                   TripBucket
@@ -59,7 +58,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           </div>
 
           <div className="flex flex-col gap-10 items-center mt-10">
-            <div className="flex items-center justify-center border-b border-gray-400 w-xs">
+            {/* <div className="flex items-center justify-center border-b border-gray-400 w-xs">
                 <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 
                           transition duration-200 text-center pb-2">
                   Create
@@ -70,7 +69,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
                     transition duration-200 text-center pb-2">
                   Browse
                 </h2>
-              </div>
+              </div> */}
               <div className="flex items-center justify-center border-b border-gray-400 w-xs">
                 <h2 className="md:text-lg text-base tracking-wide cursor-pointer text-green-800 hover:text-green-600 
                     transition duration-200 pb-2"
@@ -94,7 +93,8 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
 
   return (
     <div>
-      <div className="top-0 bg-stone-100 shadow-sm p-4 min-h-[80px] md:flex items-center hidden">
+      <div className=" top-0 left-0 w-full z-50 
+                  bg-stone-100 shadow-sm p-4 min-h-[80px] md:flex items-center hidden">
         <div className="flex justify-between md:mx-20 mx-5 items-center w-full">
           <div className="flex lg:gap-20 gap-10 items-center">
             <div className="flex items-center">

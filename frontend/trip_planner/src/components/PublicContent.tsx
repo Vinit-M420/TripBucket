@@ -4,15 +4,16 @@ import { useParams } from "react-router-dom";
 import Left from '../assets/left';
 import { FileText, Play , Image, Link, EllipsisVertical } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
+import { Link as Linkk } from "react-router-dom";
+
 
 const PublicContent = () => {
-    const { shareId } = useParams(); // from /public/:shareId route
+    const { shareId } = useParams<{ shareId: string }>();
     const [tripName, setTripName] = useState<string | null>(null);
     const [contents, setContents] = useState<ContentItem[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
@@ -48,10 +49,12 @@ const PublicContent = () => {
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
-                    <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
-                                    transition duration-200 cursor-pointer hover:bg-green-700" >
-                        <Left />
-                    </div> 
+                    <Linkk to="/">
+                        <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
+                                        transition duration-200 cursor-pointer hover:bg-green-700" >
+                            <Left /> 
+                        </div> 
+                    </Linkk>
 
                     <h1 className="text-green-800 text-2xl font-bold">
                         {tripName} Itinerary 

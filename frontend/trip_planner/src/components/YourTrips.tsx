@@ -61,7 +61,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
             </h1>      
 
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
-                            lg:w-6xl md:w-2xl w-sm">
+                            lg:w-6xl md:w-2xl w-sm mb-10">
                 { trips.map((trip) => (
                     
                     <div key={trip._id} 

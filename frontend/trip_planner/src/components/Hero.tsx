@@ -5,7 +5,8 @@ import type { NavbarProps } from "../types/navbarstate";
 const Hero = ( {setNavbarState}: NavbarProps) => {
     
     return (
-        <div className="flex flex-col gap-5 justify-center items-center mx-auto h-[calc(100dvh-80px)]">
+        <div>
+        <div className="flex flex-col gap-5 justify-center items-center mx-auto h-screen">
         <h1 className="lg:text-6xl md:text-5xl text-4xl lg:w-4xl md:w-lg w-md text-green-800 font-bold text-center">
             Never Lose Another Travel Idea
         </h1>
@@ -26,6 +27,8 @@ const Hero = ( {setNavbarState}: NavbarProps) => {
             </button>
         </div>
         <img src={heropic} alt="maps" className='md:w-[500px] w-[400px] h-auto' />
+    </div>
+        
     </div>
     
 )}

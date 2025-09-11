@@ -66,7 +66,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 <div className='flex gap-5 my-5'>
                     <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                     transition duration-200 cursor-pointer hover:bg-green-700"
-                        onClick={() => setNavbarState("profile")}>
+                        onClick={() => setNavbarState("trip")}>
                         <Left />
                     </div> 
 
@@ -100,13 +100,11 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                 </div>
                 
                 {/* Content Part */}
-                <div 
-                className={`grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10
-                        `}>
+                <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10`}>
                                 
                     {filteredContent.map((item) => (
                         <div key={item._id}
-                            className="col-span-1 flex flex-col gap-5 border-2 border-green-200 rounded-xl p-4 
+                            className="mb-5 break-inside-avoid border-2 border-green-200 rounded-xl p-4 
                                         shadow hover:shadow-lg transition">
                             <div className='flex justify-between'>  
                                 <div className='flex gap-2 items-center text-green-800'>
@@ -179,7 +177,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                 })()}
 
                             {item.type === 'image' && 
-                                <img src={item.value} className='max-w-lg' ></img>
+                                <img src={item.value} className='column-1' ></img>
                             }
                             </div>
                     )) }                

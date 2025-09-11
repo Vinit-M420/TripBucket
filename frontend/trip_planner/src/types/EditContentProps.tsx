@@ -1,5 +1,5 @@
 export type EditContentProp = {
-    tripId: string;
+    tripId: string | null;
     contentId: number | null;
     toggleEditContent: boolean;
     setToggleEditContent: React.Dispatch<React.SetStateAction<boolean>>;

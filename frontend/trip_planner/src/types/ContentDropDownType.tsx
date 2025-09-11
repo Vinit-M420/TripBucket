@@ -1,5 +1,5 @@
 export type ContentDropDownType = {
-  tripId: string;
+  tripId: string | null;
   contentId: number;
   toggleEditContent: boolean;
   setToggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
