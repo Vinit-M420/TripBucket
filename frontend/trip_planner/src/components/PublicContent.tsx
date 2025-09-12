@@ -21,6 +21,8 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
 
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         const fetchPublicTrip = async () => {
         try {
             const res = await fetch(`http://localhost:5000/api/v1/trip/public/${shareId}`);
@@ -35,6 +37,10 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
         fetchPublicTrip();
     }, [shareId]);
 
+
+    const filteredContent =
+    contentType === "all" ? contents : contents.filter((c) => c.type === contentType);
+
     const getYouTubeId = (url: string) => {
         const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
         const match = url.match(regex);
@@ -46,7 +52,6 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
 
     return (
         <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
-
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
@@ -88,13 +93,11 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                 </div>
                 
                 {/* Content Part */}
-                <div 
-                className={`grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10
-                        `}>
+                <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10`}>
                                 
-                    {contents.map((item) => (
+                    {filteredContent.map((item) => (
                         <div key={item._id}
-                            className="col-span-1 flex flex-col gap-5 border-2 border-green-200 rounded-xl p-4 
+                            className="mb-5 break-inside-avoid border-2 border-green-200 rounded-xl p-4 
                                         shadow hover:shadow-lg transition">
                             <div className='flex justify-between'>  
                                 <div className='flex gap-2 items-center text-green-800'>
@@ -159,7 +162,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                                 })()}
 
                             {item.type === 'image' && 
-                                <img src={item.value} className='max-w-lg' ></img>
+                                <img src={item.value} className='column-1' ></img>
                             }
                             </div>
                     )) }                

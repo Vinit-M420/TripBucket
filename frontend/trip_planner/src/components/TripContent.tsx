@@ -61,7 +61,6 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
 
     return (
         <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
-
             <div>   
                 {/* Header  */}
                 <div className='flex gap-5 my-5'>
@@ -150,7 +149,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                             )}
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" className="text-blue-600 underline" >
-                                    Visit LinkIcon
+                                    Visit Link
                                 </a>
                             )}
                             {item.type === "video" && (() => {

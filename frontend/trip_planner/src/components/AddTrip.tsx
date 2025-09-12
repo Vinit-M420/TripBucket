@@ -34,12 +34,20 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
+  ) => {
     const { name, value, type } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "radio" ? value === "public" : value, // radio special case
-    }));
+
+    if (name === "isPublic") {
+      setFormData((prev) => ({
+        ...prev,
+        isPublic: value === "public", 
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,7 +120,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
                 type="radio"
                 name="isPublic"
                 value="public"
-                checked={formData.isPublic === true}
+                checked={formData.isPublic}
                 onChange={handleChange}
               />
               <label className="text-base text-black mr-5">Public</label>
@@ -121,7 +129,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
                 type="radio"
                 name="isPublic"
                 value="private"
-                checked={formData.isPublic === false}
+                checked={!formData.isPublic}
                 onChange={handleChange}
               />
               <label className="text-base text-black">Private</label>

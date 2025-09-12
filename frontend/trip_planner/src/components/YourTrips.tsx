@@ -89,6 +89,7 @@ const YourTrips = ({ setNavbarState,setSelectedTripId, setSelectedTripName }: Yo
                                 <div className="border border-transparent rounded-2xl p-1
                                                 hover:border hover:border-green-800 hover:bg-stone-200"
                                     onClick={(e) => { 
+                                        e.preventDefault();
                                         e.stopPropagation();
                                         navigator.clipboard.writeText(`${window.location.origin}/public/${trip.shareId}`);
                                         setTypeOfAlert('shareurl');

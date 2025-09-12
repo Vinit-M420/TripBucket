@@ -10,6 +10,8 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     const [toggleNavbar, setToggleNavbar] = useState(false);
     const [toggleProfileDropdown, setToggleProfileDropdown] = useState(false);
     const [userFname, setUserFname] = useState("");
+    // const location = useLocation();
+    // const isProtected = location.pathname.startsWith("/trip") || location.pathname.startsWith("/profile");
 
     useEffect(() => {
     async function fetchUser() {
@@ -45,9 +47,9 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     return (
       <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
           <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden">
-            <Link to="/">
+            <Link to={navbarState === "trip" || navbarState === "content" || navbarState === "profile" ? "" : "/"}>
               <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                      onClick={navbarState === "trip" || navbarState === "content"
+                      onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
                         ? undefined : () => setNavbarState("hero") }>
                     TripBucket
               </h1>
@@ -131,25 +133,22 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           
           <div className={`flex gap-5 items-center 
             ${(navbarState === "hero" ) ? '' : 'hidden'}`}>
-            <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
-                            transition duration-200 cursor-pointer hover:bg-green-100"
-                onClick={() => setNavbarState("login")}>
-              <Link to="/login">
-                <h2 className="text-lg">
-                  Log In
-                </h2>
-              </Link>
-            </div>
+            <Link to="/login">
+              <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
+                              transition duration-200 cursor-pointer hover:bg-green-100"
+                  onClick={() => setNavbarState("login")}>
 
-            <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 border-2 border-transparent
-                            transition duration-200 cursor-pointer hover:bg-green-700"
-                onClick={() => setNavbarState("signup")}>
-              <Link to="/signup">
-                <h2 className="text-lg">
-                  Sign Up
-                </h2> 
-              </Link>
-            </div>  
+                  <h2 className="text-lg">Log In</h2>         
+              </div>
+            </Link>
+            <Link to="/signup">
+              <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 border-2 border-transparent
+                              transition duration-200 cursor-pointer hover:bg-green-700"
+                  onClick={() => setNavbarState("signup")}>
+               
+                  <h2 className="text-lg">Sign Up</h2>    
+              </div>
+            </Link> 
           </div>
 
           <div className={`flex gap-3 items-center cursor-pointer 

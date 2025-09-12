@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import heropic from '../images/hero1.png'
 import type { NavbarProps } from "../types/navbarstate";
 
+interface HeroProps extends NavbarProps {
+  scrollToPublic: () => void;
+}
 
-const Hero = ( {setNavbarState}: NavbarProps) => {
+const Hero = ( { scrollToPublic, setNavbarState}:  HeroProps ) => {
     
     return (
         <div>
@@ -23,7 +26,8 @@ const Hero = ( {setNavbarState}: NavbarProps) => {
             
             <button className="bg-transparent border-2 border-green-700 text-green-700 sm:text-base text-sm
                                transition-all duration-200 px-5 py-1 rounded-2xl hover:bg-green-100 
-                               hover:scale-105 hover:-translate-y-0.5 cursor-pointer">
+                               hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
+                    onClick={scrollToPublic}>
                 Browse Public Trips
             </button>
         </div>

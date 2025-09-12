@@ -37,12 +37,26 @@ const TripSchema = new mongoose.Schema({
     updatedAt: Date,
 })
 
-TripSchema.pre("save", function(next) {
-    if (this.isPublic && !this.shareId){
-        this.shareId = nanoid(10);
-    }
-    next();
-})
+TripSchema.pre("updateOne", function (next) {
+  const update = this.getUpdate() as any;
+  
+  if (update.$set?.isPublic && !update.$set.shareId) {
+    update.$set.shareId = nanoid(10);
+    this.setUpdate(update);
+  } else if (update.isPublic && !update.shareId) {
+    update.shareId = nanoid(10);
+    this.setUpdate(update);
+  }
+  next();
+});
+
+TripSchema.pre("save", function (next) {
+  if (this.isPublic && !this.shareId) {
+    this.shareId = nanoid(10);
+  }
+  next();
+});
+
 
 // enum contentTypes { "image" | "link" | "string"};
 

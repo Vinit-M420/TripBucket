@@ -36,7 +36,7 @@ router.post("/", async function (req:CustomRequest, res) {
         })
     }
 
-    const { destination, from_date, to_date, bannerURL } = req.body;
+    const { destination, from_date, to_date, bannerURL, isPublic } = req.body;
     let existingTrip = await TripModel.findOne({ userId, destination }); 
     if (existingTrip){
         return res.status(HttpStatusCode.Forbidden).json({
@@ -46,7 +46,7 @@ router.post("/", async function (req:CustomRequest, res) {
 
     try{
         const trip = await TripModel.create({
-            userId , destination, from_date, to_date, bannerURL
+            userId , destination, from_date, to_date, bannerURL, isPublic
         });
 
         if (!trip){
@@ -105,7 +105,7 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
         const editBody = req.body;
         const updatedResult = await TripModel.updateOne( {_id: id, userId: userId },
                                                         editBody,
-                                                        { runValidators: true })
+                                                        { runValidators: true  })
         
         if (updatedResult.modifiedCount === 0){
             return res.status(HttpStatusCode.BadRequest).json({
@@ -154,28 +154,28 @@ router.delete("/delete/:id", async function (req:CustomRequest, res) {
     }
 });
 
-router.patch("/public/:id" , async function (req:CustomRequest, res) {
-    const userId = req.userId;
-    const { id } = req.params;
+// router.patch("/public/:id" , async function (req:CustomRequest, res) {
+//     const userId = req.userId;
+//     const { id } = req.params;
 
-    const trip = await TripModel.findOne({ userId, _id: id });
-    if (!trip) {
-        return res.status(HttpStatusCode.Unauthorized).json({
-            message: "No trip found"
-        });
-    }
-    try{
-        trip.isPublic = !trip.isPublic;
-        await trip.save();
-        res.status(HttpStatusCode.Ok).json({
-            message: `Trip is now ${trip.isPublic ? "public" : "private"}`,
-            trip
-        });
-    }catch{
-        res.status(HttpStatusCode.ServerError).json({
-            error: "Server Error: Error in changing the trip's access"
-        })
-    }
-});
+//     const trip = await TripModel.findOne({ userId, _id: id });
+//     if (!trip) {
+//         return res.status(HttpStatusCode.Unauthorized).json({
+//             message: "No trip found"
+//         });
+//     }
+//     try{
+//         trip.isPublic = !trip.isPublic;
+//         await trip.save();
+//         res.status(HttpStatusCode.Ok).json({
+//             message: `Trip is now ${trip.isPublic ? "public" : "private"}`,
+//             trip
+//         });
+//     }catch{
+//         res.status(HttpStatusCode.ServerError).json({
+//             error: "Server Error: Error in changing the trip's access"
+//         })
+//     }
+// });
 
 export default router;
