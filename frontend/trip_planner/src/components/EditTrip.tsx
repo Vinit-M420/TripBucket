@@ -3,7 +3,7 @@ import type { tripInterface } from '../types/tripInterface';
 import { X } from 'lucide-react';
 import type { EditTripProps } from '../types/EditTripProps';
 
-const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
+const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
 
     const [isPublic, setIsPublic] = useState<boolean>(true);
     const [trip, setTrip] = useState<tripInterface | null>(null);
@@ -89,7 +89,7 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
     return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
       <div ref={modalRef} 
-            className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-md shadow relative">
+            className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative">
               <button
                 aria-label="Close modal"
                 onClick={handleClose}
@@ -97,10 +97,10 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
                 <X size={30} /> 
             </button>  
         <div className="flex flex-col justify-center items-center">
-          <h1 className="text-3xl text-black font-bold">Edit Trip</h1>
+          <h1 className="md:text-3xl text-2xl text-black font-bold">Edit Trip</h1>
 
-          <form className="md:w-md w-sm py-4" onSubmit={handleSubmit}>
-            <label className="text-base text-black pl-2">Destination *</label><br/>
+          <form className="md:w-md w-xs py-4" onSubmit={handleSubmit}>
+            <label className="md:text-base text-sm text-black pl-2">Destination *</label><br/>
             <input
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 mb-4 shadow border-1 border-green-800 placeholder:text-green-600"
               type="text"
@@ -111,7 +111,7 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
 
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-1 flex flex-col">
-                <label className="text-base text-black pl-2">From Date</label>
+                <label className="md:text-base text-sm text-black pl-2">From Date</label>
                 <input
                   type="date"
                   value={trip.from_date ? trip.from_date.split("T")[0] : ""}
@@ -121,7 +121,7 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
               </div>
 
               <div className="col-span-1 flex flex-col">
-                <label className="text-base text-black pl-2">To Date</label>
+                <label className="md:text-base text-sm text-black pl-2">To Date</label>
                 <input
                   type="date"
                   value={trip.to_date ? trip.to_date.split("T")[0] : ""}
@@ -131,16 +131,16 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
               </div>
             </div>
 
-            <label className="text-base text-black pl-2">Status</label>
+            <label className="md:text-base text-sm text-black pl-2">Status</label>
             <div className="flex gap-2 pl-2 mt-2 mb-4">
               <input type="radio" checked={isPublic} onChange={() => setIsPublic(true)} />
-              <label className="text-base text-black mr-5">Public</label>
+              <label className="md:text-base text-sm text-black mr-5">Public</label>
 
               <input type="radio" checked={!isPublic} onChange={() => setIsPublic(false)} />
-              <label className="text-base text-black">Private</label>
+              <label className="md:text-base text-sm text-black">Private</label>
             </div>
 
-            <label className="text-base text-black pl-2">Banner URL</label><br/>
+            <label className="md:text-base text-sm text-black pl-2">Banner URL</label><br/>
             <input
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800 placeholder:text-green-600"
               value={trip.bannerURL || ""}
@@ -148,9 +148,8 @@ const EditTrip = ( { tripId, setToggleEditTrip, onClose, refreshTrips }: EditTri
               type="text"
             />
 
-            <button
-                className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 
-                text-lg border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
+            <button className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 md:text-lg text-md 
+                border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
                 type="submit">Save Changes
             </button>
           </form>

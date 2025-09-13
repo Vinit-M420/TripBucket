@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 import type { AddContentProp } from "../types/AddContentProp";
 
 
-const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshContent, onClose }: AddContentProp) => {
+const AddContent = ({tripId, toggleAddContent, setToggleAddContent, refreshContent, onClose}: AddContentProp) => {
     
   const modalRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
@@ -55,7 +55,7 @@ const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshCont
     return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
       <div ref={modalRef}
-        className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-md shadow relative" >
+        className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative" >
         <button
           aria-label="Close modal"
           onClick={handleClose}
@@ -64,11 +64,11 @@ const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshCont
         </button>
 
         <div className="flex flex-col justify-center items-center">
-          <h1 className="text-3xl text-black font-bold">Add Content</h1>
+          <h1 className="md:text-3xl text-2xl text-black font-bold">Add Content</h1>
           {/* <h2 className="text-base text-green-800">One Trip at a Time</h2> */}
-          <form className="md:w-md w-sm py-4" onSubmit={handleSubmit}>
+          <form className="md:w-md w-xs py-4" onSubmit={handleSubmit}>
             
-            <label className="text-base text-black pl-2">Type</label>
+            <label className="md:text-base text-sm text-black pl-2">Type</label>
             <div>
                   <select name="type" value={formData.type} onChange={handleChange}
                   className="bg-green-100 rounded-2xl w-full p-3 mx-auto mt-2 shadow border-1 border-green-800">
@@ -77,23 +77,24 @@ const AddContent = ({ tripId, toggleAddContent, setToggleAddContent, refreshCont
                     <option value="image">Image</option>
                     <option value="video">Video</option>
                 </select>
-            </div><br />
+            </div> <br />
 
-            <label className="text-base text-black pl-2">Title</label>
+            <label className="md:text-base text-sm text-black pl-2">Title</label>
             <br />
             <input
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 mb-4 shadow border-1 border-green-800 placeholder:text-green-600"
               type="text" name="title" value={formData.title} onChange={handleChange} />
             <br />
 
-            <label className="text-base text-black pl-2">Value</label>
+            <label className="md:text-base text-sm text-black pl-2">Value</label>
             <br />
             <textarea name="value" rows={4} cols={40} value={formData.value} onChange={handleChange}
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
             />
 
             <button
-              className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 text-lg border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
+              className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 md:text-lg text-md 
+              border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
               type="submit" >
               Save Content
             </button>

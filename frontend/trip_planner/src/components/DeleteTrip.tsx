@@ -80,7 +80,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refr
 
     return (
         <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
-            <div className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-md shadow relative">
+            <div className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative">
                 <button
                     aria-label="Close modal"
                     onClick={handleClose}
@@ -89,20 +89,20 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refr
                     <X size={30} /> 
                 </button>  
                 <div className="flex flex-col justify-center items-center">
-                    <h1 className="text-3xl text-black font-bold">Delete {trip}</h1>
+                    <h1 className="md:text-3xl text-2xl text-black font-bold">Delete {trip}</h1>
 
                     <h2 className='my-5'>Are you sure you want to Delete?</h2>
                     <div className={`flex gap-5 items-center`}>
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 border-2 border-transparent
                                         transition duration-200 cursor-pointer hover:bg-green-700"
                             onClick={handleDelete}>
-                            <h2 className="text-lg">Delete</h2> 
+                            <h2 className="md:text-lg text-sm">Delete</h2> 
                         </div>  
 
                         <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                                         transition duration-200 cursor-pointer hover:bg-green-100"
                             onClick={handleClose}>
-                            <h2 className="text-lg">Cancel</h2>
+                            <h2 className="md:text-lg text-sm">Cancel</h2>
                         </div>                      
                     </div>
                 </div>

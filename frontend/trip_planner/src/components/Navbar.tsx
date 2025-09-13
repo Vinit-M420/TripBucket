@@ -55,8 +55,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
             ${navbarState === "trip" || navbarState === "content" ? "hidden" : 'flex'}`}       
                 onClick={() => setToggleNavbar(!toggleNavbar)} >
                 <Bars />
-            </div>
-              
+            </div>           
           </div>
 
           <div className="flex flex-col gap-10 items-center mt-10">
@@ -162,7 +161,8 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
               onClick={() => setToggleNavbar(!toggleNavbar)} >
               <Bars />
           </div>
-          <div className={`flex gap-3 items-center cursor-pointer 
+
+          <div className={`flex gap-3 items-center cursor-pointer hover:bg-stone-200
                 ${(navbarState === "trip" || navbarState === 'content') ? '' : "hidden"}`}
                 onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
               <CircleUser className="size-5" />

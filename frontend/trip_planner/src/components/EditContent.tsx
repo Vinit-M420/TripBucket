@@ -88,7 +88,7 @@ const EditContent = (
     return (
     <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
       <div ref={modalRef}
-        className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-md shadow relative" >
+        className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative" >
         <button
           aria-label="Close modal"
           onClick={handleClose}
@@ -97,10 +97,10 @@ const EditContent = (
         </button>
 
         <div className="flex flex-col justify-center items-center">
-          <h1 className="text-3xl text-black font-bold">Edit Content</h1>
-          <form className="md:w-md w-sm py-4" onSubmit={handleSubmit}>
+          <h1 className="md:text-3xl text-2xl text-black font-bold">Edit Content</h1>
+          <form className="md:w-md w-xs py-4" onSubmit={handleSubmit}>
             
-            <label className="text-base text-black pl-2">Type</label>
+            <label className="md:text-base text-sm text-black pl-2">Type</label>
             <div>
                   <select name="type" value={EditformData.type} onChange={handleChange}
                   className="bg-green-100 rounded-2xl w-full p-3 mx-auto mt-2 shadow border-1 border-green-800">
@@ -111,23 +111,23 @@ const EditContent = (
                 </select>
             </div><br />
 
-            <label className="text-base text-black pl-2">Title</label>
+            <label className="md:text-base text-sm text-black pl-2">Title</label>
             <br />
             <input
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 mb-4 shadow border-1 border-green-800 placeholder:text-green-600"
               type="text" name="title" value={EditformData.title} onChange={handleChange} />
             <br />
 
-            <label className="text-base text-black pl-2">Value</label>
+            <label className="md:text-base text-sm text-black pl-2">Value</label>
             <br />
             <textarea name="value" rows={4} cols={40} value={EditformData.value} onChange={handleChange}
               className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-80"
               
             />
 
-            <button
-              className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 text-lg border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
-              type="submit" >
+            <button className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 md:text-lg text-sm border-2 
+              border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
+              type="submit">
               Save Changes
             </button>
           </form>

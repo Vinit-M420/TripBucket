@@ -54,9 +54,9 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
     }
 
     return (
-        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
+        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10">
         <div>
-            <h1 className="text-green-800 text-2xl font-semibold my-5">
+            <h1 className="text-green-800 md:text-2xl text-xl font-semibold my-5">
                 {trips.length > 0 ? "Your Trips" : 'You have no trips yet'}                     
             </h1>      
 
