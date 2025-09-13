@@ -15,8 +15,6 @@ import { type NavbarState } from './types/navbarstate';
 function App() {
  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
  const [navbarState, setNavbarState] =  useState<NavbarState>(token ? "trip" : "hero");
- const [selectedTripId, setSelectedTripId] = useState<string | null>(null);
- const [selectedTripName, setSelectedTripName] = useState<string | null>(null);
  const publicRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -76,21 +74,14 @@ function App() {
         <Route path="/trips" 
             element={
               token
-                ? <YourTrips 
-                    setNavbarState={setNavbarState} 
-                    setSelectedTripId={setSelectedTripId} 
-                    setSelectedTripName={setSelectedTripName} /> 
+                ? <YourTrips setNavbarState={setNavbarState} navbarState={'trip'} /> 
                 :  <Navigate replace to={"/"} />
           }
-        />
-        
+        />      
 
         <Route path="/trip/:tripId" element={
           <TripContent 
-            tripId={selectedTripId} 
-            tripName={selectedTripName}
-            setNavbarState={setNavbarState}
-            />
+            setNavbarState={setNavbarState} navbarState={'content'} />
         } />
 
         <Route path="/public/:shareId" element={

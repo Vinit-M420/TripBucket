@@ -76,7 +76,7 @@ router.get("/all", async function (req:CustomRequest, res) {
 router.get("/single/:tripId", async function (req:CustomRequest, res) {
     const userId = req.userId
     const { tripId } = req.params;
-    const trip = await TripModel.find({ userId, _id: tripId })
+    const trip = await TripModel.findOne({ userId, _id: tripId })
     res.json({ trip })
 });
 

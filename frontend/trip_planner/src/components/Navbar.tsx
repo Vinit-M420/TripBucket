@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Bars } from "../assets/bars";
-import ProfileCircle from "../assets/profileCircle";
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, CircleUser  } from 'lucide-react';
 import ProfileDropDown from "./ProfileDropdown";
 import type { NavbarProps } from "../types/navbarstate";
 import { Link } from "react-router-dom";
@@ -10,8 +9,6 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     const [toggleNavbar, setToggleNavbar] = useState(false);
     const [toggleProfileDropdown, setToggleProfileDropdown] = useState(false);
     const [userFname, setUserFname] = useState("");
-    // const location = useLocation();
-    // const isProtected = location.pathname.startsWith("/trip") || location.pathname.startsWith("/profile");
 
     useEffect(() => {
     async function fetchUser() {
@@ -46,7 +43,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
   if (toggleNavbar) {
     return (
       <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
-          <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden">
+          <div className="flex justify-between mx-2 p-4 min-h-[60px] items-center md:hidden">
             <Link to={navbarState === "trip" || navbarState === "content" || navbarState === "profile" ? "" : "/"}>
               <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
                       onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
@@ -115,20 +112,6 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
               </h1>
               </Link>
             </div>
-            {/* <div className={`flex lg:gap-10 gap-5 items-center 
-              ${(navbarState === 'login' || navbarState === 'signup' || 
-                navbarState === "trip" || navbarState === 'content') ? 'hidden' : ''}`}>
-              <div className="flex items-center">
-                <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 transition duration-200">
-                  Create
-                </h2>
-              </div>
-              <div className="flex items-center">
-                <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 transition duration-200">
-                  Browse
-                </h2>
-              </div>
-            </div> */}
           </div>
           
           <div className={`flex gap-5 items-center 
@@ -154,7 +137,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           <div className={`flex gap-3 items-center cursor-pointer 
                 ${(navbarState === "trip" || navbarState === 'content') ? '' : "hidden"}`}
                 onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
-              <ProfileCircle  />
+              <CircleUser className="size-7"  />
               <div className="flex items-center">
                 <h2 className="font-bold text-xl">Hi {userFname}</h2>
               </div>
@@ -164,19 +147,30 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
 
         </div>
       </div>
-      <div className="flex justify-around p-4 min-h-[60px] items-center md:hidden shadow-sm">
-          <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
-                  onClick={
-                      navbarState === "trip" || navbarState === "content"
-                        ? undefined
-                        : () => setNavbarState("hero")
-                    }>
-                TripBucket
-          </h1>
+      <div className="flex justify-between p-4 min-h-[60px] items-center md:hidden shadow-sm mx-2">
+           <Link to="/">
+              <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
+                      onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
+                            ? undefined
+                            : () => setNavbarState("hero")
+                          }>
+                    TripBucket
+              </h1>
+          </Link>
           <div className={`border border-transparent hover:border hover:border-green-800 rounded-lg p-1
-                ${(navbarState === 'login' || navbarState === 'signup' || navbarState === "trip" || navbarState === 'content') ? 'hidden' : ''}`}
+                ${(navbarState === 'hero') ? '' : 'hidden'}`}
               onClick={() => setToggleNavbar(!toggleNavbar)} >
               <Bars />
+          </div>
+          <div className={`flex gap-3 items-center cursor-pointer 
+                ${(navbarState === "trip" || navbarState === 'content') ? '' : "hidden"}`}
+                onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
+              <CircleUser className="size-5" />
+              <div className="flex items-center">
+                <h2 className="font-bold text-md">Hi {userFname}</h2>
+              </div>
+              <ChevronDown  
+                className={`size-5 transition-transform duration-200 ${toggleProfileDropdown ? 'rotate-180' : 'rotate-0'}`}/>
           </div>
       </div>
 

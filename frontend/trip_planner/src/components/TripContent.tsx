@@ -1,18 +1,20 @@
 import { useEffect, useState, useRef } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PlusCircle from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
 import AddContent from './AddContent';
 import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
-import type { TripContentType } from '../types/TripContentType';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X } from 'lucide-react';
+import { fetchTripName } from '../utils/fetchTripname';
+import type { NavbarProps } from '../types/navbarstate';
 
 
-const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
-
+const TripContent = ({setNavbarState}: NavbarProps) => {
+    const { tripId } = useParams();
+    const [tripName, setTripName] = useState<string | null>(null);
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [content, setContent] = useState<ContentItem[]>([])
@@ -26,11 +28,27 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
 
     useEffect(() => {
-        const loadContent = async () => {
-            const response = await fetchContent(tripId);
-            setContent(response)
-            console.log(content);
+        if (!tripId) return;
+
+        const loadTripName = async () => {
+        try {
+            const destination = await fetchTripName(tripId);
+            setTripName(destination);
+        } catch (error) {
+            console.error('Error loading trip name:', error);
+        }
         };
+
+    const loadContent = async () => {
+        try {
+            const response = await fetchContent(tripId);
+            setContent(response);
+        } catch (error) {
+            console.error('Error loading content:', error);
+        }
+    };      
+
+        loadTripName();
         loadContent();
     }, [tripId]);
 
@@ -48,8 +66,9 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
     contentType === "all" ? content : content.filter((c) => c.type === contentType);
 
     const refreshContent = async () => {
-            const tripsContent = await fetchContent(tripId);
-            setContent(tripsContent);
+        if (!tripId) return;
+        const tripsContent = await fetchContent(tripId);
+        setContent(tripsContent);
     }
 
     const getYouTubeId = (url: string) => {
@@ -81,7 +100,7 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                     {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
-                        { key: "LinkIcon", label: "LinkIcons", icon: <LinkIcon /> },
+                        { key: "LinkIcon", label: "Link", icon: <LinkIcon /> },
                         { key: "video", label: "Videos", icon: <Play /> },
                         { key: "image", label: "Images", icon: <Image /> },
                     ].map(({ key, label, icon }) => (
@@ -148,8 +167,9 @@ const TripContent = ({tripId, tripName, setNavbarState}: TripContentType) => {
                                 </p>
                             )}
                             {item.type === "link" && (
-                                <a href={item.value} target="_blank" className="text-blue-600 underline" >
-                                    Visit Link
+                                <a href={item.value} target="_blank" 
+                                className="text-blue-600 underline w-full" >
+                                    {/* Visit Link */} {item.value}
                                 </a>
                             )}
                             {item.type === "video" && (() => {
