@@ -6,13 +6,13 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
     const navigate = useNavigate(); 
 
     return (
-        <div className="my-25  bg-stone-50">
+        <div className="my-25 bg-stone-50">
             <div className="flex items-center mx-auto justify-center">
-                <h3 className="font-semibold text-4xl text-green-800 ">Public Trips</h3>
+                <h3 className="font-semibold md:text-4xl text-3xl text-green-800 ">Public Trips</h3>
             </div>
 
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
-                            lg:w-6xl md:w-2xl w-sm my-10">
+                            lg:w-6xl md:w-2xl w-xs my-10">
                 <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2
                                 md:hover:translate-y-3 transition-all duration-200"
                     onClick={() => {
@@ -24,7 +24,7 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                     <h1 className='text-green-800 text-xl font-semibold mx-5'>
                         Iceland
                     </h1>
-                    <h2 className='text-green-600 text-md mx-5'>
+                    <h2 className='text-green-600 md:text-md text-sm mx-5'>
                         Land of Fire & Ice—where glaciers and volcanoes meet.
                         Explore hot springs, black beaches, waterfalls, and northern lights.
                     </h2>
@@ -32,7 +32,7 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                     <button className="bg-green-800 text-white hover:bg-green-700 transition-all duration-200 
                     cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"> 
                         <Link to="/public/icelandbaby">
-                            <h3 className='text-lg'>View</h3>
+                            <h3 className='md:text-lg text-md'>View</h3>
                         </Link>
                     </button>
 
@@ -49,13 +49,13 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                     <h1 className='text-green-800 text-xl font-semibold mx-5'>
                         Japan
                     </h1>
-                    <h2 className='text-green-600 text-md mx-5'>
+                    <h2 className='text-green-600 md:text-md text-sm mx-5'>
                         A stunning fusion of ancient temples and neon-lit cities.
                         Cherry blossoms, traditions, and world-famous cuisine await.    
                     </h2>
                     <button className="bg-green-800 text-white hover:bg-green-700 transition-all duration-200 
                     cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"> 
-                        <h3 className='text-lg'>View</h3>
+                        <h3 className='md:text-lg text-md'>View</h3>
                     </button>
                 </div>
 
@@ -70,13 +70,13 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                     <h1 className='text-green-800 text-xl font-semibold mx-5'>
                         Vietnam
                     </h1>
-                    <h2 className='text-green-600 text-md mx-5'>
+                    <h2 className='text-green-600 md:text-md text-sm mx-5'>
                         From emerald mountains to golden beaches and street food.
                         A vibrant blend of culture, nature, and adventure in Southeast Asia.
                     </h2>
                     <button className="bg-green-800 text-white hover:bg-green-700 transition-all duration-200 
                     cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"> 
-                        <h3 className='text-lg'>View</h3>
+                        <h3 className='md:text-lg text-md'>View</h3>
                     </button>
                 </div>
             
