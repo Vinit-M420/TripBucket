@@ -18,11 +18,13 @@ const Hero = ( { scrollToPublic, setNavbarState}:  HeroProps ) => {
             Organize ideas, photos, videos, and notes for every destination. Create detailed itineraries others can follow.
         </h4>
         <div className='flex justify-evenly gap-5'>
-            <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 sm:text-base text-sm
-            transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
-            onClick={() => setNavbarState('signup')}>
-                <Link to='signup'>Create Your Bucket list</Link>
-            </button>
+            <Link to='signup'>
+                <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 sm:text-base text-sm
+                transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
+                onClick={() => setNavbarState('signup')}>
+                    Create Your Bucket list
+                </button>
+            </Link>
             
             <button className="bg-transparent border-2 border-green-700 text-green-700 sm:text-base text-sm
                                transition-all duration-200 px-5 py-1 rounded-2xl hover:bg-green-100 
