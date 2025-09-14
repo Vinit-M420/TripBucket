@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import type { tripInterface } from '../types/tripInterface';
 import { X } from 'lucide-react';
 import type { EditTripProps } from '../types/EditTripProps';
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
 
@@ -12,7 +13,7 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
     useEffect(() => {
         const fetchTrip = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/trip/single/${tripId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/trip/single/${tripId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +60,7 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
             to_date: trip.to_date ? new Date(trip.to_date).toISOString() : '',
             bannerURL: trip.bannerURL,
           };
-          const response = await fetch(`http://localhost:5000/api/v1/trip/edit/${tripId}`, {
+          const response = await fetch(`${API_BASE}/api/v1/trip/edit/${tripId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

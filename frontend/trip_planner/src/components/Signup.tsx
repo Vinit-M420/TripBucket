@@ -1,10 +1,9 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import type { NavbarState } from "../types/navbarstate";
+const API_BASE = import.meta.env.VITE_API_URL; 
 
-interface NavbarProps {
-  setNavbarState: (state: NavbarState) => void;
-}
+interface NavbarProps { setNavbarState: (state: NavbarState) => void }
 
 const Signup = ({setNavbarState} : NavbarProps) => {
     const [name, setName] = useState("");
@@ -16,7 +15,7 @@ const Signup = ({setNavbarState} : NavbarProps) => {
         e.preventDefault();
 
         try{
-            const response = await fetch("http://localhost:5000/api/v1/user/signup", {
+            const response = await fetch(`${API_BASE}/api/v1/user/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 

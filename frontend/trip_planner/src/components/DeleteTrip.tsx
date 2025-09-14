@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
 import type { DeleteTripProps } from '../types/DeleteTripProps';
 import { useEffect, useState } from 'react';
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refreshTrips }: DeleteTripProps) => {
     const [trip, setTrip] = useState('');
@@ -8,7 +9,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refr
     useEffect(() => {
         const fetchTrip = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/trip/single/${tripId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/trip/single/${tripId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -38,7 +39,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refr
     
     const deleteTrip = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/trip/delete/${tripId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/trip/delete/${tripId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

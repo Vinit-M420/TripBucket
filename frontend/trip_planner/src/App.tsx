@@ -11,7 +11,6 @@ import TripContent from './components/TripContent';
 import PublicContent from './components/PublicContent';
 import { type NavbarState } from './types/navbarstate';
 
-
 function App() {
  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
  const [navbarState, setNavbarState] =  useState<NavbarState>(token ? "trip" : "hero");

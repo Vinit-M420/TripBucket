@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { X } from 'lucide-react';
 import type { AddContentProp } from "../types/AddContentProp";
-
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const AddContent = ({tripId, toggleAddContent, setToggleAddContent, refreshContent, onClose}: AddContentProp) => {
     
@@ -30,7 +30,7 @@ const AddContent = ({tripId, toggleAddContent, setToggleAddContent, refreshConte
     const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
           try{
-            const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/content/${tripId}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

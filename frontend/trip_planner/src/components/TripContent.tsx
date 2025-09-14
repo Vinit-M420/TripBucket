@@ -8,9 +8,8 @@ import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X } from 'lucide-react';
-import { fetchTripName } from '../utils/fetchTripname';
+import { fetchTripName } from '../utils/fetchTripName';
 import type { NavbarProps } from '../types/navbarstate';
-
 
 const TripContent = ({setNavbarState}: NavbarProps) => {
     const { tripId } = useParams();

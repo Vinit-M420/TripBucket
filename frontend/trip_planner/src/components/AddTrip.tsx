@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { X } from 'lucide-react';
 import type { AddTripProp } from '../types/AddTripProp';
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: AddTripProp) => {
 
@@ -13,7 +14,6 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
     isPublic: false,
   });
   
-
   // useEffect(() => {
   //   const handleClickOutside = (event: MouseEvent) => {
   //     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -53,7 +53,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/v1/trip/", {
+      const response = await fetch(`${API_BASE}/api/v1/trip/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,9 +61,11 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
         },
         body: JSON.stringify(formData),
       });
+
       if (!response.ok) throw new Error("Failed to add trip");
       refreshTrips();
       handleClose();
+
     } catch (err) {
       alert("Error in adding your trip");
       console.error("Error Detail:", err);

@@ -6,6 +6,7 @@ import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical } from 'luci
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { Link } from "react-router-dom";
 import type { NavbarProps } from '../types/navbarstate';
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 
 const PublicContent = ({setNavbarState}: NavbarProps) => {
@@ -19,13 +20,12 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
 
-
     useEffect(() => {
         window.scrollTo(0, 0);
 
         const fetchPublicTrip = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/v1/trip/public/${shareId}`);
+            const res = await fetch(`${API_BASE}/api/v1/trip/public/${shareId}`);
             if (!res.ok) throw new Error("Trip not found or private");
             const data = await res.json();
             setTripName(data.trip.destination);
@@ -58,7 +58,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                     <Link to="/">
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                         transition duration-200 cursor-pointer hover:bg-green-700" 
-                            onClick={() => { setNavbarState("hero");}}>
+                            onClick={() => {setNavbarState("hero")}}>
                             <Left /> 
                         </div> 
                     </Link>

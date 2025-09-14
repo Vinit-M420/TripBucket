@@ -1,6 +1,8 @@
+const API_BASE = import.meta.env.VITE_API_URL; 
+
 export const fetchTripName = async (tripId: string) => {
     try {
-        const response = await fetch(`http://localhost:5000/api/v1/trip/single/${tripId}`, {
+        const response = await fetch(`${API_BASE}/api/v1/trip/single/${tripId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

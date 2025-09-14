@@ -4,6 +4,7 @@ import { ChevronDown, CircleUser  } from 'lucide-react';
 import ProfileDropDown from "./ProfileDropdown";
 import type { NavbarProps } from "../types/navbarstate";
 import { Link } from "react-router-dom";
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     const [toggleNavbar, setToggleNavbar] = useState(false);
@@ -13,7 +14,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
     useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/user/get", {
+        const response = await fetch(`${API_BASE}/api/v1/user/get`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +43,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
   
   if (toggleNavbar) {
     return (
-      <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
+      <div className="fixed inset-0 bg-stone-100 z-50 mx-auto w-sm">
           <div className="flex justify-between mx-2 p-4 min-h-[60px] items-center md:hidden">
             <Link to={navbarState === "trip" || navbarState === "content" || navbarState === "profile" ? "" : "/"}>
               <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
@@ -59,18 +60,6 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
           </div>
 
           <div className="flex flex-col gap-10 items-center mt-10">
-            {/* <div className="flex items-center justify-center border-b border-gray-400 w-xs">
-                <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 
-                          transition duration-200 text-center pb-2">
-                  Create
-                </h2>
-              </div>
-              <div className="flex items-center justify-center border-b border-gray-400 w-xs">
-                <h2 className="text-lg tracking-wide cursor-pointer text-green-800 hover:text-green-600 
-                    transition duration-200 text-center pb-2">
-                  Browse
-                </h2>
-              </div> */}
               <div className="flex items-center justify-center border-b border-gray-400 w-xs">
                 <Link to="/login">
                 <h2 className="md:text-lg text-base tracking-wide cursor-pointer text-green-800 hover:text-green-600 
@@ -91,7 +80,6 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
               </div>
               
           </div>
-
       </div>
     )
   }
@@ -146,6 +134,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
 
         </div>
       </div>
+      
       <div className="flex justify-between p-4 min-h-[60px] items-center md:hidden shadow-sm mx-2">
            <Link to="/">
               <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
@@ -176,11 +165,9 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
 
       {toggleProfileDropdown && 
       <ProfileDropDown 
-          // navbarState={navbarState} 
           setNavbarState={setNavbarState} 
-          setToggleProfileDropdown={setToggleProfileDropdown}
-      /> }
-      
+          setToggleProfileDropdown={setToggleProfileDropdown}/> 
+      }
     </div>
   );
 };

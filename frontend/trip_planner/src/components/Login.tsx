@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import type { NavbarState } from "../types/navbarstate";
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 interface NavbarProps {
   setNavbarState: (state: NavbarState) => void;
@@ -11,27 +12,29 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate(); 
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:5000/api/v1/user/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
+            const response = await fetch(`${API_BASE}/api/v1/user/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
             });
 
             const data = await response.json().catch(() => ({}));
 
             if (!response.ok) {
                 alert(data.message || "Login failed");
-                return;
+                console.log("API_BASE =", API_BASE);
+                return;              
             }
+
 
             localStorage.setItem("token", data.token);
             setNavbarState("trip");
             navigate("/trips"); 
+            
         } catch (err) {
             console.error("Error logging in:", err);
             alert("Network error. Please try again.");

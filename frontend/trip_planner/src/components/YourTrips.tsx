@@ -14,7 +14,6 @@ import { fetchTrips } from '../utils/fetchtrips';
 import { X } from 'lucide-react';
 import type { NavbarProps } from '../types/navbarstate';
 
-
 const YourTrips = ({ setNavbarState }: NavbarProps ) => {
     const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
     const [trips, setTrips] = useState<tripInterface[]>([]);

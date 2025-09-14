@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { X } from 'lucide-react';
 import type { EditContentProp } from "../types/EditContentProps";
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const EditContent = (
   {tripId, contentId, setToggleEditContent, refreshContent, onClose}: EditContentProp) => {
@@ -15,7 +16,7 @@ const EditContent = (
     useEffect(() => {
       const fetchContentToEdit = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}/${contentId}`, {
+        const response = await fetch(`${API_BASE}/api/v1/content/${tripId}/${contentId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +66,7 @@ const EditContent = (
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try{
-            const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}/edit/${contentId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/content/${tripId}/edit/${contentId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

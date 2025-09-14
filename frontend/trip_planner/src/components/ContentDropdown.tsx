@@ -1,6 +1,7 @@
 import Edit from '../assets/edit';
 import Trash from '../assets/trash';
 import type { ContentDropDownType } from '../types/ContentDropDownType';
+const API_BASE = import.meta.env.VITE_API_URL; 
 
 const ContentDropdown = ({ tripId, contentId, toggleEditContent, 
   setToggleAlert, setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
@@ -8,7 +9,7 @@ const ContentDropdown = ({ tripId, contentId, toggleEditContent,
   
   const deleteContent = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/content/${tripId}/delete/${contentId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/content/${tripId}/delete/${contentId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -63,6 +64,5 @@ const ContentDropdown = ({ tripId, contentId, toggleEditContent,
     </div>
   );
 };
-
 
 export default ContentDropdown;

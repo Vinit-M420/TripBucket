@@ -30,7 +30,6 @@ router.post("/signup",  async function (req, res) {
             errors: parsedDataWithSuccess.error,
         });
     }
-    
 
     try{
         const hashedPass = await bcrypt.hash(password, 5);
