@@ -26,7 +26,6 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
 
             if (!response.ok) {
                 alert(data.message || "Login failed");
-                console.log("API_BASE =", API_BASE);
                 return;              
             }
 

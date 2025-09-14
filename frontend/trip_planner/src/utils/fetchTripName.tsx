@@ -18,10 +18,12 @@ export const fetchTripName = async (tripId: string) => {
 
         const data = await response.json();
         
-        if (data.trip && data.trip.length > 0) {
-            return data.trip[0].destination;
+        if (data.trip && data.trip.destination) {
+            return data.trip.destination;
         } else {
+            // console.log(data.trip.destination);
             return "Trip not found";
+            
         }
         
     } catch (err) {
