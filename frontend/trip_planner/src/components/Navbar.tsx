@@ -149,7 +149,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
               <Bars />
           </div>
 
-          <div className={`flex gap-3 items-center cursor-pointer hover:bg-stone-200
+          <div className={`flex gap-2 items-center cursor-pointer hover:bg-stone-200 p-1 rounded-xl
                 ${(navbarState === "trip" || navbarState === 'content') ? '' : "hidden"}`}
                 onClick={() => setToggleProfileDropdown(!toggleProfileDropdown)}>
               <CircleUser className="size-5" />
