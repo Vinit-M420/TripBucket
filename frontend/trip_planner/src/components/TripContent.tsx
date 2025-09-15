@@ -161,7 +161,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
 
                             </div>
                             {item.type === "note" && (
-                                <p className="whitespace-pre-wrap text-gray-800">
+                                <p className="whitespace-pre-wrap break-words text-gray-800">
                                     {item.value}
                                 </p>
                             )}
