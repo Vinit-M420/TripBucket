@@ -11,11 +11,11 @@ const Hero = ( { scrollToPublic, setNavbarState}:  HeroProps ) => {
     return (
         <div>
         <div className="flex flex-col gap-5 justify-center items-center mx-auto h-screen ">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-xl text-green-800 font-bold text-center">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl text-green-800 font-bold text-center">
             Never Lose Another Travel Idea
         </h1>
-        <h4 className="text-sm md:text-lg max-w-md text-green-700 text-center">
-            Organize ideas, photos, videos, and notes for every destination...
+        <h4 className="text-sm md:text-lg max-w-lg text-green-700 text-center">
+            Organize ideas, photos, videos, and notes for every destination. Create detailed itineraries others can follow.
         </h4>
 
         <div className='flex justify-evenly md:gap-5 gap-2'>
