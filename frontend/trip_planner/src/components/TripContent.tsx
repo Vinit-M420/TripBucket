@@ -177,7 +177,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                             )}
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" 
-                                className="text-blue-600 underline w-full" >
+                                className="text-blue-600 underline w-full whitespace-pre-wrap" >
                                     {/* Visit Link */} {item.value}
                                 </a>
                             )}

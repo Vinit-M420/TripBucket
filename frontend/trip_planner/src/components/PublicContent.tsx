@@ -56,8 +56,8 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
         <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
   
             {/* Header  */}
-            <div className='flex justify-between gap-10 items-center'>
-                <div className='flex gap-2 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
+            <div className='flex justify-between gap-10 items-center w-full max-w-6xl'>
+                <div className='flex justify-start w-full max-w-6xl gap-2 my-5 items-center mx-auto px-2 sm:px-4'>
                     <Link to="/">
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                             transition duration-200 cursor-pointer hover:bg-green-700" 
@@ -143,7 +143,8 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                             </p>
                         )}
                         {item.type === "link" && (
-                            <a href={item.value} target="_blank" className="text-blue-600 underline" >
+                            <a href={item.value} target="_blank" 
+                                className="text-blue-600 underline break-words" >
                                 {/* Visit Link */} {item.value}
                             </a>
                         )}
