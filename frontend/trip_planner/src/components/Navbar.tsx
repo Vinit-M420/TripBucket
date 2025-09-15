@@ -43,10 +43,10 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
   
   if (toggleNavbar) {
     return (
-      <div className="fixed inset-0 bg-stone-100 z-50 mx-auto w-sm">
-          <div className="flex justify-between mx-2 p-4 min-h-[60px] items-center md:hidden">
+      <div className="fixed inset-0 bg-stone-100 z-50 mx-auto">
+          <div className="flex justify-between p-4 min-h-[60px] items-center md:hidden">
             <Link to={navbarState === "trip" || navbarState === "content" || navbarState === "profile" ? "" : "/"}>
-              <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
+              <h1 className="font-bold md:text-2xl text-xl tracking-tight text-green-950 cursor-pointer"
                       onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
                         ? undefined : () => setNavbarState("hero") }>
                     TripBucket
@@ -78,7 +78,6 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
                 </h2>
                 </Link>
               </div>
-              
           </div>
       </div>
     )
@@ -86,13 +85,12 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
 
   return (
     <div>
-      <div className=" top-0 left-0 w-full z-50 
-                  bg-stone-100 shadow-sm p-4 min-h-[80px] md:flex items-center hidden">
+      <div className=" top-0 left-0 w-full z-50 bg-stone-100 shadow-sm p-4 min-h-[80px] md:flex items-center hidden">
         <div className="flex justify-between md:mx-20 mx-5 items-center w-full">
           <div className="flex lg:gap-20 gap-10 items-center">
             <div className="flex items-center">
               <Link to="/">
-              <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
+              <h1 className="font-bold md:text-2xl text-xl tracking-tight text-green-950 cursor-pointer"
                   onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
                     ? undefined : () => setNavbarState("hero")}>
                 TripBucket
@@ -135,9 +133,9 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
         </div>
       </div>
       
-      <div className="flex justify-between p-4 min-h-[60px] items-center md:hidden shadow-sm mx-2">
+      <div className="flex justify-between p-4 min-h-[60px] items-center md:hidden shadow-sm">
            <Link to="/">
-              <h1 className="font-bold text-2xl tracking-tight text-green-950 cursor-pointer"
+              <h1 className="font-bold md:text-2xl text-xl tracking-tight text-green-950 cursor-pointer"
                       onClick={navbarState === "trip" || navbarState === "content" || navbarState === "profile"
                             ? undefined
                             : () => setNavbarState("hero")

@@ -51,125 +51,123 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
     if (!contents) return <div className="text-center mt-20">Loading trip...</div>;
 
     return (
-        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
-            <div>   
-                {/* Header  */}
-                <div className='flex gap-5 my-5'>
-                    <Link to="/">
-                        <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
-                                        transition duration-200 cursor-pointer hover:bg-green-700" 
-                            onClick={() => {setNavbarState("hero")}}>
-                            <Left /> 
-                        </div> 
-                    </Link>
+        <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
+  
+            {/* Header  */}
+            <div className='flex gap-5 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
+                <Link to="/">
+                    <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
+                                    transition duration-200 cursor-pointer hover:bg-green-700" 
+                        onClick={() => {setNavbarState("hero")}}>
+                        <Left /> 
+                    </div> 
+                </Link>
 
-                    <h1 className="text-green-800 text-2xl font-bold">
-                        {tripName} Itinerary 
-                    </h1>      
-                </div>
-                
-                {/* Filter Tabs */}
-                <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden">
-                    {[
-                        { key: "all", label: "All" },
-                        { key: "note", label: "Notes", icon: <FileText /> },
-                        { key: "link", label: "Links", icon: <LinkIcon /> },
-                        { key: "video", label: "Videos", icon: <Play /> },
-                        { key: "image", label: "Images", icon: <Image /> },
-                    ].map(({ key, label, icon }) => (
-                        <div
-                            key={key}
-                            className={`rounded-2xl px-5 py-1 border-2 border-transparent cursor-pointer 
-                                        transition duration-200 flex items-center gap-2 
-                                ${contentType === key ? typeOn : typeOff}`}
-                            onClick={() => 
-                                {setContentType(key as ContentTypeState); 
-                                setOpenDropdownId(null);
-                                }}>
-                            {icon}
-                            <h2 className="text-lg">{label}</h2>
-                        </div>
-                    ))}
-                </div>
-                
-                {/* Content Part */}
-                <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10`}>
-                                
-                    {filteredContent.map((item) => (
-                        <div key={item._id}
-                            className="mb-5 break-inside-avoid border-2 border-green-200 rounded-xl p-4 
-                                        shadow hover:shadow-lg transition">
-                            <div className='flex justify-between'>  
-                                <div className='flex gap-2 items-center text-green-800'>
-                                    {item.type === "note"  && <FileText className='size-5' /> }
-                                    {item.type === "image" && <Image className='size-5' /> }
-                                    {item.type === "video" && <Play className='size-5' /> }
-                                    {item.type === "link"  && <LinkIcon className='size-5' /> }
-                                    <h3 className="font-semibold text-lg text-green-800">
-                                        {item.title }
-                                    </h3>
-                                </div>
-                                <div className="relative">
-                                    <div className="border border-transparent rounded-2xl p-1
-                                                hover:border hover:border-green-800 hover:bg-stone-100 cursor-pointer"
-                                        onClick={() =>
-                                        setOpenDropdownId(openDropdownId === item._id ? null : item._id)}>
-                                        <EllipsisVertical className="size-5" />
-                                    </div>
-
-                                    {openDropdownId === item._id && (
-                                        <div className="absolute right-0 mt-1 z-50"
-                                        onClick={() => {}}>
-                                       
-                                        </div>
-                                    )}
-                                    </div>
-
-                            </div>
-                            {item.type === "note" && (
-                                <p className="whitespace-pre-wrap text-gray-800">
-                                    {item.value}
-                                </p>
-                            )}
-                            {item.type === "link" && (
-                                <a href={item.value} target="_blank" className="text-blue-600 underline" >
-                                    Visit Link
-                                </a>
-                            )}
-                            {item.type === "video" && (() => {
-                                const videoId = getYouTubeId(item.value ?? '');
-                                return videoId ? (
-                                    <div className="w-full place-content-center">
-                                        <a href={item.value}  target="_blank" rel="noopener noreferrer" 
-                                        className="block w-full overflow-hidden shadow-lg hover:opacity-90 transition relative">
-                                            <img alt="YouTube thumbnail" 
-                                            className="w-full"
-                                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}  />
-
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                            <Play size={40} 
-                                            className="text-white drop-shadow-lg opacity-90 bg-green-800
-                                             rounded-3xl p-1" />
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                ) : (
-                                    <a href={item.value} target="_blank" className="text-red-500 underline">
-                                    Watch Video
-                                    </a>
-                                );
-                                })()}
-
-                            {item.type === 'image' && 
-                                <img src={item.value} className='column-1' ></img>
-                            }
-                            </div>
-                    )) }                
-                </div>
+                <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
+                    {tripName} Itinerary 
+                </h1>      
             </div>
-     
+            
+            {/* Filter Tabs */}
+            {/* bg-green-100 rounded-xl p-1 gap-3 mb-5 justify-center hidden md:flex flex-wrap */}
+            <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden w-full max-w-6xl mx-auto px-2 sm:px-4">
+                {[
+                    { key: "all", label: "All" },
+                    { key: "note", label: "Notes", icon: <FileText /> },
+                    { key: "link", label: "Links", icon: <LinkIcon /> },
+                    { key: "video", label: "Videos", icon: <Play /> },
+                    { key: "image", label: "Images", icon: <Image /> },
+                ].map(({ key, label, icon }) => (
+                    <div
+                        key={key}
+                        className={`rounded-2xl px-5 py-1 border-2 border-transparent cursor-pointer 
+                                    transition duration-200 flex items-center gap-2 
+                            ${contentType === key ? typeOn : typeOff}`}
+                        onClick={() => 
+                            {setContentType(key as ContentTypeState); 
+                            setOpenDropdownId(null);
+                            }}>
+                        {icon}
+                        <h2 className="text-lg">{label}</h2>
+                    </div>
+                ))}
+            </div>
+            
+            {/* Content Part */}
+            <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-xs mb-10`}>
+                            
+                {filteredContent.map((item) => (
+                    <div key={item._id}
+                        className="mb-5 break-inside-avoid border-2 border-green-200 rounded-xl p-4 
+                                    shadow hover:shadow-lg transition">
+                        <div className='flex justify-between'>  
+                            <div className='flex gap-2 items-center text-green-800'>
+                                {item.type === "note"  && <FileText className='size-5' /> }
+                                {item.type === "image" && <Image className='size-5' /> }
+                                {item.type === "video" && <Play className='size-5' /> }
+                                {item.type === "link"  && <LinkIcon className='size-5' /> }
+                                <h3 className="font-semibold text-lg text-green-800">
+                                    {item.title }
+                                </h3>
+                            </div>
+                            <div className="relative">
+                                <div className="border border-transparent rounded-2xl p-1
+                                            hover:border hover:border-green-800 hover:bg-stone-100 cursor-pointer"
+                                    onClick={() =>
+                                    setOpenDropdownId(openDropdownId === item._id ? null : item._id)}>
+                                    <EllipsisVertical className="size-5" />
+                                </div>
 
+                                {openDropdownId === item._id && (
+                                    <div className="absolute right-0 mt-1 z-50"
+                                    onClick={() => {}}>
+                                    
+                                    </div>
+                                )}
+                                </div>
+
+                        </div>
+                        {item.type === "note" && (
+                            <p className="whitespace-pre-wrap text-gray-800">
+                                {item.value}
+                            </p>
+                        )}
+                        {item.type === "link" && (
+                            <a href={item.value} target="_blank" className="text-blue-600 underline" >
+                                Visit Link
+                            </a>
+                        )}
+                        {item.type === "video" && (() => {
+                            const videoId = getYouTubeId(item.value ?? '');
+                            return videoId ? (
+                                <div className="w-full place-content-center">
+                                    <a href={item.value}  target="_blank" rel="noopener noreferrer" 
+                                    className="block w-full overflow-hidden shadow-lg hover:opacity-90 transition relative">
+                                        <img alt="YouTube thumbnail" 
+                                        className="w-full"
+                                        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}  />
+
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                        <Play size={40} 
+                                        className="text-white drop-shadow-lg opacity-90 bg-green-800
+                                            rounded-3xl p-1" />
+                                        </div>
+                                    </a>
+                                </div>
+
+                            ) : (
+                                <a href={item.value} target="_blank" className="text-red-500 underline">
+                                Watch Video
+                                </a>
+                            );
+                            })()}
+
+                        {item.type === 'image' && 
+                            <img src={item.value} className='column-1' ></img>
+                        }
+                        </div>
+                )) }                
+            </div>        
         </div>
     )
 }

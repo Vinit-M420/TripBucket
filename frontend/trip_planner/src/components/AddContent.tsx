@@ -53,20 +53,21 @@ const AddContent = ({tripId, toggleAddContent, setToggleAddContent, refreshConte
     if (!toggleAddContent) return null;
 
     return (
-    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50 px-2">
       <div ref={modalRef}
-        className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative" >
+        className="relative bg-stone-50 border-2 border-green-800 rounded-2xl py-6 px-4 md:px-6 
+                 w-[90%] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl shadow max-h-[90vh] overflow-y-auto" >
         <button
           aria-label="Close modal"
           onClick={handleClose}
-          className="absolute top-5 right-5 text-green-800 hover:text-green-600 transition-colors duration-200 z-10">
+          className="absolute top-4 right-4 text-green-800 hover:text-green-600 transition-colors duration-200">
           <X size={30} />
         </button>
 
         <div className="flex flex-col justify-center items-center">
           <h1 className="md:text-3xl text-2xl text-black font-bold">Add Content</h1>
           {/* <h2 className="text-base text-green-800">One Trip at a Time</h2> */}
-          <form className="md:w-md w-xs py-4" onSubmit={handleSubmit}>
+          <form className="w-full mt-5 space-y-4" onSubmit={handleSubmit}>
             
             <label className="md:text-base text-sm text-black pl-2">Type</label>
             <div>
@@ -77,7 +78,7 @@ const AddContent = ({tripId, toggleAddContent, setToggleAddContent, refreshConte
                     <option value="image">Image</option>
                     <option value="video">Video</option>
                 </select>
-            </div> <br />
+            </div><br />
 
             <label className="md:text-base text-sm text-black pl-2">Title</label>
             <br />

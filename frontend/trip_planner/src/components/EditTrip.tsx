@@ -28,8 +28,8 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
             }
 
             const data = await response.json();
-            setTrip(data.trip[0]);
-            setIsPublic(data.trip[0].isPublic);
+            setTrip(data.trip);
+            setIsPublic(data.trip.isPublic);
             // console.log(data);
 
         } catch (err) {
@@ -88,76 +88,111 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
 
 
     return (
-    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
-      <div ref={modalRef} 
-            className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative">
-              <button
-                aria-label="Close modal"
-                onClick={handleClose}
-                className="absolute top-5 right-5 text-green-800 hover:text-green-600 transition-colors duration-200 z-10">
-                <X size={30} /> 
-            </button>  
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="md:text-3xl text-2xl text-black font-bold">Edit Trip</h1>
+  <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50 px-2">
+    <div
+      ref={modalRef}
+      className="relative bg-stone-50 border-2 border-green-800 rounded-2xl py-6 px-4 md:px-6 
+                 w-[90%] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl shadow max-h-[90vh] overflow-y-auto"
+    >
+      {/* Close Button */}
+      <button
+        aria-label="Close modal"
+        onClick={handleClose}
+        className="absolute top-4 right-4 text-green-800 hover:text-green-600 transition-colors duration-200"
+      >
+        <X size={28} />
+      </button>
 
-          <form className="md:w-md w-xs py-4" onSubmit={handleSubmit}>
-            <label className="md:text-base text-sm text-black pl-2">Destination *</label><br/>
+      {/* Header */}
+      <div className="flex flex-col items-center">
+        <h1 className="md:text-3xl text-2xl text-black font-bold">Edit Trip</h1>
+
+        {/* Form */}
+        <form className="w-full mt-5 space-y-4" onSubmit={handleSubmit}>
+          {/* Destination */}
+          <div>
+            <label className="md:text-base text-sm text-black pl-1">Destination *</label>
             <input
-              className="bg-green-100 rounded-2xl w-full p-3 mt-2 mb-4 shadow border-1 border-green-800 placeholder:text-green-600"
+              className="bg-green-100 rounded-2xl w-full p-3 mt-2 shadow border border-green-800 placeholder:text-green-600"
               type="text"
               value={trip.destination || ""}
               onChange={(e) => setTrip({ ...trip, destination: e.target.value })}
               required
             />
+          </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="col-span-1 flex flex-col">
-                <label className="md:text-base text-sm text-black pl-2">From Date</label>
-                <input
-                  type="date"
-                  value={trip.from_date ? trip.from_date.split("T")[0] : ""}
-                  onChange={(e) => setTrip({ ...trip, from_date: e.target.value })}
-                  className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
-                />
-              </div>
-
-              <div className="col-span-1 flex flex-col">
-                <label className="md:text-base text-sm text-black pl-2">To Date</label>
-                <input
-                  type="date"
-                  value={trip.to_date ? trip.to_date.split("T")[0] : ""}
-                  onChange={(e) => setTrip({ ...trip, to_date: e.target.value })}
-                  className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
-                />
-              </div>
+          {/* Dates */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="md:text-base text-sm text-black pl-1">From Date</label>
+              <input
+                type="date"
+                value={trip.from_date ? trip.from_date.split("T")[0] : ""}
+                onChange={(e) => setTrip({ ...trip, from_date: e.target.value })}
+                className="bg-green-100 rounded-2xl w-full p-3 mt-2 shadow border border-green-800"
+              />
             </div>
 
-            <label className="md:text-base text-sm text-black pl-2">Status</label>
-            <div className="flex gap-2 pl-2 mt-2 mb-4">
-              <input type="radio" checked={isPublic} onChange={() => setIsPublic(true)} />
-              <label className="md:text-base text-sm text-black mr-5">Public</label>
-
-              <input type="radio" checked={!isPublic} onChange={() => setIsPublic(false)} />
-              <label className="md:text-base text-sm text-black">Private</label>
+            <div>
+              <label className="md:text-base text-sm text-black pl-1">To Date</label>
+              <input
+                type="date"
+                value={trip.to_date ? trip.to_date.split("T")[0] : ""}
+                onChange={(e) => setTrip({ ...trip, to_date: e.target.value })}
+                className="bg-green-100 rounded-2xl w-full p-3 mt-2 shadow border border-green-800"
+              />
             </div>
+          </div>
 
-            <label className="md:text-base text-sm text-black pl-2">Banner URL</label><br/>
+          {/* Status */}
+          <div>
+            <label className="md:text-base text-sm text-black pl-1">Status</label>
+            <div className="flex gap-4 mt-2">
+              <label className="flex items-center gap-2 text-sm md:text-base">
+                <input
+                  type="radio"
+                  checked={isPublic}
+                  onChange={() => setIsPublic(true)}
+                />
+                Public
+              </label>
+
+              <label className="flex items-center gap-2 text-sm md:text-base">
+                <input
+                  type="radio"
+                  checked={!isPublic}
+                  onChange={() => setIsPublic(false)}
+                />
+                Private
+              </label>
+            </div>
+          </div>
+
+          {/* Banner URL */}
+          <div>
+            <label className="md:text-base text-sm text-black pl-1">Banner URL</label>
             <input
-              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800 placeholder:text-green-600"
+              className="bg-green-100 rounded-2xl w-full p-3 mt-2 shadow border border-green-800 placeholder:text-green-600"
               value={trip.bannerURL || ""}
               onChange={(e) => setTrip({ ...trip, bannerURL: e.target.value })}
               type="text"
             />
+          </div>
 
-            <button className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 md:text-lg text-md 
-                border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
-                type="submit">Save Changes
-            </button>
-          </form>
-        </div>
+          {/* Submit */}
+          <button
+            className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 md:text-lg text-base 
+                       border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700"
+            type="submit"
+          >
+            Save Changes
+          </button>
+        </form>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default EditTrip;

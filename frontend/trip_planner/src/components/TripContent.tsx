@@ -78,10 +78,10 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
     
 
     return (
-        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10 ">
+        <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
             <div>   
                 {/* Header  */}
-                <div className='flex gap-5 my-5'>
+                <div className='flex gap-5 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
                     <Link to='/trips'>
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                         transition duration-200 cursor-pointer hover:bg-green-700"
@@ -89,13 +89,13 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                             <Left />
                         </div>
                     </Link> 
-                    <h1 className="text-green-800 text-2xl font-bold">
+                    <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
                         {tripName} Itinerary 
                     </h1>      
                 </div>
                 
                 {/* Filter Tabs */}
-                <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden">
+                <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden w-full max-w-6xl mx-auto px-2 sm:px-4">
                     {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
@@ -119,7 +119,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                 </div>
                 
                 {/* Content Part */}
-                <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-sm mb-10`}>
+                <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-xs mb-10`}>
                                 
                     {filteredContent.map((item) => (
                         <div key={item._id}
@@ -203,7 +203,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                 </div>
             </div>
 
-        <div className="fixed bottom-6 lg:right-15 md:right-10 sm:right-7 right-5">
+        <div className="fixed bottom-6 lg:right-15 md:right-10 sm:bottom">
             <div className='group flex justify-start bg-green-800 text-white p-3 rounded-3xl 
             hover:bg-green-700 transition-all duration-300 cursor-pointer items-center overflow-hidden'
                   onClick={() => { setToggleAddContent(!toggleAddContent) }}>

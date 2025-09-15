@@ -80,7 +80,7 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refr
 
 
     return (
-        <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50 px-2">
             <div className="border-2 border-green-800 bg-stone-50 rounded-2xl py-5 md:w-xl w-sm shadow relative">
                 <button
                     aria-label="Close modal"

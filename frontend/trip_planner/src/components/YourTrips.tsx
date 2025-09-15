@@ -43,8 +43,8 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
     }
 
     const handleEdit = (id: string) => {
-        console.log("Edit trip with id:", id);
-        setEditingTripId(id)
+        // console.log("Edit trip with id:", id);
+        setEditingTripId(id);
     };
 
     const refreshTrips = async () => {
@@ -53,14 +53,13 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
     }
 
     return (
-        <div className="bg-stone-50 min-h-screen lg:w-6xl md:w-2xl w-sm flex flex-col items-center mx-auto gap-5 mt-10">
-        <div>
+        <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
+        <div className="w-full max-w-6xl mx-auto">
             <h1 className="text-green-800 md:text-2xl text-xl font-semibold my-5">
                 {trips.length > 0 ? "Your Trips" : 'You have no trips yet'}                     
             </h1>      
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
-                            lg:w-6xl md:w-2xl w-sm mb-10">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mb-10">
                 {trips.map((trip) => (
                     
                     <div key={trip._id} 
@@ -69,9 +68,10 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                             onClick={() => {
                             setNavbarState("content");
                             }}>
-   
+
                         {trip.bannerURL ? (
-                            <img src={trip.bannerURL} className="w-full h-[70%] min-h-60 rounded-t-lg mb-2" />
+                            <img src={trip.bannerURL} 
+                                className="w-full h-[70%] min-h-60 object-cover rounded-t-lg mb-2" />
                             ) : (
                             <div className="bg-green-200 w-full h-[70%] min-h-60 rounded-t-lg place-content-center mb-2">
                                 <h2 className="text-center text-green-800">No Banner Yet</h2>
@@ -121,6 +121,7 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                             onClick={(e) => { 
                                 e.stopPropagation();
                                 setToggleEditTrip(!toggleAddTrip);
+                                
                                 handleEdit(trip._id);
                             }}>
                                 <Edit /> 
@@ -144,7 +145,7 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
             </div>         
         </div>
 
-        <div className="fixed bottom-6 lg:right-15 md:right-10 sm:right-7 right-5">
+        <div className="fixed bottom-6 lg:right-15 md:right-10 sm:bottom">
             <div className='group flex justify-start bg-green-800 text-white p-3 rounded-3xl 
             hover:bg-green-700 transition-all duration-300 cursor-pointer items-center overflow-hidden'
                 onClick={() => setToggleAddTrip(!toggleAddTrip)}>
