@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 // import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
-import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { Link } from "react-router-dom";
 import type { NavbarProps } from '../types/navbarstate';
+import FilterDropDown from './FilterDropDown';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
 
@@ -16,6 +17,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
     const [error, setError] = useState<string | null>(null);
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+    const [filterToggle, setFilterToggle] = useState<boolean>(false);
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
@@ -54,18 +56,26 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
         <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
   
             {/* Header  */}
-            <div className='flex gap-5 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
-                <Link to="/">
-                    <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
-                                    transition duration-200 cursor-pointer hover:bg-green-700" 
-                        onClick={() => {setNavbarState("hero")}}>
-                        <Left /> 
-                    </div> 
-                </Link>
+            <div className='flex justify-between gap-10 items-center'>
+                <div className='flex gap-2 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
+                    <Link to="/">
+                        <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
+                                            transition duration-200 cursor-pointer hover:bg-green-700" 
+                            onClick={() => {setNavbarState("hero")}}>
+                            <Left /> 
+                        </div> 
+                    </Link>
 
-                <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
-                    {tripName} Itinerary 
-                </h1>      
+                    <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
+                        {tripName} Itinerary 
+                    </h1>      
+                </div>
+                <div className='md:hidden block'>
+                    <div className='hover:border border-green-800 rounded-lg p-1'
+                        onClick={() => setFilterToggle(!filterToggle)}>
+                        <ListFilter className='size-6'/>
+                    </div>
+                </div>
             </div>
             
             {/* Filter Tabs */}
@@ -167,7 +177,15 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                         }
                         </div>
                 )) }                
-            </div>        
+            </div>  
+
+            { filterToggle &&
+                (<div className="absolute right-5 mt-15 z-50">
+                <FilterDropDown 
+                    setContentType={setContentType} /> 
+                </div>
+                )
+            }      
         </div>
     )
 }

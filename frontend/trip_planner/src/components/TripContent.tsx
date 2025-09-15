@@ -7,9 +7,10 @@ import AddContent from './AddContent';
 import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
-import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
 import { fetchTripName } from '../utils/fetchTripName';
 import type { NavbarProps } from '../types/navbarstate';
+import FilterDropDown from './FilterDropDown';
 
 const TripContent = ({setNavbarState}: NavbarProps) => {
     const { tripId } = useParams();
@@ -20,6 +21,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
     const [toggleAddContent, setToggleAddContent] = useState<boolean>(false);
     const [toggleEditContent, setToggleEditContent] = useState<boolean>(false);
     const [selectedContentId, setSelectedContentId] = useState<number | null>(null);
+    const [filterToggle, setFilterToggle] = useState<boolean>(false);
     const [toggleAlert, setToggleAlert] = useState<boolean>(false);
     const modalAlert = useRef<HTMLDivElement>(null);
 
@@ -81,17 +83,25 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
         <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
             <div>   
                 {/* Header  */}
-                <div className='flex gap-5 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
-                    <Link to='/trips'>
-                        <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
-                                        transition duration-200 cursor-pointer hover:bg-green-700"
-                            onClick={() => setNavbarState("trip")}>
-                            <Left />
+                <div className='flex justify-between items-center'>
+                    <div className='flex gap-2 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
+                        <Link to='/trips'>
+                            <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
+                                            transition duration-200 cursor-pointer hover:bg-green-700"
+                                onClick={() => setNavbarState("trip")}>
+                                <Left />
+                            </div>
+                        </Link> 
+                        <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
+                            {tripName} Itinerary 
+                        </h1>      
+                    </div>
+                    <div className='md:hidden flex'>
+                        <div className='hover:border border-green-800 rounded-lg p-1'
+                            onClick={() => setFilterToggle(!filterToggle)}>
+                            <ListFilter className='size-6'/>
                         </div>
-                    </Link> 
-                    <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
-                        {tripName} Itinerary 
-                    </h1>      
+                    </div>
                 </div>
                 
                 {/* Filter Tabs */}
@@ -215,7 +225,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
             </div>
         </div>
             
-            {toggleAddContent === true && 
+            {toggleAddContent && 
             <AddContent 
                 tripId={tripId}
                 toggleAddContent={toggleAddContent}
@@ -226,7 +236,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                 />
             }
 
-            {toggleEditContent === true && 
+            {toggleEditContent  && 
                 <EditContent 
                     tripId={tripId}
                     contentId={selectedContentId}
@@ -236,6 +246,14 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                     onClose={() => setToggleEditContent(false)} 
                     />
             } 
+
+            { filterToggle &&
+                (<div className="absolute right-5 mt-15 z-50">
+                <FilterDropDown 
+                    setContentType={setContentType} /> 
+                </div>
+                )
+            }
             
             {toggleAlert ? (
             <div ref={modalAlert} role="alert"
