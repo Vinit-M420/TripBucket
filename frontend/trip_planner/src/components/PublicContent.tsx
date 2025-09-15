@@ -134,7 +134,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                         )}
                         {item.type === "link" && (
                             <a href={item.value} target="_blank" className="text-blue-600 underline" >
-                                Visit Link
+                                {/* Visit Link */} {item.value}
                             </a>
                         )}
                         {item.type === "video" && (() => {

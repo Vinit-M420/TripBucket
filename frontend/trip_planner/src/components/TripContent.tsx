@@ -99,7 +99,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                     {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
-                        { key: "LinkIcon", label: "Link", icon: <LinkIcon /> },
+                        { key: "link", label: "Link", icon: <LinkIcon /> },
                         { key: "video", label: "Videos", icon: <Play /> },
                         { key: "image", label: "Images", icon: <Image /> },
                     ].map(({ key, label, icon }) => (
