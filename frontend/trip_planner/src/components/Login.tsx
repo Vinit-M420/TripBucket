@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import type { NavbarState } from "../types/navbarstate";
+import { Eye, EyeOff } from 'lucide-react';
+
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-interface NavbarProps {
-  setNavbarState: (state: NavbarState) => void;
+type LoginProps = {
+    hidePassword: boolean;
+    setHidePassword: React.Dispatch<React.SetStateAction<boolean>>;
+    setNavbarState: (state: NavbarState) => void;
 }
 
-const Login = ( {setNavbarState} : NavbarProps ) => {
+const Login = ( {hidePassword, setHidePassword, setNavbarState} : LoginProps ) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    
     const navigate = useNavigate(); 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -54,11 +59,16 @@ const Login = ( {setNavbarState} : NavbarProps ) => {
                                 onChange={(e) => setEmail(e.target.value)} value={email} required />
                         <br/>
                         <label className="md:text-base text-sm text-black pl-2">Password</label>
-                        <div>
+                        <div className="flex relative items-center ">
                             <input className="bg-green-100 rounded-2xl w-full p-3 my-2 shadow border border-green-800
                                                 placeholder:text-green-600 placeholder:text-base"
-                                    type="password" placeholder="Enter your password" 
+                                    type={hidePassword ? "password" : 'text'} 
+                                    placeholder="Enter your password" 
                                     onChange={(e) => setPassword(e.target.value)} value={password} required/>
+                            <div className="absolute right-5" 
+                                onClick={() => setHidePassword(!hidePassword)}>
+                                { hidePassword ? <Eye /> : <EyeOff />}
+                            </div>
                         </div>
                         <div className="flex flex-col gap-2 items-center mb-5">
                             <h4 className="text-xs text-center">

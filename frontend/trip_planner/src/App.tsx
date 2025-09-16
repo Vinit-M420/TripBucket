@@ -14,6 +14,7 @@ import { type NavbarState } from './types/navbarstate';
 function App() {
  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
  const [navbarState, setNavbarState] =  useState<NavbarState>(token ? "trip" : "hero");
+ const [hidePassword, setHidePassword] = useState<boolean>(true);
  const publicRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,8 +68,17 @@ function App() {
           )
         } />
         
-        <Route path="/login" element={<Login setNavbarState={setNavbarState} />} />
-        <Route path="/signup" element={<Signup setNavbarState={setNavbarState} />} />
+        <Route path="/login" element={
+          <Login 
+            hidePassword={hidePassword}
+            setHidePassword={setHidePassword}      
+            setNavbarState={setNavbarState} />} />
+
+        <Route path="/signup" element={
+          <Signup 
+            hidePassword={hidePassword}
+            setHidePassword={setHidePassword}   
+            setNavbarState={setNavbarState} />} />
 
         <Route path="/trips" 
             element={
