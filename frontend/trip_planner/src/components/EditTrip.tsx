@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 import type { EditTripProps } from '../types/EditTripProps';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
+const EditTrip = ({ tripId, setToggleEditTrip, setToggleAlert, onClose, refreshTrips }: EditTripProps ) => {
 
     const [isPublic, setIsPublic] = useState<boolean>(true);
     const [trip, setTrip] = useState<tripInterface | null>(null);
@@ -80,6 +80,7 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
           
           await refreshTrips();
           handleClose();
+          setToggleAlert(true);
         } 
         catch (err) {
           console.error("Error saving trip:", err);

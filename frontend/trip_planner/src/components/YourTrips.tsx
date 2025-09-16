@@ -122,6 +122,7 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                                 e.stopPropagation();
                                 setToggleEditTrip(!toggleAddTrip);                               
                                 handleEdit(trip._id);
+                                setTypeOfAlert("edit");    
                             }}>
                                 <Edit /> 
                                 <h3 className='text-base'>Edit</h3>
@@ -171,6 +172,7 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                 tripId={editingTripId}
                 toggleEditTrip={toggleEditTrip}
                 setToggleEditTrip={setToggleEditTrip}
+                setToggleAlert={setToggleAlert}
                 onClose={() => setEditingTripId(null)}
                 refreshTrips={refreshTrips}
             />
@@ -203,7 +205,8 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                             1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 
                             0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
-                {typeOfAlert === "delete" && <span className="font-medium">Deleted!</span>}
+                {typeOfAlert === "delete" && <span className="font-medium">Deleted trip successfully!</span>}
+                {typeOfAlert === "edit" && <span className="font-medium">Edited trip successfully!</span>}
                 {typeOfAlert === "shareurl" && (
                     <span className="font-medium">Copied share URL to clipboard</span>
                 )}

@@ -28,6 +28,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
 
         const fetchPublicTrip = async () => {
         try {
+            console.time("Fetch Public Trip"); 
             const res = await fetch(`${API_BASE}/api/v1/trip/public/${shareId}`);
             if (!res.ok) throw new Error("Trip not found or private");
             const data = await res.json();
@@ -38,7 +39,10 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
             
         } catch (err: any) {
             setError(err.message);
+        } finally {
+            console.timeEnd("Fetch Public Trip"); 
         }
+        
         };
         fetchPublicTrip();
     }, [shareId]);
@@ -74,7 +78,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
   
             {/* Header  */}
             <div className='flex justify-between gap-10 items-center w-full max-w-6xl'>
-                <div className='flex justify-start w-full max-w-6xl gap-2 my-5 items-center mx-auto px-2 sm:px-4'>
+                <div className='flex justify-start w-full max-w-6xl md:gap-5 gap-2 my-5 items-center mx-auto px-2 sm:px-4'>
                     <Link to="/">
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                             transition duration-200 cursor-pointer hover:bg-green-700" 

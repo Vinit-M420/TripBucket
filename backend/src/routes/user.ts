@@ -93,7 +93,7 @@ router.put("/update", userAuth, async function (req:CustomRequest, res) {
     
     try{
         await UserModel.updateOne({ firstName, lastName, email, password });
-        res.json({ message: "Updated your name" })
+        res.json({ message: "Updated your user details" })
     }
     catch(err){
         return res.status(HttpStatusCode.ServerError).json({

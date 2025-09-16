@@ -16,10 +16,10 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                                 md:hover:translate-y-3 transition-all duration-200">  
                     <img src="https://images.unsplash.com/photo-1500043357865-c6b8827edf10?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     className="w-full h-[70%] min-h-60 rounded-t-lg" />
-                    <h1 className='text-green-800 text-xl font-semibold mx-5'>
+                    <h1 className='text-green-800 text-xl font-bold mx-5'>
                         Iceland
                     </h1>
-                    <h2 className='text-green-600 md:text-md text-sm mx-5'>
+                    <h2 className='text-green-700 md:text-md text-sm mx-5 font-light'>
                         Land of Fire & Ice—where glaciers and volcanoes meet.
                         Explore hot springs, black beaches, waterfalls, and northern lights.
                     </h2>
@@ -38,10 +38,10 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                     >  
                     <img src="https://plus.unsplash.com/premium_photo-1661964177687-57387c2cbd14?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     className="w-full h-[70%] min-h-60 rounded-t-lg" />
-                    <h1 className='text-green-800 text-xl font-semibold mx-5'>
+                    <h1 className='text-green-800 text-xl font-bold mx-5'>
                         Japan
                     </h1>
-                    <h2 className='text-green-600 md:text-md text-sm mx-5'>
+                    <h2 className='text-green-700 md:text-md text-sm mx-5 font-light'>
                         A stunning fusion of ancient temples and neon-lit cities.
                         Cherry blossoms, traditions, and world-famous cuisine await.    
                     </h2>
@@ -59,10 +59,10 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
                                 md:hover:translate-y-2 transition-all duration-200">  
                     <img src="https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                     className="w-full h-[70%] min-h-60 rounded-t-lg" />
-                    <h1 className='text-green-800 text-xl font-semibold mx-5'>
+                    <h1 className='text-green-800 text-xl font-bold mx-5'>
                         Vietnam
                     </h1>
-                    <h2 className='text-green-600 md:text-md text-sm mx-5'>
+                    <h2 className='text-green-700 md:text-md text-sm mx-5 font-light'>
                         From emerald mountains to golden beaches and street food.
                         A vibrant blend of culture, nature, and adventure in Southeast Asia.
                     </h2>
