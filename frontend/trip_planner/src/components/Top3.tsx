@@ -5,7 +5,7 @@ const Top3 = ({setNavbarState} : NavbarProps ) => {
     const navigate = useNavigate(); 
 
     return (
-        <div className="my-25 bg-stone-50">
+        <div className="py-24 bg-stone-50">
             <div className="flex items-center mx-auto justify-center">
                 <h3 className="font-semibold md:text-4xl text-3xl text-green-800 ">Public Trips</h3>
             </div>
