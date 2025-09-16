@@ -24,6 +24,8 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
     const [filterToggle, setFilterToggle] = useState<boolean>(false);
     const [toggleAlert, setToggleAlert] = useState<boolean>(false);
     const modalAlert = useRef<HTMLDivElement>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
@@ -44,11 +46,12 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
         try {
             const response = await fetchContent(tripId);
             setContent(response);
+            setIsLoading(false);
         } catch (error) {
             console.error('Error loading content:', error);
         }
     };      
-
+            
         loadTripName();
         loadContent();
     }, [tripId]);
@@ -78,6 +81,16 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
         return match ? match[1] : null;
     };
     
+    if (isLoading) {
+        return (
+            <div className="flex justify-center h-screen mt-15">
+                <h1 className="text-green-800 font-bold md:text-2xl text-xl animate-pulse">
+                    Loading...
+                </h1>
+            </div>
+        );
+    }
+
 
     return (
         <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">

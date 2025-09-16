@@ -1,5 +1,5 @@
-import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import type { NavbarState } from "../types/navbarstate";
 const API_BASE = import.meta.env.VITE_API_URL; 
 
@@ -7,7 +7,7 @@ interface NavbarProps {
   setNavbarState: (state: NavbarState) => void;
 }
 
-const Login = ( { setNavbarState} : NavbarProps ) => {
+const Login = ( {setNavbarState} : NavbarProps ) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate(); 
@@ -19,7 +19,7 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
             const response = await fetch(`${API_BASE}/api/v1/user/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password })
             });
 
             const data = await response.json().catch(() => ({}));
@@ -28,7 +28,6 @@ const Login = ( { setNavbarState} : NavbarProps ) => {
                 alert(data.message || "Login failed");
                 return;              
             }
-
 
             localStorage.setItem("token", data.token);
             setNavbarState("trip");

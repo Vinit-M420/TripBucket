@@ -28,6 +28,7 @@ const Signup = ({setNavbarState} : NavbarProps) => {
                 alert(data.message || "Signup failed");
                 return;
             }
+
             alert("You're successfully Signed up!");
             setNavbarState("login");
             navigate("/login");
@@ -36,7 +37,6 @@ const Signup = ({setNavbarState} : NavbarProps) => {
             console.error("Error signing up:", err);
             alert("Network error. Please try again.");
         }
-
     }
 
     return (
@@ -46,6 +46,7 @@ const Signup = ({setNavbarState} : NavbarProps) => {
                 <div className="flex flex-col justify-center items-center">
                     <h1 className="md:text-3xl text-2xl text-black font-bold">Create Account</h1>
                     <h2 className="md:text-base text-sm text-green-800">Welcome to TripBucket</h2>
+
                     <form className="w-[80%] max-w-sm py-4" onSubmit={handleSubmit}>
                         <label className="md:text-base text-sm text-black pl-2">Name</label><br/>
                         <input className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800
@@ -75,18 +76,19 @@ const Signup = ({setNavbarState} : NavbarProps) => {
                             </h4>
                         </div>
                         
-                        <button className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 md:text-lg text-md
-                        border-2 border-transparent transition duration-200 cursor-pointer hover:bg-green-700" 
+                        <button className="w-full bg-green-800 rounded-2xl px-10 py-2 text-stone-50 
+                                        md:text-lg text-md border-2 border-transparent transition duration-200 
+                                        cursor-pointer hover:bg-green-700" 
                                 type="submit">Sign Up</button>
-
                     </form>
                 </div>
             </div>
+            
             <div className="flex justify-end w-full max-w-xl mr-5">
                 <div className="flex gap-5">
                     <h3 className="flex items-center md:text-base text-sm">Already have an account?</h3>
                     <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
-                            transition duration-200 cursor-pointer hover:bg-green-100"
+                                    transition duration-200 cursor-pointer hover:bg-green-100"
                         onClick={() => setNavbarState("login")}>
                             <Link to='/login'><h2 className="md:text-base text-sm">Log In</h2></Link>
                     </div> 

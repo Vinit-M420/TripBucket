@@ -120,8 +120,7 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                             transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center"
                             onClick={(e) => { 
                                 e.stopPropagation();
-                                setToggleEditTrip(!toggleAddTrip);
-                                
+                                setToggleEditTrip(!toggleAddTrip);                               
                                 handleEdit(trip._id);
                             }}>
                                 <Edit /> 
@@ -214,8 +213,7 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                 <X className="size-3" />
                 </button>
             </div>
-        )}
-    
+        )} 
     </div>
     )
 }

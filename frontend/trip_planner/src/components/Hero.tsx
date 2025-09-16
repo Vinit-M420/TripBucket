@@ -6,7 +6,7 @@ interface HeroProps extends NavbarProps {
   scrollToPublic: () => void;
 }
 
-const Hero = ( { scrollToPublic, setNavbarState}:  HeroProps ) => {
+const Hero = ( {scrollToPublic, setNavbarState}:  HeroProps ) => {
     
     return (
         <div>

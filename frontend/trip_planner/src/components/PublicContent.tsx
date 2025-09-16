@@ -18,6 +18,7 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [filterToggle, setFilterToggle] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
@@ -30,8 +31,11 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
             const res = await fetch(`${API_BASE}/api/v1/trip/public/${shareId}`);
             if (!res.ok) throw new Error("Trip not found or private");
             const data = await res.json();
+            
             setTripName(data.trip.destination);
             setContents(data.contents);
+            setIsLoading(false);
+            
         } catch (err: any) {
             setError(err.message);
         }
@@ -49,8 +53,21 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
         return match ? match[1] : null;
     };
 
-    if (error) return <div className="text-center mt-20 text-red-600">{error}</div>;
-    if (!contents) return <div className="text-center mt-20">Loading trip...</div>;
+      // Show loading screen first
+    if (isLoading) {
+        return (
+            <div className="flex justify-center h-screen mt-15">
+                <h1 className="text-green-800 font-bold md:text-2xl text-xl animate-pulse">
+                    Loading...
+                </h1>
+            </div>
+        );
+    }
+
+    // Show error if there's an error
+    if (error) {
+        return <div className="text-center mt-20 text-red-600">{error}</div>;
+    }
 
     return (
         <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
@@ -186,8 +203,10 @@ const PublicContent = ({setNavbarState}: NavbarProps) => {
                     setContentType={setContentType} /> 
                 </div>
                 )
-            }      
+            } 
+      
         </div>
+
     )
 }
 
