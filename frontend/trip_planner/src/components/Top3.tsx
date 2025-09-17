@@ -1,9 +1,10 @@
-import type { NavbarProps } from "../types/navbarstate";
 import { useNavigate } from "react-router-dom";
+import { useNavbarStore } from "../store";
 
-const Top3 = ({setNavbarState} : NavbarProps ) => {
+const Top3 = ( ) => {
     const navigate = useNavigate(); 
-
+    const { setNavbarState } = useNavbarStore();
+    
     return (
         <div className="py-24 bg-stone-50">
             <div className="flex items-center mx-auto justify-center">

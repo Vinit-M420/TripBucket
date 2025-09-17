@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Bars } from "../assets/bars";
 import { ChevronDown, CircleUser  } from 'lucide-react';
 import ProfileDropDown from "./ProfileDropdown";
-import type { NavbarProps } from "../types/navbarstate";
 import { Link } from "react-router-dom";
+import { useNavbarStore } from "../store";
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
+const Navbar = () => {
+    const { navbarState, setNavbarState } = useNavbarStore();
     const [toggleNavbar, setToggleNavbar] = useState(false);
     const [toggleProfileDropdown, setToggleProfileDropdown] = useState(false);
     const [userFname, setUserFname] = useState("");
@@ -163,8 +164,7 @@ const Navbar = ({navbarState, setNavbarState }: NavbarProps) => {
 
       {toggleProfileDropdown && 
       <ProfileDropDown 
-          setNavbarState={setNavbarState} 
-          setToggleProfileDropdown={setToggleProfileDropdown}/> 
+        setToggleProfileDropdown={setToggleProfileDropdown}/> 
       }
     </div>
   );

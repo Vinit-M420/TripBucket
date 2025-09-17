@@ -9,10 +9,11 @@ import { fetchContent } from '../utils/fetchContents';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
 import { fetchTripName } from '../utils/fetchTripName';
-import type { NavbarProps } from '../types/navbarstate';
 import FilterDropDown from './FilterDropDown';
+import { useNavbarStore, useTypeofAlertStore } from '../store';
 
-const TripContent = ({setNavbarState}: NavbarProps) => {
+const TripContent = () => {
+    const { setNavbarState } = useNavbarStore();
     const { tripId } = useParams();
     const [tripName, setTripName] = useState<string | null>(null);
     const [contentType, setContentType] = useState<ContentTypeState>("all");
@@ -22,7 +23,8 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
     const [toggleEditContent, setToggleEditContent] = useState<boolean>(false);
     const [selectedContentId, setSelectedContentId] = useState<number | null>(null);
     const [filterToggle, setFilterToggle] = useState<boolean>(false);
-    const [toggleAlert, setToggleAlert] = useState<boolean>(false);
+
+    const {toggleAlert, setToggleAlert} = useTypeofAlertStore();
     const modalAlert = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -173,7 +175,7 @@ const TripContent = ({setNavbarState}: NavbarProps) => {
                                             tripId={tripId}
                                             contentId={item._id}
                                             setOpenDropdownId={setOpenDropdownId}
-                                            setToggleAlert={setToggleAlert}
+                                            // setToggleAlert={setToggleAlert}
                                             toggleEditContent={toggleEditContent}
                                             setToggleEditContent={setToggleEditContent}
                                             refreshContent={refreshContent} 

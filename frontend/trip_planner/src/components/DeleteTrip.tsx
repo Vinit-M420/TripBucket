@@ -1,11 +1,13 @@
 import { X } from 'lucide-react';
 import type { DeleteTripProps } from '../types/DeleteTripProps';
 import { useEffect, useState } from 'react';
+import { useTypeofAlertStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const DeleteTrip = ({ tripId, setToggleDeleteTrip, setToggleAlert, onClose, refreshTrips }: DeleteTripProps) => {
+const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: DeleteTripProps) => {
     const [trip, setTrip] = useState('');
-
+    const {setToggleAlert} = useTypeofAlertStore();
+    
     useEffect(() => {
         const fetchTrip = async () => {
         try {

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { Edit, LogOut } from 'lucide-react';
-import type { NavbarState } from '../types/navbarstate';
+import { useNavbarStore } from "../store";
 
 type ProfileDropDowntype = {
-    setNavbarState:React.Dispatch<React.SetStateAction<NavbarState>>, 
-    setToggleProfileDropdown:React.Dispatch<React.SetStateAction<boolean>> 
+    setToggleProfileDropdown: React.Dispatch<React.SetStateAction<boolean>> 
 }
 
-const ProfileDropDown = ({ setNavbarState ,setToggleProfileDropdown }: ProfileDropDowntype  ) => {
+const ProfileDropDown = ({ setToggleProfileDropdown } : ProfileDropDowntype) => {
+    const { setNavbarState } = useNavbarStore();
+    
     return (
         <div className='transition-all duration-100 absolute z-50 md:right-25 right-5 bg-stone-200 shadow p-2 mt-2 rounded-xl'>
             <div className='flex flex-col gap-2'>

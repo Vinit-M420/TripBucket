@@ -12,17 +12,21 @@ import type { tripInterface } from '../types/tripInterface';
 import { ExternalLink  } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
 import { X } from 'lucide-react';
-import type { NavbarProps } from '../types/navbarstate';
+import {  useNavbarStore, useTypeofAlertStore } from "../store";
 
-const YourTrips = ({ setNavbarState }: NavbarProps ) => {
-    const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
+
+const YourTrips = () => {
+    const { setNavbarState } = useNavbarStore();
     const [trips, setTrips] = useState<tripInterface[]>([]);
+    const {typeOfAlert, toggleAlert, setTypeOfAlert, setToggleAlert} = useTypeofAlertStore();
+
+    const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
     const [toggleEditTrip, setToggleEditTrip] = useState<boolean>(false);
     const [toggleDeleteTrip, setToggleDeleteTrip] = useState<boolean>(false);
+
     const [editingTripId, setEditingTripId] = useState<string | null>(null);
     const [deletingTripId, SetDeletingTripId] = useState<string | null>(null);
-    const [typeOfAlert, setTypeOfAlert] = useState<string | null>(null);
-    const [toggleAlert, setToggleAlert] = useState<boolean>(false);
+    
     const modalAlert = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -158,7 +162,6 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
         </div>
 
 
-
         {toggleAddTrip === true && 
             <AddTrip 
                 toggleAddTrip={toggleAddTrip} 
@@ -172,7 +175,6 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
                 tripId={editingTripId}
                 toggleEditTrip={toggleEditTrip}
                 setToggleEditTrip={setToggleEditTrip}
-                setToggleAlert={setToggleAlert}
                 onClose={() => setEditingTripId(null)}
                 refreshTrips={refreshTrips}
             />
@@ -182,7 +184,6 @@ const YourTrips = ({ setNavbarState }: NavbarProps ) => {
             <DeleteTrip
                 tripId={deletingTripId}
                 setToggleDeleteTrip={setToggleDeleteTrip}
-                setToggleAlert={setToggleAlert}
                 onClose={() => SetDeletingTripId(null)}
                 refreshTrips={refreshTrips}
             />

@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import type { tripInterface } from '../types/tripInterface';
 import { X } from 'lucide-react';
 import type { EditTripProps } from '../types/EditTripProps';
+import { useTypeofAlertStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const EditTrip = ({ tripId, setToggleEditTrip, setToggleAlert, onClose, refreshTrips }: EditTripProps ) => {
-
+const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
+    const {setToggleAlert} = useTypeofAlertStore();
     const [isPublic, setIsPublic] = useState<boolean>(true);
     const [trip, setTrip] = useState<tripInterface | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);

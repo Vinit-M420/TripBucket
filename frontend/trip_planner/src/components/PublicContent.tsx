@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-// import ContentDropdown from './ContentDropdown';
 import Left from '../assets/left';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { Link } from "react-router-dom";
-import type { NavbarProps } from '../types/navbarstate';
 import FilterDropDown from './FilterDropDown';
+import { useNavbarStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
 
-const PublicContent = ({setNavbarState}: NavbarProps) => {
+const PublicContent = () => {
+    const { setNavbarState } = useNavbarStore();
     const { shareId } = useParams<{ shareId: string }>();
     const [tripName, setTripName] = useState<string | null>(null);
     const [contents, setContents] = useState<ContentItem[]>([]);

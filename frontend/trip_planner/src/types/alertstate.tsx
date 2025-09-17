@@ -1,0 +1,9 @@
+export type AlertState = 'edit' | 'delete' | 'shareurl' | null ;
+
+export interface TypeOfAlertInt {
+    typeOfAlert : AlertState;
+    setTypeOfAlert: (state: AlertState) => void;
+    
+    toggleAlert: boolean;
+    setToggleAlert: (alert: boolean) => void;
+}

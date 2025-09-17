@@ -1,11 +1,13 @@
 import Edit from '../assets/edit';
 import Trash from '../assets/trash';
+import { useTypeofAlertStore } from '../store';
 import type { ContentDropDownType } from '../types/ContentDropDownType';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
 const ContentDropdown = ({ tripId, contentId, toggleEditContent, 
-  setToggleAlert, setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
+  setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
 {
+  const {setToggleAlert} = useTypeofAlertStore();
   
   const deleteContent = async () => {
         try {

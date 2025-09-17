@@ -1,19 +1,17 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import type { NavbarState } from "../types/navbarstate";
 import { Eye, EyeOff } from 'lucide-react';
+import { useHidePassword, useNavbarStore } from "../store";
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-type SignupProps = { 
-    hidePassword: boolean;
-    setHidePassword: React.Dispatch<React.SetStateAction<boolean>>;
-    setNavbarState: (state: NavbarState) => void;
-}
 
-const Signup = ({hidePassword, setHidePassword, setNavbarState} : SignupProps) => {
+const Signup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { setNavbarState } = useNavbarStore();
+    const {hidePassword, setHidePassword} = useHidePassword();
+    
     const navigate = useNavigate(); 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -73,8 +71,8 @@ const Signup = ({hidePassword, setHidePassword, setNavbarState} : SignupProps) =
                                     placeholder="Enter your password" 
                                     onChange={(e) => setPassword(e.target.value)} value={password} required/>
                             <div className="absolute right-5" 
-                                onClick={() => setHidePassword(!hidePassword)}>
-                                { hidePassword ? <Eye /> : <EyeOff />}
+                                onClick={() => setHidePassword()}>
+                                {hidePassword ? <EyeOff /> : <Eye />}
                             </div>
                         </div>
                         <div className="flex flex-col gap-2 items-center mb-5">

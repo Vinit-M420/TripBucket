@@ -2,5 +2,5 @@ export type NavbarState = 'hero' | 'signup' | 'login' | 'trip' | 'content' | "pu
 
 export interface NavbarProps {
   navbarState: NavbarState;
-  setNavbarState: React.Dispatch<React.SetStateAction<NavbarState>>
+  setNavbarState: (state: NavbarState) => void;
 }

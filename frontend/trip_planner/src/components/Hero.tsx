@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import worldmap from "../images/worldmap trace.svg"
-import type { NavbarProps } from "../types/navbarstate";
+import { useNavbarStore } from '../store';
 
-interface HeroProps extends NavbarProps {
+interface HeroProps {
   scrollToPublic: () => void;
 }
 
-const Hero = ( {scrollToPublic, setNavbarState}:  HeroProps ) => {
+const Hero = ( {scrollToPublic}:  HeroProps ) => {
+    const { setNavbarState } = useNavbarStore();
     
     return (
     <div className='relative w-full h-[calc(100dvh-80px)]'>
