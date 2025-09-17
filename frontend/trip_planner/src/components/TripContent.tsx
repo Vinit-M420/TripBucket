@@ -10,7 +10,7 @@ import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
 import { fetchTripName } from '../utils/fetchTripName';
 import FilterDropDown from './FilterDropDown';
-import { useNavbarStore, useTypeofAlertStore } from '../store';
+import { useNavbarStore, useToggleAddStore, useTypeofAlertStore } from '../store';
 
 const TripContent = () => {
     const { setNavbarState } = useNavbarStore();
@@ -19,7 +19,7 @@ const TripContent = () => {
     const [contentType, setContentType] = useState<ContentTypeState>("all");
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [content, setContent] = useState<ContentItem[]>([])
-    const [toggleAddContent, setToggleAddContent] = useState<boolean>(false);
+    const {toggleAddContent, setToggleAddContent} = useToggleAddStore();
     const [toggleEditContent, setToggleEditContent] = useState<boolean>(false);
     const [selectedContentId, setSelectedContentId] = useState<number | null>(null);
     const [filterToggle, setFilterToggle] = useState<boolean>(false);
@@ -243,8 +243,6 @@ const TripContent = () => {
             {toggleAddContent && 
             <AddContent 
                 tripId={tripId}
-                toggleAddContent={toggleAddContent}
-                setToggleAddContent={setToggleAddContent}
                 refreshContent={refreshContent}
                 onClose={() => setToggleAddContent(false)} 
                 toggleAddTrip={false}

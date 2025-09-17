@@ -9,24 +9,17 @@ import AddTrip from './AddTrip';
 import EditTrip from './EditTrip';
 import DeleteTrip from './DeleteTrip';
 import type { tripInterface } from '../types/tripInterface';
-import { ExternalLink  } from 'lucide-react';
+import { ExternalLink, X } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
-import { X } from 'lucide-react';
-import {  useNavbarStore, useTypeofAlertStore } from "../store";
+import {  useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from "../store";
 
 
 const YourTrips = () => {
     const { setNavbarState } = useNavbarStore();
     const [trips, setTrips] = useState<tripInterface[]>([]);
-    const {typeOfAlert, toggleAlert, setTypeOfAlert, setToggleAlert} = useTypeofAlertStore();
-
-    const [toggleAddTrip, setToggleAddTrip] = useState<boolean>(false);
-    const [toggleEditTrip, setToggleEditTrip] = useState<boolean>(false);
-    const [toggleDeleteTrip, setToggleDeleteTrip] = useState<boolean>(false);
-
-    const [editingTripId, setEditingTripId] = useState<string | null>(null);
-    const [deletingTripId, SetDeletingTripId] = useState<string | null>(null);
-    
+    const {toggleAddTrip, setToggleAddTrip} = useToggleAddStore();
+    const {isEditTripOpen, isDeleteTripOpen, openEditTrip, openDeleteTrip} = useModalStore();
+    const {typeOfAlert, toggleAlert, setTypeOfAlert, setToggleAlert} = useTypeofAlertStore(); 
     const modalAlert = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -42,14 +35,14 @@ const YourTrips = () => {
         return () => clearTimeout(showAlert)
     }, [toggleAlert]);
 
-    const handleClose = () => {
+    const handleAlertClose = () => {
         setToggleAlert(false);
     }
 
-    const handleEdit = (id: string) => {
-        // console.log("Edit trip with id:", id);
-        setEditingTripId(id);
-    };
+    // const handleEdit = (id: string) => {
+    //     // console.log("Edit trip with id:", id);
+    //     setEditingTripId(id);
+    // };
 
     const refreshTrips = async () => {
         const tripsData = await fetchTrips();
@@ -124,8 +117,8 @@ const YourTrips = () => {
                             transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center"
                             onClick={(e) => { 
                                 e.stopPropagation();
-                                setToggleEditTrip(!toggleAddTrip);                               
-                                handleEdit(trip._id);
+                                openEditTrip(true, trip._id)                            
+                                // handleEdit(trip._id);
                                 setTypeOfAlert("edit");    
                             }}>
                                 <Edit /> 
@@ -135,8 +128,9 @@ const YourTrips = () => {
                                         hover:border hover:border-green-800 hover:bg-stone-200'
                                  onClick={(e) =>{
                                     e.stopPropagation();
-                                    setToggleDeleteTrip(!toggleDeleteTrip);
-                                    SetDeletingTripId(trip._id);
+                                    openDeleteTrip(true, trip._id)
+                                    // setToggleDeleteTrip(!toggleDeleteTrip);
+                                    // SetDeletingTripId(trip._id);
                                     setTypeOfAlert("delete");                               
                                  } }>
                                 <Trash  />
@@ -164,28 +158,29 @@ const YourTrips = () => {
 
         {toggleAddTrip === true && 
             <AddTrip 
-                toggleAddTrip={toggleAddTrip} 
-                setToggleAddTrip={setToggleAddTrip} 
                 refreshTrips={refreshTrips}
                 onClose={() => setToggleAddTrip(false)} />
         }
 
-        {toggleEditTrip === true && 
+        {isEditTripOpen && 
             <EditTrip
-                tripId={editingTripId}
-                toggleEditTrip={toggleEditTrip}
-                setToggleEditTrip={setToggleEditTrip}
-                onClose={() => setEditingTripId(null)}
-                refreshTrips={refreshTrips}
+                onClose={(shouldRefresh = false) => {
+                    openEditTrip(false, null);
+                    if (shouldRefresh) {
+                    refreshTrips();
+                    }
+                }}
             />
         }
 
-        {toggleDeleteTrip === true && 
+        {isDeleteTripOpen && 
             <DeleteTrip
-                tripId={deletingTripId}
-                setToggleDeleteTrip={setToggleDeleteTrip}
-                onClose={() => SetDeletingTripId(null)}
-                refreshTrips={refreshTrips}
+                onClose={(shouldRefresh = false) => {
+                openDeleteTrip(false, null);
+                if (shouldRefresh) {
+                    refreshTrips();
+                }
+                }}
             />
         }
 
@@ -213,7 +208,7 @@ const YourTrips = () => {
                 )}
                 </div>
 
-                <button onClick={handleClose} className="ml-3">
+                <button onClick={handleAlertClose} className="ml-3">
                 <X className="size-3" />
                 </button>
             </div>

@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { X } from 'lucide-react';
 import type { AddContentProp } from "../types/AddContentProp";
+import { useToggleAddStore } from "../store";
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const AddContent = ({tripId, toggleAddContent, setToggleAddContent, refreshContent, onClose}: AddContentProp) => {
-    
+const AddContent = ({tripId, refreshContent, onClose}: AddContentProp) => {
+  
+  const {toggleAddContent, setToggleAddContent} = useToggleAddStore();
   const modalRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
         type: "note",

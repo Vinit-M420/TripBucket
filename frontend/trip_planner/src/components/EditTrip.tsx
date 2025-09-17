@@ -1,11 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import type { tripInterface } from '../types/tripInterface';
 import { X } from 'lucide-react';
-import type { EditTripProps } from '../types/EditTripProps';
-import { useTypeofAlertStore } from '../store';
+import { useModalStore, useTypeofAlertStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTripProps ) => {
+export type EditTripProps = {
+  onClose: (shouldRefresh: boolean) => void;
+};
+
+
+const EditTrip = ({ onClose }: EditTripProps ) => {
+    const { editingTripId , openEditTrip } = useModalStore();
     const {setToggleAlert} = useTypeofAlertStore();
     const [isPublic, setIsPublic] = useState<boolean>(true);
     const [trip, setTrip] = useState<tripInterface | null>(null);
@@ -14,7 +19,7 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
     useEffect(() => {
         const fetchTrip = async () => {
         try {
-            const response = await fetch(`${API_BASE}/api/v1/trip/single/${tripId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/trip/single/${editingTripId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -39,15 +44,15 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
         };
 
         fetchTrip();
-    }, [tripId]);
+    }, [editingTripId]);
 
 
     if (!trip) return null;
 
     const handleClose = () => {
-          setToggleEditTrip(false);
+          openEditTrip(false, null);
           if (onClose) {
-          onClose();
+          onClose(false);
           }
     };
 
@@ -61,7 +66,7 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
             to_date: trip.to_date ? new Date(trip.to_date).toISOString() : '',
             bannerURL: trip.bannerURL,
           };
-          const response = await fetch(`${API_BASE}/api/v1/trip/edit/${tripId}`, {
+          const response = await fetch(`${API_BASE}/api/v1/trip/edit/${editingTripId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -79,8 +84,7 @@ const EditTrip = ({ tripId, setToggleEditTrip, onClose, refreshTrips }: EditTrip
 
           }
           
-          await refreshTrips();
-          handleClose();
+          onClose(true);
           setToggleAlert(true);
         } 
         catch (err) {

@@ -1,5 +1,4 @@
 export type AddTripProp = {
-    onClose: () => void, toggleAddTrip:boolean , 
-    setToggleAddTrip: React.Dispatch<React.SetStateAction<boolean>>;
+    onClose: () => void, 
     refreshTrips: () => Promise<void>;
 }

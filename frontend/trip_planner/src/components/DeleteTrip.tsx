@@ -1,47 +1,51 @@
 import { X } from 'lucide-react';
-import type { DeleteTripProps } from '../types/DeleteTripProps';
-import { useEffect, useState } from 'react';
-import { useTypeofAlertStore } from '../store';
+// import { useEffect, useState } from 'react';
+import { useModalStore, useTypeofAlertStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: DeleteTripProps) => {
-    const [trip, setTrip] = useState('');
+export type DeleteTripProps = {
+  onClose: (shouldRefresh?: boolean) => void;
+};
+
+const DeleteTrip = ({ onClose }: DeleteTripProps) => {
+    const { deletingTripId , openDeleteTrip } = useModalStore();
+    // const [tripName, setTripName] = useState('');
     const {setToggleAlert} = useTypeofAlertStore();
     
-    useEffect(() => {
-        const fetchTrip = async () => {
-        try {
-            const response = await fetch(`${API_BASE}/api/v1/trip/single/${tripId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${localStorage.getItem("token")}`,
-                },
-            });
+    // useEffect(() => {
+    //     const fetchTripName = async () => {
+    //     try {
+    //         const response = await fetch(`${API_BASE}/api/v1/trip/single/${deletingTripId}`, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             Authorization: `${localStorage.getItem("token")}`,
+    //             },
+    //         });
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error("Backend error:", errorText);
-                throw new Error("Failed to fetch trip");
-            }
+    //         if (!response.ok) {
+    //             const errorText = await response.text();
+    //             console.error("Backend error:", errorText);
+    //             throw new Error("Failed to fetch trip");
+    //         }
 
-            const data = await response.json();
-            setTrip(data.trip[0].destination);
-            // console.log(data);
+    //         const data = await response.json();
+    //         setTrip(data.trip[0].destination);
+    //         // console.log(data);
 
-        } catch (err) {
-            console.error("Error fetching trip:", err);
-        }
-        };
+    //     } catch (err) {
+    //         console.error("Error fetching trip:", err);
+    //     }
+    //     };
 
-        fetchTrip();
+    //     fetchTrip();
         
-    }, [tripId]);
+    // }, [deletingTripId]);
 
     
     const deleteTrip = async () => {
         try {
-            const response = await fetch(`${API_BASE}/api/v1/trip/delete/${tripId}`, {
+            const response = await fetch(`${API_BASE}/api/v1/trip/delete/${deletingTripId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -54,8 +58,8 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
                 console.error("Backend error:", errorText);
                 throw new Error("Failed to delete trip");
             }
-
-            await refreshTrips();
+            onClose(true);
+            // await refreshTrips();
             setToggleAlert(true);
 
         } catch (err) {
@@ -65,9 +69,9 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
     
 
     const handleClose = () => {
-          setToggleDeleteTrip(false);
+          openDeleteTrip(false, null);
           if (onClose) {
-          onClose();
+          onClose(false);
           }
     };
 
@@ -92,9 +96,9 @@ const DeleteTrip = ({ tripId, setToggleDeleteTrip, onClose, refreshTrips }: Dele
                     <X size={30} /> 
                 </button>  
                 <div className="flex flex-col justify-center items-center">
-                    <h1 className="md:text-3xl text-2xl text-black font-bold">Delete {trip}</h1>
+                    <h1 className="md:text-3xl text-2xl text-black font-bold">Delete</h1>
 
-                    <h2 className='my-5'>Are you sure you want to Delete?</h2>
+                    <h2 className='my-5'>Are you sure you want to Delete ?</h2>
                     <div className={`flex gap-5 items-center`}>
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 border-2 border-transparent
                                         transition duration-200 cursor-pointer hover:bg-green-700"

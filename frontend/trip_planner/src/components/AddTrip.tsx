@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { X } from 'lucide-react';
 import type { AddTripProp } from '../types/AddTripProp';
+import { useToggleAddStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: AddTripProp) => {
-
+const AddTrip = ({ onClose, refreshTrips }: AddTripProp) => {
+  
+  const {toggleAddTrip, setToggleAddTrip} = useToggleAddStore();
   const modalRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     destination: "",
@@ -29,7 +31,7 @@ const AddTrip = ({ onClose, toggleAddTrip, setToggleAddTrip, refreshTrips }: Add
 
   const handleClose = () => {
     setToggleAddTrip(false);
-    if (onClose) { onClose(); }
+    if (onClose) onClose();
   };
 
   const handleChange = (
