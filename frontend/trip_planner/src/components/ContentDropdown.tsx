@@ -1,5 +1,5 @@
-import Edit from '../assets/edit';
-import Trash from '../assets/trash';
+import {MemoizedEdit} from '../assets/edit';
+import {MemoizedTrash} from '../assets/trash';
 import { useModalStore, useTypeofAlertStore } from '../store';
 import type { ContentDropDownType } from '../types/ContentDropDownType';
 const API_BASE = import.meta.env.VITE_API_URL; 
@@ -53,7 +53,7 @@ const ContentDropdown = ({tripId, contentId, setOpenDropdownId, refreshContent}:
               openEditContent(!isEditContentOpen);
               // console.log("Edit content btn clicked", contentId);
               }}>
-          <Edit />
+          <MemoizedEdit />
           <h2>Edit</h2>
         </div>
         <div className="flex gap-2 border border-transparent p-2 cursor-pointer 
@@ -62,7 +62,7 @@ const ContentDropdown = ({tripId, contentId, setOpenDropdownId, refreshContent}:
               setOpenDropdownId(null); 
               handleDelete();
             }}>
-            <Trash />
+            <MemoizedTrash />
           <h2>Delete</h2>
         </div>
       </div>
