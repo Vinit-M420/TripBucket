@@ -2,6 +2,7 @@ import { create } from "zustand";
 import type { NavbarProps, NavbarState } from "./types/navbarstate";
 import type { TypeOfAlertInt, AlertState } from "./types/alertstate";
 import type { ModalStore } from "./types/ModalStore";
+// import { type ContentItem } from "./types/ContentItem";
 
 export const useNavbarStore = create<NavbarProps>((set) => ({
     navbarState: (() => {
@@ -40,9 +41,11 @@ export const useToggleAddStore = create<{
     setToggleAddContent: (add: boolean) => set({ toggleAddContent: add }),
 }));
 
+
 export const useModalStore = create<ModalStore>((set) => ({
     isEditTripOpen: false,   
     isDeleteTripOpen: false,
+    isEditContentOpen: false,
     
     editingTripId: null,
     deletingTripId: null,
@@ -55,4 +58,13 @@ export const useModalStore = create<ModalStore>((set) => ({
         isDeleteTripOpen: open,
         deletingTripId: tripId
     }),
+    openEditContent: (open: boolean) => set({ 
+        isEditContentOpen: open,
+    }),
 }))
+
+// export const useContentTypeStore = create<{
+    
+// }>((set) => ({
+    
+// }))

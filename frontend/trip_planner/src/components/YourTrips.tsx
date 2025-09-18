@@ -190,26 +190,26 @@ const YourTrips = () => {
                 className="fixed inset-x bottom-6 mx-auto flex items-center justify-between 
                         p-4 text-sm text-green-800 border border-green-300 
                         rounded-lg bg-green-50 w-fit max-w-xs shadow z-50">
-            <div className="flex items-center gap-2">
-                <svg
-                    className="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20" >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 
-                            1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 
-                            0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                {typeOfAlert === "delete" && <span className="font-medium">Deleted trip successfully!</span>}
-                {typeOfAlert === "edit" && <span className="font-medium">Edited trip successfully!</span>}
-                {typeOfAlert === "shareurl" && (
-                    <span className="font-medium">Copied share URL to clipboard</span>
-                )}
+                <div className="flex items-center gap-2">
+                    <svg
+                        className="w-4 h-4"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 20 20" >
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 
+                                1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 
+                                0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    {typeOfAlert === "delete" && <span className="font-medium">Deleted trip successfully!</span>}
+                    {typeOfAlert === "edit" && <span className="font-medium">Edited trip successfully!</span>}
+                    {typeOfAlert === "shareurl" && (
+                        <span className="font-medium">Copied share URL to clipboard</span>
+                    )}
                 </div>
-
+                
                 <button onClick={handleAlertClose} className="ml-3">
-                <X className="size-3" />
+                    <X className="size-3" />
                 </button>
             </div>
         )} 

@@ -1,11 +1,14 @@
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import type { EditContentProp } from "../types/EditContentProps";
+import { useModalStore } from "../store";
 const API_BASE = import.meta.env.VITE_API_URL; 
 
 const EditContent = (
-  {tripId, contentId, setToggleEditContent, refreshContent, onClose}: EditContentProp) => {
-
+  {tripId, contentId, refreshContent, onClose}: EditContentProp) => {
+    
+    const { openEditContent} = useModalStore();
     const modalRef = useRef<HTMLDivElement>(null);
     const [EditformData, setEditFormData] = useState({
         type: "note",
@@ -47,7 +50,7 @@ const EditContent = (
   }, [tripId, contentId])
 
     const handleClose = () => {
-        setToggleEditContent(false);
+        openEditContent(false);
         if (onClose) { 
           onClose(); 
         }
@@ -86,8 +89,8 @@ const EditContent = (
           }
     }
 
-    return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50 px-2">
+    return createPortal(
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-[9999] px-2">
       <div ref={modalRef}
         className="relative bg-stone-50 border-2 border-green-800 rounded-2xl py-6 px-4 md:px-6 
                  w-[90%] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl shadow max-h-[90vh] overflow-y-auto" >
@@ -123,7 +126,7 @@ const EditContent = (
             <label className="md:text-base text-sm text-black pl-2">Value</label>
             <br />
             <textarea name="value" rows={4} cols={40} value={EditformData.value} onChange={handleChange}
-              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-80"
+              className="bg-green-100 rounded-2xl w-full p-3 mt-2 my-4 shadow border-1 border-green-800"
               
             />
 
@@ -135,8 +138,9 @@ const EditContent = (
           </form>
         </div>
       </div>
-    </div>
-  );
+    </div>,
+    document.body
+  )
 }
 
 export default EditContent;

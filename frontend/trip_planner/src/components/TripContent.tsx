@@ -7,10 +7,11 @@ import AddContent from './AddContent';
 import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
-import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
 import { fetchTripName } from '../utils/fetchTripName';
 import FilterDropDown from './FilterDropDown';
-import { useNavbarStore, useToggleAddStore, useTypeofAlertStore } from '../store';
+import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from '../store';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
+import { FilterTabs } from './FilterTabContent';
 
 const TripContent = () => {
     const { setNavbarState } = useNavbarStore();
@@ -20,17 +21,16 @@ const TripContent = () => {
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [content, setContent] = useState<ContentItem[]>([])
     const {toggleAddContent, setToggleAddContent} = useToggleAddStore();
-    const [toggleEditContent, setToggleEditContent] = useState<boolean>(false);
+    const {isEditContentOpen, openEditContent} = useModalStore();
+
     const [selectedContentId, setSelectedContentId] = useState<number | null>(null);
     const [filterToggle, setFilterToggle] = useState<boolean>(false);
-
     const {toggleAlert, setToggleAlert} = useTypeofAlertStore();
     const modalAlert = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-
-    const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
-    const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
+    // const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
+    // const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
 
     useEffect(() => {
         if (!tripId) return;
@@ -120,8 +120,8 @@ const TripContent = () => {
                 </div>
                 
                 {/* Filter Tabs */}
-                <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden w-full max-w-6xl mx-auto px-2 sm:px-4">
-                    {[
+                {/* <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden w-full max-w-6xl mx-auto px-2 sm:px-4"> */}
+                    {/* {[
                         { key: "all", label: "All" },
                         { key: "note", label: "Notes", icon: <FileText /> },
                         { key: "link", label: "Link", icon: <LinkIcon /> },
@@ -140,8 +140,16 @@ const TripContent = () => {
                             {icon}
                             <h2 className="text-lg">{label}</h2>
                         </div>
-                    ))}
-                </div>
+                    ))} */}
+                    {/* </div> */}
+
+                    <FilterTabs
+                    contentType={contentType}
+                    setContentType={setContentType}
+                    setOpenDropdownId={setOpenDropdownId}
+                    />
+
+              
                 
                 {/* Content Part */}
                 <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-xs mb-10`}>
@@ -170,14 +178,16 @@ const TripContent = () => {
 
                                     {openDropdownId === item._id && (
                                         <div className="absolute right-0 mt-1 z-50"
-                                        onClick={() => {setSelectedContentId(item._id);}}>
+                                        onClick={() => {
+                                            setSelectedContentId(item._id);
+                                                                                    
+                                            }}>
                                         <ContentDropdown 
                                             tripId={tripId}
                                             contentId={item._id}
                                             setOpenDropdownId={setOpenDropdownId}
-                                            // setToggleAlert={setToggleAlert}
-                                            toggleEditContent={toggleEditContent}
-                                            setToggleEditContent={setToggleEditContent}
+                                            // toggleEditContent={toggleEditContent}
+                                            // setToggleEditContent={setToggleEditContent}
                                             refreshContent={refreshContent} 
                                         />
                                         </div>
@@ -249,18 +259,18 @@ const TripContent = () => {
                 />
             }
 
-            {toggleEditContent  && 
+            {isEditContentOpen  && 
                 <EditContent 
                     tripId={tripId}
-                    contentId={selectedContentId}
-                    toggleEditContent={toggleEditContent}
-                    setToggleEditContent={setToggleEditContent}
+                    contentId={selectedContentId}                  
+                    // toggleEditContent={toggleEditContent}
+                    // setToggleEditContent={setToggleEditContent}
                     refreshContent={refreshContent}
-                    onClose={() => setToggleEditContent(false)} 
+                    onClose={() => openEditContent(!isEditContentOpen)} 
                     />
             } 
 
-            { filterToggle &&
+            {filterToggle &&
                 (<div className="absolute right-5 mt-15 z-50">
                 <FilterDropDown 
                     setContentType={setContentType} /> 

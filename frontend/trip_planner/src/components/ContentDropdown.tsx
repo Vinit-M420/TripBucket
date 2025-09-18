@@ -1,13 +1,14 @@
 import Edit from '../assets/edit';
 import Trash from '../assets/trash';
-import { useTypeofAlertStore } from '../store';
+import { useModalStore, useTypeofAlertStore } from '../store';
 import type { ContentDropDownType } from '../types/ContentDropDownType';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
-const ContentDropdown = ({ tripId, contentId, toggleEditContent, 
-  setToggleEditContent, setOpenDropdownId, refreshContent }: ContentDropDownType ) => 
+const ContentDropdown = ({tripId, contentId, setOpenDropdownId, refreshContent}: ContentDropDownType) => 
 {
-  const {setToggleAlert} = useTypeofAlertStore();
+  const { setToggleAlert } = useTypeofAlertStore();
+  const { isEditContentOpen, openEditContent} = useModalStore();
+
   
   const deleteContent = async () => {
         try {
@@ -48,8 +49,10 @@ const ContentDropdown = ({ tripId, contentId, toggleEditContent,
         <div className="flex gap-2 border border-transparent p-2 cursor-pointer 
                 transition-all duration-200 hover:border-green-800"
             onClick={() => { setOpenDropdownId(null); 
-              setToggleEditContent(!toggleEditContent);
-               }}>
+              // setToggleEditContent(!toggleEditContent);
+              openEditContent(!isEditContentOpen);
+              // console.log("Edit content btn clicked", contentId);
+              }}>
           <Edit />
           <h2>Edit</h2>
         </div>
