@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import Left from '../assets/left';
+import {MemoizedLeft} from '../assets/left';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { Link } from "react-router-dom";
@@ -83,7 +83,7 @@ const PublicContent = () => {
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                             transition duration-200 cursor-pointer hover:bg-green-700" 
                             onClick={() => {setNavbarState("hero")}}>
-                            <Left /> 
+                            <MemoizedLeft /> 
                         </div> 
                     </Link>
 

@@ -1,3 +1,4 @@
+import React from "react";
 
 export const Lock = () => {
     return (
@@ -16,4 +17,4 @@ export const Lock = () => {
     )
 }
 
-export default Lock;
+export const MemoizedLock= React.memo(Lock);

@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from "react-router-dom";
-import PlusCircle from '../assets/pluscircle';
+import { MemoizedPlusCircle } from '../assets/pluscircle';
 import ContentDropdown from './ContentDropdown';
-import Left from '../assets/left';
+import {MemoizedLeft} from '../assets/left';
 import AddContent from './AddContent';
 import EditContent from './EditContent';
 import { fetchContent } from '../utils/fetchContents';
@@ -104,7 +104,7 @@ const TripContent = () => {
                             <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                             transition duration-200 cursor-pointer hover:bg-green-700"
                                 onClick={() => setNavbarState("trip")}>
-                                <Left />
+                                <MemoizedLeft />
                             </div>
                         </Link> 
                         <h1 className="text-green-800 md:text-2xl text-xl font-bold truncate">
@@ -120,36 +120,12 @@ const TripContent = () => {
                 </div>
                 
                 {/* Filter Tabs */}
-                {/* <div className="bg-green-100 rounded-xl p-1 gap-4 mb-5 justify-center md:flex hidden w-full max-w-6xl mx-auto px-2 sm:px-4"> */}
-                    {/* {[
-                        { key: "all", label: "All" },
-                        { key: "note", label: "Notes", icon: <FileText /> },
-                        { key: "link", label: "Link", icon: <LinkIcon /> },
-                        { key: "video", label: "Videos", icon: <Play /> },
-                        { key: "image", label: "Images", icon: <Image /> },
-                    ].map(({ key, label, icon }) => (
-                        <div
-                            key={key}
-                            className={`rounded-2xl px-5 py-1 border-2 border-transparent cursor-pointer 
-                                        transition duration-200 flex items-center gap-2 
-                                ${contentType === key ? typeOn : typeOff}`}
-                            onClick={() => 
-                                {setContentType(key as ContentTypeState); 
-                                setOpenDropdownId(null);
-                                }}>
-                            {icon}
-                            <h2 className="text-lg">{label}</h2>
-                        </div>
-                    ))} */}
-                    {/* </div> */}
-
                     <FilterTabs
                     contentType={contentType}
                     setContentType={setContentType}
                     setOpenDropdownId={setOpenDropdownId}
                     />
-
-              
+      
                 
                 {/* Content Part */}
                 <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-xs mb-10`}>
@@ -186,8 +162,6 @@ const TripContent = () => {
                                             tripId={tripId}
                                             contentId={item._id}
                                             setOpenDropdownId={setOpenDropdownId}
-                                            // toggleEditContent={toggleEditContent}
-                                            // setToggleEditContent={setToggleEditContent}
                                             refreshContent={refreshContent} 
                                         />
                                         </div>
@@ -242,7 +216,7 @@ const TripContent = () => {
             <div className='group flex justify-start bg-green-800 text-white p-3 rounded-3xl 
             hover:bg-green-700 transition-all duration-300 cursor-pointer items-center overflow-hidden'
                   onClick={() => { setToggleAddContent(!toggleAddContent) }}>
-                <div className="flex-shrink-0"><PlusCircle /></div>
+                <div className="flex-shrink-0"><MemoizedPlusCircle /></div>
                 <h3 className='text-lg whitespace-nowrap transition-all duration-300 
                 w-0 group-hover:w-auto group-hover:ml-2 opacity-0 group-hover:opacity-100'>
                     Add Content

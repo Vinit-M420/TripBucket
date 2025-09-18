@@ -1,6 +1,6 @@
 import React from "react";
 
-const Left = ({className="md:size-6 size-4"}) => {
+export const Left = ({className="md:size-6 size-4"}) => {
     return (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 

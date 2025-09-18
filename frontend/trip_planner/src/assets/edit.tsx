@@ -1,3 +1,4 @@
+import React from "react";
 
 export const Edit = () => {
     return (
@@ -16,4 +17,4 @@ export const Edit = () => {
     )
 }
 
-export default Edit;
+export const MemoizedEdit = React.memo(Edit);

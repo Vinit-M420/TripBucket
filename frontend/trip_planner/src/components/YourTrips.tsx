@@ -1,17 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
-import CheckCircle from '../assets/checkcircle';
-import Edit from '../assets/edit';
-import Lock from '../assets/lock';
-import PlusCircle from '../assets/pluscircle';
-import Trash from '../assets/trash';
 import AddTrip from './AddTrip';
 import EditTrip from './EditTrip';
 import DeleteTrip from './DeleteTrip';
 import type { tripInterface } from '../types/tripInterface';
+import { MemoizedCheck } from '../assets/checkcircle';
+import { MemoizedEdit } from '../assets/edit';
+import { MemoizedLock } from '../assets/lock';
+import { MemoizedPlusCircle } from '../assets/pluscircle';
+import { MemoizedTrash } from '../assets/trash';
 import { ExternalLink, X } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
-import {  useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from "../store";
+import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from "../store";
 
 
 const YourTrips = () => {
@@ -92,7 +92,7 @@ const YourTrips = () => {
                                 </div>
                             ) : (
                                 <div className="border border-transparent rounded-2xl p-1">
-                                    <Lock />
+                                    <MemoizedLock />
                                 </div>
                             )}
 
@@ -100,7 +100,7 @@ const YourTrips = () => {
                          </Link>
                         <div className='flex gap-2 mx-5 items-center'>
                             <h2 className='text-green-600 text-sm'>Bucket List</h2>
-                            <CheckCircle />
+                            <MemoizedCheck />
                         </div>
                         <div className='mx-5'>
                             <h2 className='text-green-600 text-sm'>
@@ -121,7 +121,7 @@ const YourTrips = () => {
                                 // handleEdit(trip._id);
                                 setTypeOfAlert("edit");    
                             }}>
-                                <Edit /> 
+                                <MemoizedEdit /> 
                                 <h3 className='text-base'>Edit</h3>
                             </button>
                             <div className='border border-transparent rounded-2xl p-1
@@ -133,7 +133,7 @@ const YourTrips = () => {
                                     // SetDeletingTripId(trip._id);
                                     setTypeOfAlert("delete");                               
                                  } }>
-                                <Trash  />
+                                <MemoizedTrash  />
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ const YourTrips = () => {
             <div className='group flex justify-start bg-green-800 text-white p-3 rounded-3xl 
             hover:bg-green-700 transition-all duration-300 cursor-pointer items-center overflow-hidden'
                 onClick={() => setToggleAddTrip(!toggleAddTrip)}>
-                <div className="flex-shrink-0"><PlusCircle /></div>
+                <div className="flex-shrink-0"><MemoizedPlusCircle /></div>
                 <h3 className='text-lg whitespace-nowrap transition-all duration-300 
                 w-0 group-hover:w-auto group-hover:ml-2 opacity-0 group-hover:opacity-100'>
                     Add Trip

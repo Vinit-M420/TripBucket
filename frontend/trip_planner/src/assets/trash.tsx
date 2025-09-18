@@ -1,3 +1,4 @@
+import React from "react";
 
 const Trash = () => {
     return (
@@ -15,4 +16,4 @@ const Trash = () => {
     )
 }
 
-export default Trash
+export const MemoizedTrash= React.memo(Trash);

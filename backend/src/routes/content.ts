@@ -114,8 +114,8 @@ router.get("/:tripId/all", async function (req:CustomRequest, res) {
     const { tripId } = req.params;
     const content =  await ContentModel.find({ userId: userId, tripId: tripId });
     if (content.length === 0){
-        return res.status(HttpStatusCode.Unauthorized ).json({
-            error: "No Trip Content Not Found"
+        return res.status(204).json({
+            message: "No Trip Content Not Found"
         })
     }
 

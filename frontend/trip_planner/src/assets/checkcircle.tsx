@@ -1,3 +1,4 @@
+import React from "react";
 
 export const CheckCircle = () => {
     return (
@@ -18,5 +19,4 @@ export const CheckCircle = () => {
     )
 }
 
-export default CheckCircle;
-
+export const MemoizedCheck = React.memo(CheckCircle);
