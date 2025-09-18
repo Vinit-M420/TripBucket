@@ -5,4 +5,5 @@ export enum HttpStatusCode  {
     Forbidden = 403,
     InputError= 411,
     ServerError= 500,
+    NoContent=204,
 }
