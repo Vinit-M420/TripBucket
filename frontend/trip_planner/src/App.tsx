@@ -10,6 +10,7 @@ import YourTrips from './components/YourTrips';
 import TripContent from './components/TripContent';
 import PublicContent from './components/PublicContent';
 import { useNavbarStore } from './store';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
               <div ref={publicRef}>
                 <Top3 />
               </div>
+              <Footer />
             </>        
           )
         } />

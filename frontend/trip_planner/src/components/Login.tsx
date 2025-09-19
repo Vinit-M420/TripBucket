@@ -9,7 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { setNavbarState } = useNavbarStore();
-    const {hidePassword, setHidePassword} = useHidePassword();
+    const { hidePassword, setHidePassword } = useHidePassword();
     const navigate = useNavigate(); 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -97,4 +97,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Login;
