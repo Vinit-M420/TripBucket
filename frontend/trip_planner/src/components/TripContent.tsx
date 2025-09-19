@@ -12,6 +12,7 @@ import FilterDropDown from './FilterDropDown';
 import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from '../store';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
 import { FilterTabs } from './FilterTabContent';
+import Note from './Note';
 
 const TripContent = () => {
     const { setNavbarState } = useNavbarStore();
@@ -97,6 +98,7 @@ const TripContent = () => {
     return (
         <div className="bg-stone-50 min-h-screen w-full flex flex-col items-center mx-auto gap-5 mt-10 px-4">
             <div>   
+                
                 {/* Header  */}
                 <div className='flex justify-between items-center'>
                     <div className='flex gap-2 my-5 items-center w-full max-w-6xl mx-auto px-2 sm:px-4'>
@@ -124,8 +126,7 @@ const TripContent = () => {
                     contentType={contentType}
                     setContentType={setContentType}
                     setOpenDropdownId={setOpenDropdownId}
-                    />
-      
+                    />     
                 
                 {/* Content Part */}
                 <div className={`columns-1 md:columns-2 lg:columns-3 gap-5 mx-auto lg:w-6xl md:w-2xl w-xs mb-10`}>
@@ -169,15 +170,13 @@ const TripContent = () => {
                                     </div>
 
                             </div>
-                            {item.type === "note" && (
-                                <p className="whitespace-pre-wrap break-words text-gray-800">
-                                    {item.value}
-                                </p>
-                            )}
+                            {item.type === "note" && ( <Note value={item.value} />)}
+
                             {item.type === "link" && (
                                 <a href={item.value} target="_blank" 
                                 className="text-blue-600 underline w-full whitespace-pre-wrap" >
-                                    {/* Visit Link */} {item.value}
+                                    {/* Visit Link */} 
+                                    {item.value}
                                 </a>
                             )}
                             {item.type === "video" && (() => {

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import worldmap from "../images/worldmap trace.svg"
 import { useNavbarStore } from '../store';
+import { motion } from "motion/react";
 
 interface HeroProps {
   scrollToPublic: () => void;
@@ -10,8 +11,12 @@ const Hero = ( {scrollToPublic}:  HeroProps ) => {
     const { setNavbarState } = useNavbarStore();
     
     return (
-    <div className='relative w-full h-[calc(100dvh-80px)]'>
-       
+    <motion.div
+        initial={{ opacity: 0, y:40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}>
+
+    <div className='relative w-full h-[calc(100dvh-80px)]'>    
         <div className="absolute inset-0 flex flex-col gap-5 justify-center items-center z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl text-green-800 font-bold text-center">
                 Never Lose Another Travel Idea
@@ -39,10 +44,10 @@ const Hero = ( {scrollToPublic}:  HeroProps ) => {
             </div>
         </div>  
          
-        <img src={worldmap} alt="maps" className="w-full h-full object-cover md:object-contain opacity-10" />
-        
+        <img src={worldmap} alt="maps" className="w-full h-full object-cover md:object-contain opacity-10" />    
     </div>
     
+    </motion.div>
 )}
 
 export default Hero
