@@ -105,7 +105,9 @@ router.put("/edit/:id", async function (req:CustomRequest, res) {
         const editBody = req.body;
         const updatedResult = await TripModel.updateOne( {_id: id, userId: userId },
                                                         editBody,
-                                                        { runValidators: true  })
+                                                        { runValidators: true  }) 
+        /// runValidators check the new content obeys the schema set on db.ts
+        /// maintains data integrity
         
         if (updatedResult.modifiedCount === 0){
             return res.status(HttpStatusCode.BadRequest).json({
@@ -153,29 +155,5 @@ router.delete("/delete/:id", async function (req:CustomRequest, res) {
         })
     }
 });
-
-// router.patch("/public/:id" , async function (req:CustomRequest, res) {
-//     const userId = req.userId;
-//     const { id } = req.params;
-
-//     const trip = await TripModel.findOne({ userId, _id: id });
-//     if (!trip) {
-//         return res.status(HttpStatusCode.Unauthorized).json({
-//             message: "No trip found"
-//         });
-//     }
-//     try{
-//         trip.isPublic = !trip.isPublic;
-//         await trip.save();
-//         res.status(HttpStatusCode.Ok).json({
-//             message: `Trip is now ${trip.isPublic ? "public" : "private"}`,
-//             trip
-//         });
-//     }catch{
-//         res.status(HttpStatusCode.ServerError).json({
-//             error: "Server Error: Error in changing the trip's access"
-//         })
-//     }
-// });
 
 export default router;

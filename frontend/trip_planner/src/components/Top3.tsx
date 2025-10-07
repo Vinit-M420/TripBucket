@@ -1,17 +1,38 @@
 import { useNavigate } from "react-router-dom";
 import { useNavbarStore } from "../store";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
 
 const Top3 = ( ) => {
     const navigate = useNavigate(); 
     const { setNavbarState } = useNavbarStore();
+
+    const top3Ref = useRef<HTMLDivElement | null>(null);
+    
+    useEffect(() => {
+        if (top3Ref.current) {
+        
+        gsap.fromTo(top3Ref.current, 
+            {y: -50, opacity: 0, duration: 3, ease: "power3.out" }, 
+            {y: 0, opacity: 1, duration: 1, 
+                scrollTrigger: {
+                trigger: top3Ref.current,  start: "top 80%", 
+                toggleActions: "play none none none", // play only once
+                },
+            });
+        }
+    }, []);
     
     return (
-        <div className="py-24 bg-stone-50">
+        <div  className="py-24 bg-stone-50">
             <div className="flex items-center mx-auto justify-center">
                 <h3 className="font-semibold md:text-4xl text-3xl text-green-800 ">Public Trips</h3>
             </div>
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
+            <div ref={top3Ref} className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mx-auto justify-center items-center
                             lg:w-6xl md:w-2xl w-xs my-10">
                 <div className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2
                                 md:hover:translate-y-3 transition-all duration-200">  

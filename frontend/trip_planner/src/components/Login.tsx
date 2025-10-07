@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from 'lucide-react';
 import { useHidePassword, useNavbarStore } from "../store";
+import gsap from "gsap";
+
 const API_BASE = import.meta.env.VITE_API_URL; 
 
 
@@ -11,6 +13,19 @@ const Login = () => {
     const { setNavbarState } = useNavbarStore();
     const { hidePassword, setHidePassword } = useHidePassword();
     const navigate = useNavigate(); 
+    const loginRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (loginRef.current) {
+        gsap.fromTo(
+            loginRef.current,
+            { y: -50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+        );
+        }
+    }, []);
+
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center gap-5 h-[calc(100dvh-80px)] px-4">     
+        <div ref={loginRef} className="flex flex-col justify-center items-center gap-5 h-[calc(100dvh-80px)] px-4">     
         
             <div className="border border-green-800 rounded-2xl py-5 w-full max-w-xl shadow">
                 <div className="flex flex-col justify-center items-center">

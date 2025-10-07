@@ -142,5 +142,4 @@ router.get("/:tripId/:contentId", async function (req:CustomRequest, res) {
     })
 });
 
-
 export default router;

@@ -4,7 +4,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.js";
 import tripRoutes from "./routes/trip.js";
 import contentRoutes from "./routes/content.js"
-import { connectToDatabase } from "./db/db.js";
+import connectToDatabase from "./db/db.js";
 
 const app = express();
 dotenv.config();

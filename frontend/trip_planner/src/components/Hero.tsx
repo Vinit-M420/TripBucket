@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import worldmap from "../images/worldmap trace.svg"
 import { useNavbarStore } from '../store';
 import { motion } from "motion/react";
+import worldmap from "../images/worldmap trace.svg"
+
 
 interface HeroProps {
   scrollToPublic: () => void;
@@ -12,17 +13,17 @@ const Hero = ( {scrollToPublic}:  HeroProps ) => {
     
     return (
     <motion.div
-        initial={{ opacity: 0, y:40 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}>
 
     <div className='relative w-full h-[calc(100dvh-80px)]'>    
         <div className="absolute inset-0 flex flex-col gap-5 justify-center items-center z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl text-green-800 font-bold text-center">
-                Never Lose Another Travel Idea
+                Build your Travel Era
             </h1>
             <h4 className="text-sm md:text-lg max-w-lg text-green-700 text-center">
-                Organize ideas, photos, videos, and notes for every destination. Create detailed itineraries others can follow.
+                Organize ideas, photos, videos, and notes for your future destination. Create detailed itineraries that others can follow.
             </h4>
 
             <div className='flex justify-evenly md:gap-5 gap-2'>

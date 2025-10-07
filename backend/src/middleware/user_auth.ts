@@ -1,7 +1,8 @@
-import  jwt, { type JwtPayload }  from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { HttpStatusCode } from "../schemas/responses.js";
-import type { Request, Response, NextFunction } from "express";
+
 dotenv.config();
 
 export interface CustomRequest extends Request {
@@ -12,9 +13,9 @@ export interface CustomRequest extends Request {
 export function userAuth(req: CustomRequest, res: Response, next: NextFunction) {
     const header = req.headers.authorization;
 
-    if(!header){
+    if (!header){
         return res.status(HttpStatusCode.Unauthorized).json({
-            message: "Authorizations Headers missing"
+            message: "Authorizations Headers missing // Login Denied"
         })
     }
     
