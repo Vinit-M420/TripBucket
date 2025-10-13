@@ -10,7 +10,7 @@ import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { fetchTripName } from '../utils/fetchTripName';
 import FilterDropDown from './FilterDropDown';
 import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from '../store';
-import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter, Loader2 } from 'lucide-react';
 import { FilterTabs } from './FilterTabContent';
 import Note from './Note';
 
@@ -86,11 +86,11 @@ const TripContent = () => {
     
     if (isLoading) {
         return (
-            <div className="flex justify-center h-screen mt-15">
-                <h1 className="text-green-800 font-bold md:text-2xl text-xl animate-pulse">
-                    Loading...
-                </h1>
-            </div>
+            <div className="fixed inset-0 bg-[#fafaf9] bg-opacity-90 flex flex-col justify-center 
+                                items-center z-50">
+                    <Loader2 className="w-16 h-16 text-green-700 animate-spin" />
+                    <p className="text-green-900 mt-4 text-lg font-semibold">Loading your Itinerary</p>
+                </div>
         );
     }
 

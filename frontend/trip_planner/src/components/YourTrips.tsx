@@ -83,7 +83,7 @@ const YourTrips = () => {
                                                 hover:border hover:border-green-800 hover:bg-stone-200"
                                     onClick={(e) => { 
                                         e.preventDefault();
-                                        e.stopPropagation();
+                                        e.stopPropagation(); /// To stop event bubbling up & make the button work
                                         navigator.clipboard.writeText(`${window.location.origin}/public/${trip.shareId}`);
                                         setTypeOfAlert('shareurl');
                                         setToggleAlert(true); }                                     
@@ -116,9 +116,8 @@ const YourTrips = () => {
                             <button className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 
                             transition-all duration-200 cursor-pointer my-2 flex gap-2 items-center"
                             onClick={(e) => { 
-                                e.stopPropagation();
+                                e.stopPropagation(); /// To stop event bubbling up & make the button work
                                 openEditTrip(true, trip._id)                            
-                                // handleEdit(trip._id);
                                 setTypeOfAlert("edit");    
                             }}>
                                 <MemoizedEdit /> 
@@ -127,10 +126,8 @@ const YourTrips = () => {
                             <div className='border border-transparent rounded-2xl p-1
                                         hover:border hover:border-green-800 hover:bg-stone-200'
                                  onClick={(e) =>{
-                                    e.stopPropagation();
+                                    e.stopPropagation(); /// To stop event bubbling up & make the button work
                                     openDeleteTrip(true, trip._id)
-                                    // setToggleDeleteTrip(!toggleDeleteTrip);
-                                    // SetDeletingTripId(trip._id);
                                     setTypeOfAlert("delete");                               
                                  } }>
                                 <MemoizedTrash  />

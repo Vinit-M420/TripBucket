@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className="bottom-0 bg-green-800 w-full">
       <div className="flex flex-row justify-between items-center lg:items-start gap-6">
-        <h1 className="text-4xl sm:text-6xl lg:text-9xl text-white text-center lg:text-left">
+        <h1 className="text-4xl sm:text-5xl lg:text-9xl text-white text-center lg:text-left">
           TripBucket
         </h1>
 
