@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import {MemoizedLeft} from '../assets/left';
-import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter,  Loader2  } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { Link } from "react-router-dom";
 import FilterDropDown from './FilterDropDown';
@@ -60,11 +60,11 @@ const PublicContent = () => {
       // Show loading screen first
     if (isLoading) {
         return (
-            <div className="flex justify-center h-screen mt-15">
-                <h1 className="text-green-800 font-bold md:text-2xl text-xl animate-pulse">
-                    Loading...
-                </h1>
-            </div>
+            <div className="fixed inset-0 bg-[#fafaf9] bg-opacity-90 flex flex-col justify-center 
+                                items-center z-50">
+                    <Loader2 className="w-16 h-16 text-green-700 animate-spin" />
+                    <p className="text-green-900 mt-4 text-lg font-semibold">Loading Public Itinerary</p>
+                </div>
         );
     }
 

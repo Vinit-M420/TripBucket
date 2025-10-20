@@ -11,6 +11,8 @@ import TripContent from './components/TripContent';
 import PublicContent from './components/PublicContent';
 import Footer from './components/Footer';
 import { useNavbarStore } from './store';
+import { Cities } from './components/Cities';
+
 
 
 function App() {
@@ -56,7 +58,8 @@ function App() {
             <Navigate replace to="/trips" />
             ) : ( 
             <>
-              <Hero scrollToPublic={() => scrollToRef(publicRef)} />          
+              <Hero scrollToPublic={() => scrollToRef(publicRef)} />
+              <Cities />
               <div ref={publicRef}> <Top3 /> </div>
               <Footer />
             </>        

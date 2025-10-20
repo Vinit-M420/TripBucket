@@ -9,7 +9,7 @@ import { MemoizedEdit } from '../assets/edit';
 import { MemoizedLock } from '../assets/lock';
 import { MemoizedPlusCircle } from '../assets/pluscircle';
 import { MemoizedTrash } from '../assets/trash';
-import { ExternalLink, X } from 'lucide-react';
+import { ExternalLink, Loader2, X } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
 import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from "../store";
 
@@ -21,11 +21,14 @@ const YourTrips = () => {
     const {isEditTripOpen, isDeleteTripOpen, openEditTrip, openDeleteTrip} = useModalStore();
     const {typeOfAlert, toggleAlert, setTypeOfAlert, setToggleAlert} = useTypeofAlertStore(); 
     const modalAlert = useRef<HTMLDivElement>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
     useEffect(() => {
     const loadTrips = async () => {
         const tripsData = await fetchTrips();
         setTrips(tripsData);
+        setIsLoading(false);
     };
     loadTrips();
     }, []);
@@ -47,6 +50,16 @@ const YourTrips = () => {
     const refreshTrips = async () => {
         const tripsData = await fetchTrips();
         setTrips(tripsData);
+    }
+
+    if (isLoading) {
+        return (
+            <div className="fixed inset-0 bg-[#fafaf9] bg-opacity-90 flex flex-col justify-center 
+                                items-center z-50">
+                    <Loader2 className="w-16 h-16 text-green-700 animate-spin" />
+                    <p className="text-green-900 mt-4 text-lg font-semibold">Loading your planned trips</p>
+                </div>
+        );
     }
 
     return (
