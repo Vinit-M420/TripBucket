@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Eye, EyeOff } from 'lucide-react';
-import { useHidePassword, useNavbarStore } from "../store";
+import { useHidePassword } from "../store";
 import gsap from "gsap";
 
 const API_BASE = import.meta.env.VITE_API_URL; 
@@ -11,7 +11,6 @@ const Signup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { setNavbarState } = useNavbarStore();
     const {hidePassword, setHidePassword} = useHidePassword();
     const navigate = useNavigate(); 
     const signupRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +44,6 @@ const Signup = () => {
             }
 
             alert("You're successfully Signed up!");
-            setNavbarState("login");
             navigate("/login");
 
         } catch(err){
@@ -109,7 +107,7 @@ const Signup = () => {
                     <h3 className="flex items-center md:text-base text-sm">Already have an account?</h3>
                     <div className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                                     transition duration-200 cursor-pointer hover:bg-green-100"
-                        onClick={() => setNavbarState("login")}>
+                        >
                             <Link to='/login'><h2 className="md:text-base text-sm">Log In</h2></Link>
                     </div> 
                 </div>

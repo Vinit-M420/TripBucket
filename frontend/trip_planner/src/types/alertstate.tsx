@@ -1,4 +1,4 @@
-export type AlertState = 'edit' | 'delete' | 'shareurl' | null ;
+export type AlertState = 'edit' | 'delete' | 'shareurl' | 'coldstart' | null ;
 
 export interface TypeOfAlertInt {
     typeOfAlert : AlertState;

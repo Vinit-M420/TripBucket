@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import { useHidePassword, useNavbarStore } from "../store";
+import { Eye, EyeOff, Loader2, X } from 'lucide-react';
+import { useHidePassword, useTypeofAlertStore } from "../store";
 import gsap from "gsap";
 
 const API_BASE = import.meta.env.VITE_API_URL; 
@@ -10,10 +10,11 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const { setNavbarState } = useNavbarStore();
     const { hidePassword, setHidePassword } = useHidePassword();
     const navigate = useNavigate(); 
     const loginRef = useRef<HTMLDivElement | null>(null);
+    const modalAlert = useRef<HTMLDivElement>(null);
+    const {toggleAlert, setToggleAlert} = useTypeofAlertStore();
 
     useEffect(() => {
         if (loginRef.current) {
@@ -29,7 +30,12 @@ const Login = () => {
         e.preventDefault();
         setIsLoading(true);
 
-        // Remove this setTimeout after testing
+        setTimeout(() => {
+                    setToggleAlert(true);
+                    // Hide alert after 3 seconds
+                    setTimeout(() => setToggleAlert(false), 15000);
+        }, 5000);
+
         // await new Promise(resolve => setTimeout(resolve, 30000));
 
         try {
@@ -44,19 +50,25 @@ const Login = () => {
             if (!response.ok) {
                 alert(data.message || "Login failed");
                 setIsLoading(false);
+                setToggleAlert(false);
                 return;              
             }
 
             localStorage.setItem("token", data.token);
-            setNavbarState("trip");
+            // setNavbarState("trip");
             navigate("/trips"); 
             
         } catch (err) {
             console.error("Error logging in:", err);
             alert("Network error. Please try again.");
             setIsLoading(false);
+            setToggleAlert(false);
         }
     };
+
+    const handleClose = () => {
+        setToggleAlert(false);
+    }
 
     return (
         <div ref={loginRef} className="flex flex-col justify-center items-center gap-5 h-[calc(100dvh-80px)] px-4">     
@@ -127,9 +139,7 @@ const Login = () => {
                                     <Loader2 className="w-5 h-5 animate-spin" />
                                     Logging In...
                                 </>
-                            ) : (
-                                'Log In'
-                            )}
+                            ) : ('Log In')}
                         </button>
                     </form>
                 </div>
@@ -141,12 +151,31 @@ const Login = () => {
                     <div 
                         className="bg-transparent rounded-2xl px-5 py-1 border-2 border-green-700 text-green-700
                                    transition duration-200 cursor-pointer hover:bg-green-100 md:text-base text-sm" 
-                        onClick={() => setNavbarState("signup")}
+                        // onClick={() => setNavbarState("signup")}
                     >
                         <Link to="/signup">Sign Up</Link>
                     </div> 
                 </div>
             </div>
+            {toggleAlert ? (
+            <div ref={modalAlert} role="alert"
+                className='fixed inset-x-0 bottom-0 left-0 flex items-center justify-center p-4 mb-4 text-sm 
+           text-green-800 border border-green-300 rounded-lg bg-green-50 w-fit h-fit z-50 md:ml-5'>
+                <div className="flex items-center">
+                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span className="sr-only">Info</span>
+                    <span className="font-medium mr-5">
+                        Hang tight! Your adventure is loading in about 50 seconds as our backend warms up.
+                    </span> 
+                    </div>
+                    <div onClick={handleClose}>
+                        <X className='size-3' />
+                    </div>
+                </div>
+            ) : (null)}                    
+            
         </div>
     )
 }

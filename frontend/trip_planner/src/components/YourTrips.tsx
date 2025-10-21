@@ -11,11 +11,10 @@ import { MemoizedPlusCircle } from '../assets/pluscircle';
 import { MemoizedTrash } from '../assets/trash';
 import { ExternalLink, Loader2, X } from 'lucide-react';
 import { fetchTrips } from '../utils/fetchtrips';
-import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from "../store";
+import { useModalStore, useToggleAddStore, useTypeofAlertStore } from "../store";
 
 
 const YourTrips = () => {
-    const { setNavbarState } = useNavbarStore();
     const [trips, setTrips] = useState<tripInterface[]>([]);
     const {toggleAddTrip, setToggleAddTrip} = useToggleAddStore();
     const {isEditTripOpen, isDeleteTripOpen, openEditTrip, openDeleteTrip} = useModalStore();
@@ -74,10 +73,7 @@ const YourTrips = () => {
                     
                     <div key={trip._id} 
                         className="col-span-1 flex flex-col border-2 border-green-800 rounded-xl gap-2 cursor-pointer" >  
-                        <Link to={`/trip/${trip._id}`} className="block cursor-pointer"
-                            onClick={() => {
-                            setNavbarState("content");
-                            }}>
+                        <Link to={`/trip/${trip._id}`} className="block cursor-pointer">
 
                         {trip.bannerURL ? (
                             <img src={trip.bannerURL} 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useNavbarStore } from '../store';
+// import { useNavbarStore } from '../store';
 import { motion } from 'framer-motion';
 import { WorldMap } from './ui/world-map';
 
@@ -8,7 +8,7 @@ interface HeroProps {
 }
 
 const Hero = ({ scrollToPublic }: HeroProps) => {
-  const { setNavbarState } = useNavbarStore();
+  // const { setNavbarState } = useNavbarStore();
 
   return (
     <motion.div
@@ -17,11 +17,10 @@ const Hero = ({ scrollToPublic }: HeroProps) => {
       transition={{ duration: 0.5 }}
       className="relative w-full h-[calc(100dvh-80px)]"
     >
-      {/* WorldMap as Background */}
       <div className="absolute inset-0 z-0">
-        <WorldMap
-        //   className="w-full h-full object-cover opacity-5" 
-          // dots={[
+        <WorldMap 
+            // className="w-full h-full object-cover" 
+            // dots={[
             // {
             // start: { lat: 0.0887, lng: 73.8678 }, // Mumbai (BOM)
             // end: { lat: -55.9399, lng: 151.1753 }, // Sydney (SYD)
@@ -71,7 +70,7 @@ const Hero = ({ scrollToPublic }: HeroProps) => {
               className="bg-green-800 text-white px-5 py-1 rounded-2xl hover:bg-green-700 
               border-2 border-transparent md:text-base sm:text-sm text-xs text-center
               transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
-              onClick={() => setNavbarState('signup')}
+              // onClick={() => setNavbarState('signup')}
             >
               Create Your Bucket list
             </button>
@@ -81,8 +80,7 @@ const Hero = ({ scrollToPublic }: HeroProps) => {
             className="border-2 border-green-700 text-green-700 md:text-base sm:text-sm text-xs
             transition-all duration-200 px-5 py-1 rounded-2xl hover:bg-green-100 bg-white
             hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
-            onClick={scrollToPublic}
-          >
+            onClick={scrollToPublic}>
             Browse Public Trips
           </button>
         </div>

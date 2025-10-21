@@ -107,7 +107,7 @@ const City = ({ city, country, icon, color }: CityItem) => {
   )
 }
 
-export function Cities({ className }: { className?: string }) {
+export default function Cities({ className }: { className?: string }) {
   // Shuffle the array on each render
   const shuffledCities = shuffleArray(CityArray)
 
@@ -119,7 +119,7 @@ export function Cities({ className }: { className?: string }) {
       )}
     >
       <div className="flex items-center justify-center">
-        <h3 className="font-semibold md:text-4xl text-3xl text-green-800 ">
+        <h3 className="font-semibold md:text-4xl text-3xl text-green-800 text-center">
           Where Will Your Next Adventure Take You?</h3>
       </div>
 

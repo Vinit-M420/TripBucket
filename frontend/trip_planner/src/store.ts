@@ -1,17 +1,17 @@
 import { create } from "zustand";
-import type { NavbarProps, NavbarState } from "./types/navbarstate";
+// import type { NavbarProps, NavbarState } from "./types/navbarstate";
 import type { TypeOfAlertInt, AlertState } from "./types/alertstate";
 import type { ModalStore } from "./types/ModalStore";
 // import { type ContentItem } from "./types/ContentItem";
 
-export const useNavbarStore = create<NavbarProps>((set) => ({
-    navbarState: (() => {
-        const token = localStorage.getItem("token");
-        return token ? "trip" : "hero";
-    })(),
-      setNavbarState: (state: NavbarState) => set({ navbarState: state }),
+// export const useNavbarStore = create<NavbarProps>((set) => ({
+//     navbarState: (() => {
+//         const token = localStorage.getItem("token");
+//         return token ? "trip" : "hero";
+//     })(),
+//       setNavbarState: (state: NavbarState) => set({ navbarState: state }),
 
-}));
+// }));
 
 export const useHidePassword = create<{
         hidePassword: boolean;

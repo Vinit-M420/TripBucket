@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from "react-router-dom";
 import {MemoizedLeft} from '../assets/left';
-import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter,  Loader2  } from 'lucide-react';
+import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, ListFilter,  Loader2, X  } from 'lucide-react';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { Link } from "react-router-dom";
 import FilterDropDown from './FilterDropDown';
-import { useNavbarStore } from '../store';
+import { useTypeofAlertStore } from '../store';
 const API_BASE = import.meta.env.VITE_API_URL; 
 
 
 const PublicContent = () => {
-    const { setNavbarState } = useNavbarStore();
+    // const { setNavbarState } = useNavbarStore();
     const { shareId } = useParams<{ shareId: string }>();
     const [tripName, setTripName] = useState<string | null>(null);
     const [contents, setContents] = useState<ContentItem[]>([]);
@@ -19,6 +19,8 @@ const PublicContent = () => {
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [filterToggle, setFilterToggle] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const modalAlert = useRef<HTMLDivElement>(null);
+    const {toggleAlert, setToggleAlert} = useTypeofAlertStore();
 
     const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
@@ -28,8 +30,9 @@ const PublicContent = () => {
 
         const fetchPublicTrip = async () => {
         try {
-            console.time("Fetch Public Trip"); 
+            // console.time("Fetch Public Trip"); 
             const res = await fetch(`${API_BASE}/api/v1/trip/public/${shareId}`);
+            // setToggleAlert(true);
             if (!res.ok) throw new Error("Trip not found or private");
             const data = await res.json();
             
@@ -37,16 +40,27 @@ const PublicContent = () => {
             setContents(data.contents);
             setIsLoading(false);
             
+            setTimeout(() => {
+                    setToggleAlert(true);
+                    setTimeout(() => setToggleAlert(false), 8000);
+            }, 5000);
+
+            
         } catch (err: any) {
             setError(err.message);
         } finally {
-            console.timeEnd("Fetch Public Trip"); 
+            // console.timeEnd("Fetch Public Trip"); 
         }
-        
         };
+        
         fetchPublicTrip();
     }, [shareId]);
 
+
+
+    const handleClose = () => {
+        setToggleAlert(false);
+    }
 
     const filteredContent =
     contentType === "all" ? contents : contents.filter((c) => c.type === contentType);
@@ -59,12 +73,32 @@ const PublicContent = () => {
 
       // Show loading screen first
     if (isLoading) {
-        return (
+        return (<>
             <div className="fixed inset-0 bg-[#fafaf9] bg-opacity-90 flex flex-col justify-center 
                                 items-center z-50">
                     <Loader2 className="w-16 h-16 text-green-700 animate-spin" />
                     <p className="text-green-900 mt-4 text-lg font-semibold">Loading Public Itinerary</p>
                 </div>
+
+            {toggleAlert ? (
+            <div ref={modalAlert} role="alert"
+                className='fixed inset-x-0 bottom-0 flex items-center justify-between p-4 mb-4 text-sm 
+           text-green-800 border border-green-300 rounded-lg bg-green-50 w-fit h-fit z-50 mx-auto'>
+                <div className="flex items-center">
+                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span className="sr-only">Info</span>
+                    <span className="font-medium mr-5">
+                        Hang tight! Your adventure is loading in about 50 seconds as our backend warms up.
+                    </span> 
+                    </div>
+                    <div onClick={handleClose}>
+                        <X className='size-3' />
+                    </div>
+                </div>
+            ) : (null)}
+            </>
         );
     }
 
@@ -82,7 +116,8 @@ const PublicContent = () => {
                     <Link to="/">
                         <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                             transition duration-200 cursor-pointer hover:bg-green-700" 
-                            onClick={() => {setNavbarState("hero")}}>
+                            // onClick={() => {setNavbarState("hero")}}
+                            >
                             <MemoizedLeft /> 
                         </div> 
                     </Link>

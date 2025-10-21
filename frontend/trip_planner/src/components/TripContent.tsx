@@ -32,7 +32,7 @@ const TripContent = () => {
 
     // const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     // const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
-
+2
     useEffect(() => {
         if (!tripId) return;
 

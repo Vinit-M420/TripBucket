@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useNavbarStore } from "../store";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,7 +7,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Top3 = ( ) => {
     const navigate = useNavigate(); 
-    const { setNavbarState } = useNavbarStore();
 
     const top3Ref = useRef<HTMLDivElement | null>(null);
     
@@ -49,7 +47,6 @@ const Top3 = ( ) => {
                         cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"
                              onClick={() => {
                                 navigate("/public/icelandbaby");
-                                setNavbarState("public");
                             }}> 
                                 <h3 className='md:text-lg text-md'>View</h3>       
                         </button>
@@ -71,7 +68,6 @@ const Top3 = ( ) => {
                     cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"
                             onClick={() => { 
                                 navigate("/public/ZU0U7AhV94");
-                                setNavbarState("public");
                             }}> 
                         <h3 className='md:text-lg text-md'>View</h3>
                     </button>
@@ -92,7 +88,6 @@ const Top3 = ( ) => {
                     cursor-pointer px-10 py-1 mx-auto rounded-2xl my-2"
                             onClick={() => {
                                 navigate("/public/1ur7NZN6Xf");
-                                setNavbarState("public");
                             }}> 
                         <h3 className='md:text-lg text-md'>View</h3>
                     </button>
