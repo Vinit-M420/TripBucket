@@ -11,6 +11,7 @@ import TripContent from './components/TripContent';
 import PublicContent from './components/PublicContent';
 import Cities from './components/Cities';
 import Footer from './components/Footer';
+import EditProfile from './components/EditProfile';
 // import { useNavbarStore } from './store';
 
 
@@ -76,6 +77,7 @@ function App() {
 
         <Route path="/trip/:tripId" element={ <TripContent /> } />
         <Route path="/public/:shareId" element={ <PublicContent /> } />
+        <Route path="/profile" element={ <EditProfile /> } />
       </Routes>
     </div>
   )

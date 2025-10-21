@@ -13,7 +13,8 @@ const Navbar = () => {
   const [userFname, setUserFname] = useState("");
 
   // const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
-  const isTripOrContentPage = location.pathname.includes('/trip') || location.pathname.includes('/content');
+  const isTripOrContentPage = location.pathname.includes('/trip') || location.pathname.includes('/content')
+          || location.pathname.includes('/profile')  ;
   const isHeroPage = location.pathname === '/';
 
   useEffect(() => {

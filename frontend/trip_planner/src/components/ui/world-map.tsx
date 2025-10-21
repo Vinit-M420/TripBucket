@@ -1,10 +1,9 @@
-"use client";
-
 import { useRef } from "react";
 import { motion } from "motion/react";
 import DottedMap from "dotted-map";
 
 import { useTheme } from "next-themes";
+import React from "react";
 
 interface MapProps {
   dots?: Array<{
@@ -14,7 +13,7 @@ interface MapProps {
   lineColor?: string;
 }
 
-export function WorldMap({
+function WorldMap({
   dots = [],
   lineColor = "oklch(44.8% 0.119 151.328)",
 }: MapProps) {
@@ -168,3 +167,6 @@ export function WorldMap({
     </div>
   );
 }
+
+
+export default React.memo(WorldMap);

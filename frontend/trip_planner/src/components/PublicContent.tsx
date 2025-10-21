@@ -29,32 +29,39 @@ const PublicContent = () => {
         window.scrollTo(0, 0);
 
         const fetchPublicTrip = async () => {
-        try {
-            // console.time("Fetch Public Trip"); 
-            const res = await fetch(`${API_BASE}/api/v1/trip/public/${shareId}`);
-            // setToggleAlert(true);
-            if (!res.ok) throw new Error("Trip not found or private");
-            const data = await res.json();
+            try {
+                // console.time("Fetch Public Trip"); 
+                // await new Promise(resolve => setTimeout(resolve, 30000));
+                const res = await fetch(`${API_BASE}/api/v1/trip/public/${shareId}`);
             
-            setTripName(data.trip.destination);
-            setContents(data.contents);
-            setIsLoading(false);
-            
-            setTimeout(() => {
-                    setToggleAlert(true);
-                    setTimeout(() => setToggleAlert(false), 8000);
-            }, 5000);
+                if (!res.ok) throw new Error("Trip not found or private");
+                const data = await res.json();
 
-            
-        } catch (err: any) {
-            setError(err.message);
-        } finally {
-            // console.timeEnd("Fetch Public Trip"); 
-        }
+                // Set trip data
+                setTripName(data.trip.destination);
+                setContents(data.contents);
+                setIsLoading(false);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                // console.timeEnd("Fetch Public Trip"); 
+            }
         };
-        
+
+        // Start the fetch
         fetchPublicTrip();
-    }, [shareId]);
+
+        const alertTimer = setTimeout(() => {
+            setToggleAlert(true);
+            const hideAlertTimer = setTimeout(() => {
+                setToggleAlert(false);
+            }, 10000);
+            return () => clearTimeout(hideAlertTimer);
+        }, 3000);
+
+        // Clean up the alert timer if component unmounts
+        return () => clearTimeout(alertTimer);
+    }, [shareId, setToggleAlert]);
 
 
 

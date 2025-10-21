@@ -9,13 +9,12 @@ import { fetchContent } from '../utils/fetchContents';
 import type { ContentTypeState, ContentItem } from '../types/ContentItem';
 import { fetchTripName } from '../utils/fetchTripName';
 import FilterDropDown from './FilterDropDown';
-import { useModalStore, useNavbarStore, useToggleAddStore, useTypeofAlertStore } from '../store';
+import { useModalStore, useToggleAddStore, useTypeofAlertStore } from '../store';
 import { FileText, Play , Image, Link as LinkIcon, EllipsisVertical, X , ListFilter, Loader2 } from 'lucide-react';
 import { FilterTabs } from './FilterTabContent';
 import Note from './Note';
 
 const TripContent = () => {
-    const { setNavbarState } = useNavbarStore();
     const { tripId } = useParams();
     const [tripName, setTripName] = useState<string | null>(null);
     const [contentType, setContentType] = useState<ContentTypeState>("all");
@@ -32,7 +31,7 @@ const TripContent = () => {
 
     // const typeOn: string = "bg-green-800 text-stone-50  hover:bg-green-700";
     // const typeOff: string = "hover:border-2 hover:border-green-800 text-green-700";    
-2
+    
     useEffect(() => {
         if (!tripId) return;
 
@@ -105,7 +104,8 @@ const TripContent = () => {
                         <Link to='/trips'>
                             <div className="bg-green-800 rounded-2xl px-5 py-1 text-stone-50 flex gap-2 items-center
                                             transition duration-200 cursor-pointer hover:bg-green-700"
-                                onClick={() => setNavbarState("trip")}>
+                                
+                                >
                                 <MemoizedLeft />
                             </div>
                         </Link> 
@@ -236,8 +236,6 @@ const TripContent = () => {
                 <EditContent 
                     tripId={tripId}
                     contentId={selectedContentId}                  
-                    // toggleEditContent={toggleEditContent}
-                    // setToggleEditContent={setToggleEditContent}
                     refreshContent={refreshContent}
                     onClose={() => openEditContent(!isEditContentOpen)} 
                     />

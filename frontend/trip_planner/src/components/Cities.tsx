@@ -1,14 +1,12 @@
 import { AnimatedList } from "./ui/animated-list"
 import { cn } from "../lib/utils"
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
+import type { CityItem } from "../types/cityitem";
+gsap.registerPlugin(ScrollTrigger);
 
-interface CityItem {
-  city: string
-  country: string | undefined
-  icon: string
-  color: string
-}
 
-// Define the city array with updated emojis
 const CityArray: CityItem[] = [
   {
     city: "Barcelona",
@@ -108,11 +106,46 @@ const City = ({ city, country, icon, color }: CityItem) => {
 }
 
 export default function Cities({ className }: { className?: string }) {
-  // Shuffle the array on each render
-  const shuffledCities = shuffleArray(CityArray)
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const shuffledCities = shuffleArray(CityArray);
+
+  useEffect(() => {
+    if (listRef.current && containerRef.current) {
+      // Select all child elements of AnimatedList for animation
+      const items = listRef.current.querySelectorAll(".animated-list-item");
+
+      if (items.length === 0) {
+        console.warn("No .animated-list-item elements found in AnimatedList");
+      }
+
+      gsap.set(items, { y: 50, opacity: 0 });
+
+      gsap.to(items, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.1,
+        delay: 0.5,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 90%", // Adjusted to trigger later
+          end: "bottom 20%", // Ensure animation completes before leaving viewport
+          toggleActions: "play none none none",
+          // markers: true, // Uncomment for debugging trigger points
+        },
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "relative flex gap-10 h-[500px] w-full flex-col overflow-hidden p-2 my-25",
         className
@@ -120,15 +153,20 @@ export default function Cities({ className }: { className?: string }) {
     >
       <div className="flex items-center justify-center">
         <h3 className="font-semibold md:text-4xl text-3xl text-green-800 text-center">
-          Where Will Your Next Adventure Take You?</h3>
+          Where Will Your Next Adventure Take You?
+        </h3>
       </div>
 
-      <AnimatedList>
-        {shuffledCities.map((item, idx) => (
-          <City {...item} key={idx} />
-        ))}
-      </AnimatedList>
+      <div ref={listRef}>
+        <AnimatedList>
+          {shuffledCities.map((item, idx) => (
+            <div key={idx} className="animated-list-item">
+              <City {...item} />
+            </div>
+          ))}
+        </AnimatedList>
+      </div>
       <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t"></div>
     </div>
-  )
+  );
 }
