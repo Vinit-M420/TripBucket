@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import  bcrypt from "bcrypt";
 import { UserModel } from "../db/db.js";
 import { HttpStatusCode } from "../schemas/responses.js"
-import { UserSigninSchema, UserSignupSchema } from "../schemas/user_schema.js";
+import { ForgotPassSchema, UserSigninSchema, UserSignupSchema } from "../schemas/user_schema.js";
 import { userAuth, type CustomRequest } from "../middleware/user_auth.js"
 dotenv.config();
 
@@ -50,6 +50,8 @@ router.post("/signup",  async function (req, res) {
     }  
 });
 
+
+///
 router.post("/login",  async function (req, res) {
     const parsed = UserSigninSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -87,12 +89,26 @@ router.post("/login",  async function (req, res) {
 });
 
 
+///
 router.put("/update", userAuth, async function (req:CustomRequest, res) {
     const userId = req.userId;
     const { firstName, lastName, email, password } = req.body;
     
+    const parsedDataWithSuccess = UserSignupSchema.safeParse(req.body);
+
+    if (!parsedDataWithSuccess.success){
+        return res.status(400).json({
+            message: "New Email or Password has incorrect format",
+            errors: parsedDataWithSuccess.error,
+        });
+    }
+
     try{
-        await UserModel.updateOne({ firstName, lastName, email, password });
+        const hashedPass = await bcrypt.hash(password, 5);
+         await UserModel.updateOne(
+            { _id: userId },  // ADD: filter by userId
+            { firstName, lastName, email, password: hashedPass } 
+        );
         res.json({ message: "Updated your user details" })
     }
     catch(err){
@@ -102,6 +118,37 @@ router.put("/update", userAuth, async function (req:CustomRequest, res) {
     }
 });
 
+///
+router.patch("/forgotpass", async function (req, res) {
+    const parsed = ForgotPassSchema.safeParse(req.body);
+    console.log("Parsed result:", parsed);
+    if (!parsed.success) {
+        return res.status(HttpStatusCode.Forbidden).json({ 
+            message: "Incorrect format" 
+        });
+    }
+    const { firstName, email, password } = req.body;
+
+    let user = await UserModel.findOne({ email });
+    if (!user) {
+        return res.status(HttpStatusCode.Forbidden).json({
+            message: "No user found with the provided email."
+        });
+    }
+
+    try{
+        const hashedPass = await bcrypt.hash(password, 5);
+        await user.updateOne({ password: hashedPass });
+        res.json({ message: "Updated your password" });
+    } 
+    catch(err){
+        return res.status(HttpStatusCode.ServerError).json({
+            message: "Error in updating the password"
+        })
+    }   
+});
+
+///
 router.get("/get", userAuth, async function (req:CustomRequest, res) {
     const userId = req.userId;
 
