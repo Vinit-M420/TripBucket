@@ -26,6 +26,12 @@ const Login = () => {
         }
     }, []);
 
+    useEffect(() => {
+        return () => {
+            setToggleAlert(false);
+        };
+    }, [setToggleAlert]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);

@@ -63,7 +63,11 @@ const PublicContent = () => {
         return () => clearTimeout(alertTimer);
     }, [shareId, setToggleAlert]);
 
-
+    useEffect(() => {
+        return () => {
+            setToggleAlert(false);
+        };
+    }, [setToggleAlert]);
 
     const handleClose = () => {
         setToggleAlert(false);

@@ -60,9 +60,14 @@ const TripContent = () => {
 
     useEffect(() => {
         const showAlert = setTimeout(() => setToggleAlert(false), 3000);
-        return () => clearTimeout(showAlert)
-
+        
+        return () => {
+            clearTimeout(showAlert);
+            setFilterToggle(false);
+        }
     }, [toggleAlert])
+
+    
 
     const handleClose = () => {
         setToggleAlert(false);
