@@ -2,7 +2,7 @@ import { AnimatedList } from "./ui/animated-list"
 import { cn } from "../lib/utils"
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import type { CityItem } from "../types/cityitem";
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,6 +74,8 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray
 }
 
+
+
 const City = ({ city, country, icon, color }: CityItem) => {
   return (
     <figure
@@ -105,43 +107,12 @@ const City = ({ city, country, icon, color }: CityItem) => {
   )
 }
 
+
+
 export default function Cities({ className }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const shuffledCities = shuffleArray(CityArray);
-
-  useEffect(() => {
-    if (listRef.current && containerRef.current) {
-      // Select all child elements of AnimatedList for animation
-      const items = listRef.current.querySelectorAll(".animated-list-item");
-
-      if (items.length === 0) {
-        console.warn("No .animated-list-item elements found in AnimatedList");
-      }
-
-      gsap.set(items, { y: 50, opacity: 0 });
-
-      gsap.to(items, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power3.out",
-        stagger: 0.1,
-        delay: 0.5,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 90%", // Adjusted to trigger later
-          end: "bottom 20%", // Ensure animation completes before leaving viewport
-          toggleActions: "play none none none",
-          // markers: true, // Uncomment for debugging trigger points
-        },
-      });
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
 
   return (
     <div

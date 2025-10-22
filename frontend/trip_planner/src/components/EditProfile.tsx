@@ -74,7 +74,7 @@ const EditProfile = () => {
 
             const data = await response.json();
             setUpdateMessage(data.message || "Profile updated successfully!");
-            setPassword(""); // Clear password field after update
+            // setPassword(""); 
             
             // Clear success message after 3 seconds
             setTimeout(() => setUpdateMessage(""), 3000);

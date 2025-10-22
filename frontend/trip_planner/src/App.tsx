@@ -12,6 +12,7 @@ import PublicContent from './components/PublicContent';
 import Cities from './components/Cities';
 import Footer from './components/Footer';
 import EditProfile from './components/EditProfile';
+import Features from './components/Features';
 // import { useNavbarStore } from './store';
 
 
@@ -62,6 +63,7 @@ function App() {
             <>
               <Hero scrollToPublic={() => scrollToRef(publicRef)} />
               <Cities />
+              <Features />
               <div ref={publicRef}> <Top3 /> </div>
               <Footer />
             </>        
