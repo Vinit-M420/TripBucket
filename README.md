@@ -23,22 +23,23 @@ Do you have your travel bucket list in mind? Do you want to build itineraries fo
 1. Navigate to the `backend` directory and run:
    ```bash
    npm install
-to install dependencies.
+   ```
+    to install dependencies.
 
 2. Create a MongoDB Atlas cluster (or use local MongoDB). Copy the connection URI.
 3. Create an .env file and add the MongoDB URI in your .env file
-```env
-    MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/tripbucket
-    PORT=3000
-    JWT_SECRET=your_strong_secret_here
-```
+    ```env
+        MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/tripbucket
+        PORT=3000
+        JWT_SECRET=your_strong_secret_here
+    ```
 5. Build and start the backend: 
-```bash
-    npm run build   # Compiles TypeScript to /dist (optional for dev)
-    npm run dev     # Starts with nodemon for hot-reload
-```   
+    ```bash
+        npm run build   # Compiles TypeScript to /dist (optional for dev)
+        npm run dev     # Starts with nodemon for hot-reload
+    ```   
 
-Server runs at http://localhost:3000
+    Server runs at http://localhost:3000
 
 
 6. Check the backend routes using [Postman](https://www.postman.com/downloads/) or HoppScotch (https://hoppscotch.io/)
@@ -57,10 +58,10 @@ Server runs at http://localhost:3000
     ```
 
 4. For production build:
-```bash
-npm run build    # Outputs to /dist
-npm run preview  # Serves the built app locally
-```
+    ```bash
+    npm run build    # Outputs to /dist
+    npm run preview  # Serves the built app locally
+    ```
 
 ***
 
